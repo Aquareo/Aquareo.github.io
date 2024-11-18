@@ -3,7 +3,6 @@ name: Update Website
 on:
   schedule:
     - cron: '0 * * * *'  # 每小时的第 0 分钟执行，即整点执行
-
   push:
     branches:
       - main  # 只要 main 分支有更新，自动触发部署
