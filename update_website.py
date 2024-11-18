@@ -19,8 +19,11 @@ def dataframe_to_html(ranking_df):
 # 生成完整的 HTML 页面
 def generate_html(content):
     html_content = f"""
-    <html>
+    <!DOCTYPE html>
+    <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>可转债投资排名</title>
         <style>
             /* 全局设置 */
