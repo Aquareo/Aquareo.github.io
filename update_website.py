@@ -1,15 +1,24 @@
 import pandas as pd
+import akshare as ak
 
 # 创建示例 DataFrame
 def load_ranking():
-    # 示例数据
-    data = {
-        'Rank': [1, 2, 3, 4, 5],
-        'Name': ['可转债A', '可转债B', '可转债C', '可转债D', '可转债E'],
-        'Price': [101.5, 99.2, 98.7, 102.3, 105.0],
-        'Yield': [3.5, 4.0, 3.8, 2.5, 3.2]
-    }
-    ranking_df = pd.DataFrame(data)
+    # 获取数据
+    bond_zh_hs_cov_spot_df = ak.bond_zh_hs_cov_spot()
+    
+    # 根据 'trade' 列进行升序排序
+    sorted_df = bond_zh_hs_cov_spot_df.sort_values(by='trade', ascending=True)
+    
+    # 添加 'rank' 列，使用 DataFrame 的 reset_index 来生成一个基于排序后的行号的新的索引
+    sorted_df['rank'] = sorted_df.reset_index().index + 1  # rank从1开始
+    
+    # 选择需要的列，并重命名
+    sorted_df = sorted_df[['rank', 'symbol', 'name']]
+    
+    # 重命名列
+    #sorted_df = sorted_df.rename(columns={'trade': 'price', 'symbol': 'ticker'})
+    
+    sorted_df = sorted_df.rename(columns={'symbol': 'ticker'})
     return ranking_df
 
 # 将 DataFrame 转换为 HTML 表格
