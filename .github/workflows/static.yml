@@ -1,0 +1,35 @@
+name: Update Website with Python Script
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天的 00:00 UTC 运行
+  workflow_dispatch:  # 手动触发工作流
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Python script to update webpage
+        run: |
+          python update_website.py
+
+      - name: Commit and push updated webpage
+        run: |
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "your-username"
+          git add .
+          git commit -m "Update webpage content"
+          git push origin main
