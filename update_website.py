@@ -18,7 +18,7 @@ def load_ranking():
     # 重命名列
     #sorted_df = sorted_df.rename(columns={'trade': 'price', 'symbol': 'ticker'})
     
-    sorted_df = sorted_df.rename(columns={'symbol': 'ticker'})
+    ranking_df = sorted_df.rename(columns={'symbol': 'ticker'})
     return ranking_df
 
 # 将 DataFrame 转换为 HTML 表格
