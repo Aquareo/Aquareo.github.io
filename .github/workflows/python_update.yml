@@ -32,4 +32,4 @@ jobs:
         git config --global user.email "github-actions@github.com"
         git add -A  # 添加所有更改
         git commit -m "Update website"
-        git push origin HEAD:gh-pages  # 将更改推送到 gh-pages 分支
+        git push 
