@@ -1,9 +1,8 @@
 name: Update Website
 
 on:
-  # 定时任务，每分钟执行一次
   schedule:
-    - cron: '* * * * *'  # 每分钟执行
+    - cron: '0 * * * *'  # 每小时的第 0 分钟执行，即整点执行
 
   push:
     branches:
@@ -30,7 +29,7 @@ jobs:
     - name: Run Python script to generate website
       run: python update_website.py  # 运行您的 Python 脚本生成网页内容
 
-    - name: Push website files to gh-pages branch
+    - name: Push website files
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
