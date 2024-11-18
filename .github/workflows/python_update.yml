@@ -23,7 +23,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pandas  # 安装任何需要的依赖项
-
+        pip install akshare
+        
     - name: Run Python script to generate website
       run: python update_website.py  # 运行您的 Python 脚本生成网页内容
 
