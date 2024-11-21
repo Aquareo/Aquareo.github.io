@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main  # 只要 main 分支有更新，自动触发部署
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,24 +15,37 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    # 设置 Python 环境
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.8'
 
+    # 安装依赖项
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install pandas  # 安装任何需要的依赖项
         pip install akshare
         
+    # 运行 Python 脚本生成网站内容
     - name: Run Python script to generate website
-      run: python update_website.py  # 运行您的 Python 脚本生成网页内容
+      run: python update_website.py  # 运行 Python 脚本来生成网页文件
 
-    - name: Push website files
+    # 将生成的网页文件推送到 gh-pages 分支
+    - name: Deploy to gh-pages
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
-        git add -A  # 添加所有更改
+
+        # 创建一个新的分支 gh-pages 或切换到该分支
+        git fetch origin gh-pages
+        git checkout gh-pages || git checkout --orphan gh-pages
+
+        # 将生成的网页文件拷贝到 gh-pages 分支（假设文件在当前目录）
+        cp -r * ./
+
+        # 添加、提交并推送更改
+        git add -A
         git commit -m "Update website"
-        git push 
+        git push origin gh-pages
