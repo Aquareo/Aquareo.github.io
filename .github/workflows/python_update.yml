@@ -28,24 +28,29 @@ jobs:
 
     - name: Run Python script to generate website
       run: python update_website.py  # 运行你的 Python 脚本
-
+    
     - name: Deploy to gh-pages
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
         
-        # 拉取 gh-pages 分支并切换
+        # 获取并切换到 gh-pages 分支
         git fetch origin gh-pages
         git checkout gh-pages || git checkout --orphan gh-pages  # 如果没有 gh-pages 分支则创建
     
-        # 复制生成的 index.html 文件到当前目录，确保更新
-        cp index.html ./  # 不做文件是否存在的检查，直接覆盖
-    
-        # 提交更新并推送
+        # 提交当前更改（如果有的话），以防止切换分支时丢失更改
         git add -A
-        git commit -m "Update website" || echo "No changes to commit"
-        git push origin gh-pages
-
+        git commit -m "Backup changes before switching branches" || echo "No changes to commit"
+    
+        # 切换回 main 分支并获取最新的 index.html 文件
+        git checkout main
+        git pull origin main  # 拉取最新的 main 分支，确保获得最新的 index.html
+    
+        # 复制 index.html 文件到 gh-pages 分支
+        cp index.html ./  # 将生成的 index.html 文件复制到 gh-pages 分支根目录
+    
+        # 提交更新并推送到 gh-pages 分支
         git add -A
         git commit -m "Update website"
         git push origin gh-pages
+
