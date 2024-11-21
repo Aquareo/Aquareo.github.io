@@ -1,5 +1,6 @@
 import pandas as pd
 import akshare as ak
+from datetime import datetime
 
 # 创建示例 DataFrame
 def load_ranking():
@@ -16,21 +17,26 @@ def load_ranking():
     sorted_df = sorted_df[['rank', 'symbol', 'name']]
     
     # 重命名列
-    #sorted_df = sorted_df.rename(columns={'trade': 'price', 'symbol': 'ticker'})
-    
     ranking_df = sorted_df.rename(columns={'symbol': 'ticker'})
+    
+    # 只显示前20名
+    ranking_df = ranking_df.head(20)
+    
     return ranking_df
 
 # 将 DataFrame 转换为 HTML 表格
 def dataframe_to_html(ranking_df):
     return ranking_df.to_html(classes='data', header=True, index=False)
 
-# 生成完整的 HTML 页面
+# 生成完整的 HTML 页面，添加更新时间
 def generate_html(content):
+    # 获取当前时间并格式化
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
     html_content = f"""
     <html>
     <head>
-        <title>可转债投资排名</title>
+        <title>可转债投资排名TOP20</title>
         <style>
             /* 全局设置 */
             body {{
@@ -99,10 +105,13 @@ def generate_html(content):
         </style>
     </head>
     <body>
-        <h1>可转债投资排名</h1>
+        <h1>可转债投资排名TOP20</h1>
         <div>
             {content}  <!-- 直接插入 DataFrame 转换后的 HTML 表格 -->
         </div>
+        <footer style="text-align:center; margin-top: 20px;">
+            <p>更新时间: {current_time}</p>
+        </footer>
     </body>
     </html>
     """
