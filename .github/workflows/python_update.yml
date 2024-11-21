@@ -27,7 +27,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas  # 安装任何需要的依赖项
         pip install akshare
-        
+
     # 运行 Python 脚本生成网站内容
     - name: Run Python script to generate website
       run: python update_website.py  # 运行 Python 脚本来生成网页文件
@@ -37,15 +37,20 @@ jobs:
       run: |
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
+        
+        # 确保当前目录没有未提交的更改
+        git add -A
+        git commit -m "Pre-deploy changes" || echo "No changes to commit"
 
-        # 创建一个新的分支 gh-pages 或切换到该分支
+        # 切换到 gh-pages 分支
         git fetch origin gh-pages
-        git checkout gh-pages || git checkout --orphan gh-pages
+        git checkout gh-pages || git checkout --orphan gh-pages  # 如果没有 gh-pages 分支则创建
 
-        # 将生成的网页文件拷贝到 gh-pages 分支（假设文件在当前目录）
-        cp -r * ./
+        # 清除 gh-pages 分支已有的文件，并将生成的文件复制过去
+        rm -rf *  # 删除当前 gh-pages 分支下的所有文件
+        cp -r index.html README.md requirements.txt update_website.py ./  # 只拷贝需要的文件
 
-        # 添加、提交并推送更改
+        # 提交更改并推送到 gh-pages 分支
         git add -A
         git commit -m "Update website"
         git push origin gh-pages
