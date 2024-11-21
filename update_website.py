@@ -39,7 +39,7 @@ def generate_html(content):
     html_content = f"""
     <html>
     <head>
-        <title>可转债投资排名TOP20</title>
+        <title>可转债投资TOP20</title>
         <style>
             /* 全局设置 */
             body {{
