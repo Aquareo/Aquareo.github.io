@@ -14,9 +14,12 @@ def load_ranking():
     # 添加 'rank' 列，使用 DataFrame 的 reset_index 来生成一个基于排序后的行号的新的索引
     sorted_df['rank'] = sorted_df.reset_index().index + 1  # rank从1开始
     
-    # 添加 'score' 列，第一个排名100分，之后依次递减
-    max_score = 100
-    sorted_df['score'] = max_score - (sorted_df['rank'] - 1) * 5  # 每降一名，减5分
+    # 获取第一个排名的 'trade' 值，作为基准
+    first_trade = sorted_df.iloc[0]['trade']
+    
+    # 计算每个可转债的 score，基于第一个排名的 trade 值
+    sorted_df['score'] = 100 * first_trade / sorted_df['trade']
+    sorted_df['score'] = sorted_df['score'].round(2)
 
     # 选择需要的列，并重命名
     sorted_df = sorted_df[['rank', 'symbol', 'name', 'score']]
