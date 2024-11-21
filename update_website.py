@@ -52,7 +52,7 @@ def generate_html(content):
     html_content = f"""
     <html>
     <head>
-        <title>可转债投资TOP20</title>
+        <title>Top 20 Convertible Bonds Based on Price Screening Strategy</title>
         <style>
             /* 全局设置 */
             body {{
