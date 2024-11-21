@@ -7,7 +7,10 @@ import pytz
 def load_ranking():
     # 获取数据
     bond_zh_hs_cov_spot_df = ak.bond_zh_hs_cov_spot()
-    
+
+    # 将 'trade' 列转换为 float 类型
+    bond_zh_hs_cov_spot_df['trade'] = pd.to_numeric(bond_zh_hs_cov_spot_df['trade'], errors='coerce')
+
     # 根据 'trade' 列进行升序排序
     sorted_df = bond_zh_hs_cov_spot_df.sort_values(by='trade', ascending=True)
     
