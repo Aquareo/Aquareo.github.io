@@ -11,6 +11,9 @@ def load_ranking():
     # 将 'trade' 列转换为 float 类型
     bond_zh_hs_cov_spot_df['trade'] = pd.to_numeric(bond_zh_hs_cov_spot_df['trade'], errors='coerce')
 
+    # 只保留 'trade' 大于 50 的数据
+    bond_zh_hs_cov_spot_df = bond_zh_hs_cov_spot_df[bond_zh_hs_cov_spot_df['trade'] > 50]
+
     # 根据 'trade' 列进行升序排序
     sorted_df = bond_zh_hs_cov_spot_df.sort_values(by='trade', ascending=True)
     
