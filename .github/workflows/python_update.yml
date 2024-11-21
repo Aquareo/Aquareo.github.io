@@ -32,6 +32,12 @@ jobs:
     - name: Run Python script to generate website
       run: python update_website.py  # 运行 Python 脚本来生成网页文件
 
+    # 调试：列出当前目录和生成的文件
+    - name: List files in current directory
+      run: |
+        echo "Listing files in current directory"
+        ls -la
+
     # 将生成的网页文件推送到 gh-pages 分支
     - name: Deploy to gh-pages
       run: |
@@ -48,9 +54,15 @@ jobs:
 
         # 清除 gh-pages 分支已有的文件，并将生成的文件复制过去
         rm -rf *  # 删除当前 gh-pages 分支下的所有文件
-        cp -r index.html README.md requirements.txt update_website.py ./  # 只拷贝需要的文件
+        
+        # 调试：列出生成文件所在的目录
+        echo "Listing files in output directory (if exists)"
+        ls -la ./output  # 如果你的生成文件在 output 目录下，查看该目录的内容
 
-        # 提交更改并推送到 gh-pages 分支
+        # 假设生成的文件在 output/ 目录下
+        cp -r ./output/* ./  # 拷贝生成的文件到 gh-pages 分支
+
+        # 提交更改并推送到远程 gh-pages 分支
         git add -A
         git commit -m "Update website"
         git push origin gh-pages
