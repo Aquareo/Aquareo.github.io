@@ -3,7 +3,6 @@ import akshare as ak
 from datetime import datetime
 import pytz
 
-
 # 创建示例 DataFrame
 def load_ranking():
     # 获取数据
