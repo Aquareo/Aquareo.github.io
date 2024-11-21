@@ -1,60 +1,41 @@
-name: Update Website
+name: Update Website Every Hour
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每小时的第 0 分钟执行
-  push:
-    branches:
-      - main  # 只要 main 分支有更新，自动触发部署
+    # 每小时触发一次
+    - cron: '0 * * * *'
+  workflow_dispatch: # 手动触发工作流
 
 jobs:
-  deploy:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Repository
       uses: actions/checkout@v2
-
+    
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'
+        python-version: '3.8'  # 设置Python版本（可以根据需要更改）
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install pandas
-        pip install akshare
+        pip install -r requirements.txt  # 安装依赖（确保你的依赖在 requirements.txt 文件中）
 
-    - name: Run Python script to generate website
-      run: python update_website.py  # 运行你的 Python 脚本
-    
-    - name: Deploy to gh-pages
+    - name: Run the Python Script
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        
-        # 获取并切换到 gh-pages 分支
-        git fetch origin gh-pages
-        git checkout gh-pages || git checkout --orphan gh-pages  # 如果没有 gh-pages 分支则创建
-    
-        # 如果是新的 gh-pages 分支, 进行初始提交
-        if [ $(git rev-parse --is-inside-work-tree) ]; then
-          git add -A
-          git commit -m "Initial commit on gh-pages" || echo "Already committed"
-        fi
-    
-        # 存储当前更改，避免切换分支时丢失
-        git stash || echo "No changes to stash"
-    
-        # 切换回 main 分支并确保获得最新的 index.html
-        git checkout main
-        git pull origin main  # 拉取最新的 main 分支，确保获得最新的 index.html
-    
-        # 用 git checkout 来获取最新的 index.html 文件
-        git checkout main -- index.html
-    
-        # 提交并推送更改到 gh-pages 分支
-        git add -A
-        git commit -m "Update website"
+        python update_website.py  # 执行更新脚本
 
+    - name: Checkout gh-pages Branch
+      run: |
+        git fetch origin gh-pages  # 确保获取 gh-pages 分支的最新内容
+        git checkout gh-pages  # 切换到 gh-pages 分支
+
+    - name: Commit and Push Changes to gh-pages
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add index.html  # 确保 index.html 被添加
+        git commit -m "Auto update index.html"
+        git push origin gh-pages  # 推送到 gh-pages 分支
