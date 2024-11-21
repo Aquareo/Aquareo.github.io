@@ -1,6 +1,7 @@
 import pandas as pd
 import akshare as ak
 from datetime import datetime
+import pytz
 
 # 创建示例 DataFrame
 def load_ranking():
@@ -31,7 +32,9 @@ def dataframe_to_html(ranking_df):
 # 生成完整的 HTML 页面，添加更新时间
 def generate_html(content):
     # 获取当前时间并格式化
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # 设置时区为中国标准时间 (CST)
+    local_tz = pytz.timezone('Asia/Shanghai')
+    current_time = datetime.now(local_tz).strftime("%Y-%m-%d %H:%M:%S")
     
     html_content = f"""
     <html>
