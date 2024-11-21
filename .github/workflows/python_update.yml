@@ -19,20 +19,22 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'  # 设置 Python 版本（根据需求调整）
+        python-version: '3.10'  # 设置 Python 版本（根据需求调整）
 
     - name: Install Dependencies
       run: |
-        pip install -r requirements.txt  # 安装依赖
+        #pip install -r requirements.txt
+        pip install pandas
+        pip install akshare
 
     - name: Run the Python Script
       run: |
         python update_website.py  # 执行更新脚本
 
-    - name: Commit any local changes before switching to gh-pages
+    - name: Stash any local changes before switching to gh-pages
       run: |
         git add index.html
-        git commit -m "Auto commit index.html changes" || echo "No changes to commit"
+        git stash push -m "Stashing changes before checkout"
 
     - name: Checkout gh-pages Branch
       run: |
