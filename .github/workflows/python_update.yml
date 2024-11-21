@@ -31,20 +31,13 @@ jobs:
       run: |
         python update_website.py  # 执行更新脚本
 
-    - name: Stash any local changes before switching to gh-pages
+    - name: Commit any local changes
       run: |
         git add index.html
-        git stash push -m "Stashing changes before checkout"
+        git commit -m "Auto commit index.html changes" || echo "No changes to commit"
 
-    - name: Checkout gh-pages Branch
-      run: |
-        git fetch origin gh-pages  # 获取 gh-pages 分支的最新内容
-        git checkout gh-pages  # 切换到 gh-pages 分支
-
-    - name: Commit and Push Changes to gh-pages
+    - name: Push Changes to main branch
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git add index.html  # 确保 index.html 被添加
-        git commit -m "Auto update index.html"
-        git push origin gh-pages  # 推送到 gh-pages 分支
+        git push origin main  # 推送到 main 分支
