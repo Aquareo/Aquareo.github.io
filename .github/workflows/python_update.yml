@@ -34,12 +34,18 @@ jobs:
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
         
+        # 确保当前更改被提交或暂存
+        git add index.html
+        git commit -m "Save changes to index.html" || echo "No changes to commit"
+        
+        # 切换到 gh-pages 分支
         git fetch origin gh-pages
         git checkout gh-pages || git checkout --orphan gh-pages  # 如果没有 gh-pages 分支则创建
 
-        # 将生成的 index.html 文件推送到 gh-pages 分支
-        cp index.html ./  # 确保 index.html 文件在当前目录
-        
+        # 如果需要，复制生成的 index.html 文件
+        [ ! -f ./index.html ] && cp index.html ./  # 仅在文件不存在时复制
+
+        # 提交更改并推送
         git add -A
         git commit -m "Update website"
         git push origin gh-pages
