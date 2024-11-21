@@ -38,18 +38,17 @@ jobs:
         git fetch origin gh-pages
         git checkout gh-pages || git checkout --orphan gh-pages  # 如果没有 gh-pages 分支则创建
     
-        # 提交当前更改（如果有的话），以防止切换分支时丢失更改
-        git add -A
-        git commit -m "Backup changes before switching branches" || echo "No changes to commit"
+        # 存储当前更改，避免在切换分支时丢失
+        git stash || echo "No changes to stash" 
     
-        # 切换回 main 分支并获取最新的 index.html 文件
+        # 切换回 main 分支并确保获得最新的 index.html
         git checkout main
         git pull origin main  # 拉取最新的 main 分支，确保获得最新的 index.html
     
-        # 复制 index.html 文件到 gh-pages 分支
-        cp index.html ./  # 将生成的 index.html 文件复制到 gh-pages 分支根目录
+        # 强制复制 index.html 文件到 gh-pages 分支
+        cp -f index.html ./  # 使用 -f 强制覆盖文件
     
-        # 提交更新并推送到 gh-pages 分支
+        # 提交并推送更改
         git add -A
         git commit -m "Update website"
         git push origin gh-pages
