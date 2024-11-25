@@ -112,6 +112,15 @@ def trade(symbol):
     historical_data = historical_in_day_data(symbol, period)
 
 
+    
+    # 初始化CSV文件，如果文件不存在，创建文件并添加标题行
+    try:
+        df = pd.read_csv('portfolio_value.csv')
+    except FileNotFoundError:
+        df = pd.DataFrame(columns=['时间', '资产总值'])
+        df.to_csv('portfolio_value.csv', index=False)
+
+    
     while True:
         try:
             # 获取中国标准时间 (CST, UTC+8)
