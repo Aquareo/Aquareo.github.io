@@ -1,10 +1,10 @@
 1. 创建 GitHub Pages 网站
-GitHub Pages 允许你直接从 GitHub 仓库托管静态网页。你可以使用 HTML、CSS 和 JavaScript 来构建你的网站，甚至可以使用 Jekyll 等静态网站生成器。
+GitHub Pages 允许直接从 GitHub 仓库托管静态网页
 
 步骤：
 创建一个新的 GitHub 仓库：
 
-在 GitHub 上创建一个新的公开仓库，命名为 your-username.github.io（这将成为你的 GitHub Pages 网站的 URL）。
+在 GitHub 上创建一个新的公开仓库，命名为 aquareo.github.io（这将成为你的 GitHub Pages 网站的 URL）
 如果你希望将网页部署到其他仓库的子目录，也可以选择其他名称并将 GitHub Pages 配置为该仓库的某个分支。
 创建网页内容：
 
