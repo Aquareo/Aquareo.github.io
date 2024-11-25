@@ -87,13 +87,13 @@ def plot_balance_history(balance_history):
     plt.show()
 
 # 将portfolio_value保存到CSV
-def save_to_csv(time, portfolio_value, filename='portfolio_value.csv'):
+def save_to_csv(time, portfolio_value, filename='backtest.csv'):
     df = pd.DataFrame({'时间': [time], '资产总值': [portfolio_value]})
     df.to_csv(filename, mode='a', header=False, index=False)
 
 
 # 将portfolio_value保存到TXT文件
-def save_to_txt(time, portfolio_value, filename='portfolio_value.txt'):
+def save_to_txt(time, portfolio_value, filename='backtest.txt'):
     with open(filename, 'a') as file:
         file.write(f"{time}, {portfolio_value}\n")
 
@@ -127,10 +127,10 @@ def trade(symbol):
        # df.to_csv('portfolio_value.csv', index=False)
     # 初始化TXT文件，如果文件不存在，创建文件并添加标题行
     try:
-        with open('portfolio_value.txt', 'r') as file:
+        with open('backtest.txt', 'r') as file:
             pass
     except FileNotFoundError:
-        with open('portfolio_value.txt', 'w') as file:
+        with open('backtest.txt', 'w') as file:
             file.write("时间, 资产总值\n")
     
     while True:
@@ -217,7 +217,9 @@ def trade(symbol):
             #save_to_csv(formatted_time, portfolio_value)
             
             # 保存到TXT文件
-            save_to_txt(formatted_time, portfolio_value)
+            #save_to_txt(formatted_time, portfolio_value)
+            save_to_csv(formatted_time, portfolio_value, filename='Aquareo.github.io/backtest.txt')
+
             
             # 等待一段时间后继续
             time.sleep(10)
