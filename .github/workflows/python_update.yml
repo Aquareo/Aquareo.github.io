@@ -30,7 +30,7 @@ jobs:
 
       
     - name: day_trading
-      run: day_trading.py  # 运行您的 Python 脚本生成网页内容
+      run: python day_trading.py  # 运行您的 Python 脚本生成网页内容
 
     - name: Push website files
       run: |
