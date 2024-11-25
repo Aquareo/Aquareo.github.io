@@ -2,7 +2,7 @@
 
 ## 主要功能:
 
-1. **创建 可转债排序的 网站**：
+1. **创建 可转债排序的 网站：https://aquareo.github.io/**：
    - 使用 GitHub Actions 自动运行 Python 脚本。
    - 利用 GitHub Pages 托管静态网页。
    - 通过 Python 每天自动更新网页内容，实现基于某种策略的自动化的网站更新。
