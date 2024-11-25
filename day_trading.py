@@ -218,7 +218,7 @@ def trade(symbol):
             
             # 保存到TXT文件
             #save_to_txt(formatted_time, portfolio_value)
-            save_to_csv(formatted_time, portfolio_value, filename='Aquareo.github.io/backtest.txt')
+            save_to_csv(formatted_time, portfolio_value, filename='backtest.txt')
 
             
             # 等待一段时间后继续
