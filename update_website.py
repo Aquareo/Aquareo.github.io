@@ -42,7 +42,7 @@ def load_ranking():
     sorted_df = sorted_df[['rank', 'ticker', 'name', 'score']]
     
     # 只显示前20名
-    ranking_df = ranking_df.head(20)
+    ranking_df = sorted_df.head(20)
     
     return ranking_df
 
