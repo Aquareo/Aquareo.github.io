@@ -39,7 +39,7 @@ def load_ranking():
     sorted_df = sorted_df.rename(columns={'正股代码': 'ticker', '正股名称': 'name'})
 
     # 选择需要的列
-    sorted_df = sorted_df[['rank', 'symbol', 'name', 'score']]
+    sorted_df = sorted_df[['rank', 'ticker', 'name', 'score']]
     
     # 只显示前20名
     ranking_df = ranking_df.head(20)
