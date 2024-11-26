@@ -37,6 +37,7 @@ jobs:
           git add -A
           git commit -m "Update website"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+
           
       #- name: Run day_trading.py script
       #  run: python day_trading.py  # 只运行 day_trading.py
