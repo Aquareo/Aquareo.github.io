@@ -105,7 +105,7 @@ def trade(symbol):
     initial_balance = 100000.0  # 初始资金 100,000
     balance = initial_balance  # 当前余额
     shares = 0  # 当前持有的股票数量
-    #portfolio_value = initial_balance  # 投资组合的总价值（现金 + 股票市值）
+    portfolio_value = initial_balance  # 投资组合的总价值（现金 + 股票市值）
 
     # 记录资金变化的列表
     balance_history = []
@@ -146,9 +146,10 @@ def trade(symbol):
             print(f"当前时间: {formatted_time}")
 
 
-             #检查交易时间（9:30到15:00）
-            if current_time.hour < 9 or (current_time.hour == 9 and current_time.minute < 30) or current_time.hour > 15:
-                print("非交易时间，等待...")
+            #检查交易时间（9:30到11:30 &&13:00到15:00）
+            if (current_time.hour < 9 or (current_time.hour == 9 and current_time.minute < 30)) or \
+               (current_time.hour == 11 and current_time.minute > 30) or \
+               current_time.hour > 15:
                 time.sleep(60)
                 continue
 
@@ -159,7 +160,7 @@ def trade(symbol):
             # 取需要的列并处理
             df['时间'] = pd.to_datetime(df['时间'])
             data = df[['时间', '开盘', '最高', '最低', '成交量', '成交额', '最新价']].copy()
-
+            data['最新价'] = pd.to_numeric(data['最新价'], errors='coerce')
             
             # 将实时数据合并到历史数据中（防止重复）
             historical_data = pd.concat([historical_data, data]).drop_duplicates(subset='时间', keep='last')
@@ -227,8 +228,6 @@ def trade(symbol):
         except Exception as e:
             print(f"交易过程中出现错误: {e}")
             time.sleep(10)
-
-
 
 
 # 调用交易函数
