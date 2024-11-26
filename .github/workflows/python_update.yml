@@ -2,61 +2,61 @@ name: Update Website
 
 on:
   schedule:
-    # 每小时的第 43 分钟执行，保持不变
-    - cron: '43 8-23/1 * * *'  # 每小时的第 43 分钟执行（UTC+8）
+    # 每小时的第 43 分钟执行（UTC时间）
+    - cron: '43 0-15/1 * * *'  # 这是 UTC 时间对应的每小时的第43分钟（相当于北京时间8点到23点）
     # 每天 9:30 AM (UTC+8) 执行 day_trading.py
     - cron: '30 1 * * *'  # 每天 UTC 1:30 执行（即北京时间 9:30）
   push:
     branches:
       - main  # 只要 main 分支有更新，自动触发部署
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pandas  # 安装任何需要的依赖项
-        pip install akshare
-        
-    - name: Run Python script to generate website
-      run: python update_website.py  # 运行您的 Python 脚本生成网页内容
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas
+          pip install akshare
 
-    - name: Push website files
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add -A  # 添加所有更改
-        git commit -m "Update website"
-        git push 
-      
+      - name: Run Python script to generate website
+        run: python update_website.py  # 运行您的 Python 脚本生成网页内容
+
+      - name: Push website files
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add -A
+          git commit -m "Update website"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+
   day_trading:
     runs-on: ubuntu-latest
-    # 这个 job 专门用于每天 9:30 AM 执行 day_trading.py
-    if: github.event.schedule == 'cron: "30 1 * * *"'  # 确保这个 job 只在指定的 cron 时间运行
+    if: github.event_name == 'schedule' && github.event.schedule == '30 1 * * *'  # 确保这个 job 只在指定的 cron 时间运行
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pandas  # 安装任何需要的依赖项
-        pip install akshare
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas
+          pip install akshare
 
-    - name: Run day_trading.py script
-      run: python day_trading.py  # 只运行 day_trading.py
+      - name: Run day_trading.py script
+        run: python day_trading.py  # 只运行 day_trading.py
