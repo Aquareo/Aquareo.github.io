@@ -5,33 +5,41 @@ import pytz
 
 # 创建示例 DataFrame
 def load_ranking():
-    # 获取数据
-    bond_zh_hs_cov_spot_df = ak.bond_zh_hs_cov_spot()
+    
+    # 获取可转债比价表数据
+    bond_cov_comparison_df = ak.bond_cov_comparison()
 
-    # 将 'trade' 列转换为 float 类型
-    bond_zh_hs_cov_spot_df['trade'] = pd.to_numeric(bond_zh_hs_cov_spot_df['trade'], errors='coerce')
+    # 将列转换为 float 类型
+    bond_cov_comparison_df['转债最新价'] = pd.to_numeric(bond_cov_comparison_df['转债最新价'], errors='coerce')
+    bond_cov_comparison_df['转股溢价率'] = pd.to_numeric(bond_cov_comparison_df['转股溢价率'], errors='coerce')
 
-    # 只保留 'trade' 大于 50 的数据
-    bond_zh_hs_cov_spot_df = bond_zh_hs_cov_spot_df[bond_zh_hs_cov_spot_df['trade'] > 50]
+    # 计算 "双低值" 
+    bond_cov_comparison_df['双低值'] = bond_cov_comparison_df['转债最新价'] + bond_cov_comparison_df['转股溢价率']
 
-    # 根据 'trade' 列进行升序排序
-    sorted_df = bond_zh_hs_cov_spot_df.sort_values(by='trade', ascending=True)
+     # 去掉 "双低值" 为NaN的行
+    bond_cov_comparison_df = bond_cov_comparison_df.dropna(subset=['双低值'])
+
+    
+    # 按照 "双低值" 进行升序排序
+    sorted_df = bond_cov_comparison_df.sort_values(by='双低值', ascending=True)
+    
+
     
     # 添加 'rank' 列，使用 DataFrame 的 reset_index 来生成一个基于排序后的行号的新的索引
     sorted_df['rank'] = sorted_df.reset_index().index + 1  # rank从1开始
     
-    # 获取第一个排名的 'trade' 值，作为基准
-    first_trade = sorted_df.iloc[0]['trade']
+    # 获取第一个排名的 "双低值"，作为基准
+    first_trade = sorted_df.iloc[0]['双低值']
     
     # 计算每个可转债的 score，基于第一个排名的 trade 值
-    sorted_df['score'] = 100 * first_trade / sorted_df['trade']
+    sorted_df['score'] = 100 * first_trade / sorted_df['双低值']
     sorted_df['score'] = sorted_df['score'].round(2)
 
-    # 选择需要的列，并重命名
-    sorted_df = sorted_df[['rank', 'symbol', 'name', 'score']]
-    
     # 重命名列
-    ranking_df = sorted_df.rename(columns={'symbol': 'ticker'})
+    sorted_df = sorted_df.rename(columns={'正股代码': 'ticker', '正股名称': 'name'})
+
+    # 选择需要的列
+    sorted_df = sorted_df[['rank', 'symbol', 'name', 'score']]
     
     # 只显示前20名
     ranking_df = ranking_df.head(20)
