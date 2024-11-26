@@ -105,7 +105,7 @@ def trade(symbol):
     initial_balance = 100000.0  # 初始资金 100,000
     balance = initial_balance  # 当前余额
     shares = 0  # 当前持有的股票数量
-    portfolio_value = initial_balance  # 投资组合的总价值（现金 + 股票市值）
+    #portfolio_value = initial_balance  # 投资组合的总价值（现金 + 股票市值）
 
     # 记录资金变化的列表
     balance_history = []
