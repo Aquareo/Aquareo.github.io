@@ -42,7 +42,7 @@ def load_ranking():
     sorted_df = sorted_df[['rank', 'ticker', 'name', 'score']]
     
     # 只显示前20名
-    ranking_df = sorted_df.head(20)
+    ranking_df = sorted_df.head(10)
     
     return ranking_df
 
@@ -129,7 +129,7 @@ def generate_html(content):
         </style>
     </head>
     <body>
-        <h1>可转债投资排名TOP20</h1>
+        <h1>可转债投资排名TOP10</h1>
         <div>
             {content}  <!-- 直接插入 DataFrame 转换后的 HTML 表格 -->
         </div>
