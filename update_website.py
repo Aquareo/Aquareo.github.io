@@ -60,7 +60,7 @@ def generate_html(content):
     html_content = f"""
     <html>
     <head>
-        <title>Top 20 Convertible Bonds Based on Price Screening Strategy</title>
+        <title>Top 10 Convertible Bonds Based on Price Screening Strategy</title>
         <style>
             /* 全局设置 */
             body {{
