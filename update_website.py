@@ -46,6 +46,39 @@ def load_ranking():
     
     return ranking_df
 
+
+def load_ranking_new():
+    df = ak.bond_zh_cov()
+    df['双低值'] = df['债现价'] +df['转股溢价率']
+
+    df = df.dropna(subset=['双低值'])
+    # 排除信用评级不是以 'A' 开头的行
+    df = df[df['信用评级'].str.startswith('A', na=False)]
+    sorted_df = df.sort_values(by='双低值', ascending=True)
+
+
+    # 添加 'rank' 列，使用 DataFrame 的 reset_index 来生成一个基于排序后的行号的新的索引
+    sorted_df['rank'] = sorted_df.reset_index().index + 1  # rank从1开始
+
+    # 获取第一个排名的 "双低值"，作为基准
+    first_trade = sorted_df.iloc[0]['双低值']
+    print(first_trade)
+    # 计算每个可转债的 score，基于第一个排名的 trade 值
+    sorted_df['score'] = 100 * first_trade / sorted_df['双低值']
+    sorted_df['score'] = sorted_df['score'].round(2)
+
+    # 重命名列
+    sorted_df = sorted_df.rename(columns={'债券代码': 'ticker', '债券简称': 'name'})
+
+    # 选择需要的列
+    sorted_df = sorted_df[['rank', 'ticker', 'name', 'score']]
+
+    # 只显示前10名
+    sorted_df = sorted_df.head(10)
+    
+    return sorted_df
+
+
 # 将 DataFrame 转换为 HTML 表格
 def dataframe_to_html(ranking_df):
     return ranking_df.to_html(classes='data', header=True, index=False)
@@ -144,7 +177,7 @@ def generate_html(content):
 # 主程序
 def main():
     # 获取数据
-    ranking_df = load_ranking()
+    ranking_df = load_ranking_new()
 
     # 转换 DataFrame 为 HTML 表格
     table_html = dataframe_to_html(ranking_df)
