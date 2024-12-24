@@ -47,13 +47,21 @@ def load_ranking():
     return ranking_df
 
 
+
 def load_ranking_new():
     df = ak.bond_zh_cov()
+    df = df.dropna()
     df['双低值'] = df['债现价'] +df['转股溢价率']
 
-    df = df.dropna(subset=['双低值'])
+
+
+    #df = df.dropna(subset=['双低值', '上市时间'])  # 同时删除 '双低值' 和 '上市时间' 列中 NaN 的行
+
+    df=df.loc[df['双低值']>110]
+
+
     # 排除信用评级不是以 'A' 开头的行
-    df = df[df['信用评级'].str.startswith('A', na=False)]
+    df = df[df['信用评级'].str.startswith('AA', na=False)]
     sorted_df = df.sort_values(by='双低值', ascending=True)
 
 
@@ -62,7 +70,7 @@ def load_ranking_new():
 
     # 获取第一个排名的 "双低值"，作为基准
     first_trade = sorted_df.iloc[0]['双低值']
-    print(first_trade)
+    #print(first_trade)
     # 计算每个可转债的 score，基于第一个排名的 trade 值
     sorted_df['score'] = 100 * first_trade / sorted_df['双低值']
     sorted_df['score'] = sorted_df['score'].round(2)
@@ -71,12 +79,13 @@ def load_ranking_new():
     sorted_df = sorted_df.rename(columns={'债券代码': 'ticker', '债券简称': 'name'})
 
     # 选择需要的列
-    sorted_df = sorted_df[['rank', 'ticker', 'name', 'score']]
+    sorted_df = sorted_df[['rank', 'ticker', 'name', 'score','债现价','上市时间']]
 
     # 只显示前10名
     sorted_df = sorted_df.head(10)
     
     return sorted_df
+
 
 
 # 将 DataFrame 转换为 HTML 表格
