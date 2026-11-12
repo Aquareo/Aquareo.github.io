@@ -42,3 +42,9 @@ English: https://aquareo.github.io/en/
 - **update_website.py**：更新网站内容的脚本，每天运行并自动刷新网页数据。
 - **day_trading.py**：日内自动交易模拟脚本，使用内置的移动平均交叉策略进行交易模拟，并支持用户自定义策略。
 
+
+## 样式发布
+
+编辑 `dist/styles.css` 后运行 `python3 tools/version_styles.py`，生成带内容摘要的样式文件，并同步更新中英文页面的链接。保留旧版文件以兼容缓存页面。这样新的 HTML 会引用对应的新样式，不会复用旧样式缓存。
+
+本科研究摘要已根据 `thesis_original.pdf` 正文的模型、算法、收敛分析与数值实验整理；按本人选择，站点不提供这份原稿的下载。

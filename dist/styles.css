@@ -131,14 +131,10 @@ footer a { color: var(--muted); }
 .education-marker { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
 .school-link { display: block; line-height: 0; }
 .school-mark { display: block; width: 52px; height: 52px; object-fit: contain; }
-.school-mark-frame { display: block; width: 52px; height: 52px; overflow: hidden; }
-.school-mark-composite { display: block; height: 52px; width: auto; max-width: none; }
 @media (max-width: 600px) {
   .education-entry { grid-template-columns: 1fr; gap: 10px; }
   .education-marker { flex-direction: row; align-items: center; gap: 14px; }
   .education-marker .school-link { order: -1; }
-  .school-mark, .school-mark-frame { width: 42px; height: 42px; }
-  .school-mark-composite { height: 42px; }
 }
 
 .profile-portrait { float: right; display: block; width: 108px; height: 162px; margin: 3px 0 18px 28px; object-fit: contain; border-radius: 2px; }
@@ -146,3 +142,11 @@ footer a { color: var(--muted); }
 @media (max-width: 600px) {
   .profile-portrait { width: 76px; height: 114px; margin-left: 18px; margin-bottom: 13px; }
 }
+
+@media (max-width: 600px) {
+  .school-mark { width: 42px; height: 42px; }
+}
+
+/* Keep previously cached logo markup bounded while old HTML expires. */
+.school-mark-frame { display: block; width: 52px; height: 52px; overflow: hidden; }
+.school-mark-composite { display: block; width: 52px; height: 52px; max-width: 52px; max-height: 52px; object-fit: contain; }
