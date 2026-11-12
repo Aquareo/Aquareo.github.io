@@ -8,27 +8,23 @@
   <title>Yu Liu · 刘宇</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../styles.f4c5f8e3c7cb.css">
-  <link rel="canonical" href="https://aquareo.github.io/en/">
-  <link rel="alternate" hreflang="zh-CN" href="https://aquareo.github.io/">
-  <link rel="alternate" hreflang="en" href="https://aquareo.github.io/en/">
-  <link rel="alternate" hreflang="x-default" href="https://aquareo.github.io/">
+<link rel="canonical" href="https://aquareo.github.io/">
+<link rel="alternate" hreflang="en" href="https://aquareo.github.io/">
+<link rel="alternate" hreflang="zh-CN" href="https://aquareo.github.io/zh/">
+<link rel="alternate" hreflang="x-default" href="https://aquareo.github.io/">
 </head>
 <body>
   <a class="skip-link" href="#about">Skip to content</a>
   <main class="page">
     <header class="profile" id="about">
       <div class="topbar">
-        <nav aria-label="Page navigation"><a href="#research">Research</a><a href="#education">Education</a><a href="#teaching">Teaching</a><a href="#experience">Work</a></nav>
-        <div class="language-switch" aria-label="Language"><a href="../" lang="zh-CN" hreflang="zh-CN">中文</a><span aria-hidden="true"> / </span><a href="./" lang="en" hreflang="en" aria-current="page">English</a></div>
+        <nav aria-label="Page navigation"><a href="#research">Research</a><a href="#education">Education</a><a href="#teaching">Teaching</a><a href="#experience">Skills &amp; Work</a></nav>
+        <div class="language-switch" aria-label="Language"><a href="../zh/" lang="zh-CN" hreflang="zh-CN">中文</a><span aria-hidden="true"> / </span><a href="../" lang="en" hreflang="en" aria-current="page">English</a></div>
       </div>
       <img class="profile-portrait" src="../assets/portrait-natural.png" width="108" height="162" alt="Yu Liu">
       <h1>Yu Liu <span lang="zh-CN">刘宇</span></h1>
-      <p class="subtitle">Applied Mathematics / Numerical Analysis / Scientific Computing</p>
-      <div class="bio">
-        <p>I am applying for Ph.D. programs in applied mathematics and scientific computing for Fall 2027. My research interests are numerical analysis, scientific computing, and stochastic analysis.</p>
-        <p>I hold a B.Sc. in Mathematics and Applied Mathematics from Tongji University and an M.Phil. in Mathematics from The Chinese University of Hong Kong, Shenzhen. My undergraduate work concerned wavelet-frame image restoration; my master's thesis studied numerical valuation and multi-factor strategies for Chinese convertible bonds. These projects shaped my path from numerical optimization to stochastic simulation and numerical analysis.</p>
-        <p>I am currently studying stochastic analysis. My subsequent backend-development work also added programming and implementation experience.</p>
-      </div>
+      <p class="subtitle">Applied Mathematics · Numerical Analysis · Stochastic Analysis</p>
+      <div class="bio"><p>I hold an M.Phil. in Mathematics from The Chinese University of Hong Kong, Shenzhen, and a B.Sc. in Mathematics and Applied Mathematics from Tongji University. I am applying for Ph.D. programs for Fall 2027.</p><p>My research interests lie in numerical analysis, stochastic analysis, and scientific computing, with a particular focus on Monte Carlo methods, numerical approximation, and optimization.</p></div>
       <div class="profile-links" aria-label="Contact and profile links">
         <a href="mailto:yu130dfb4@gmail.com">yu130dfb4@gmail.com</a>
         <a href="../assets/Yu_Liu_CV.pdf" target="_blank" rel="noopener">CV</a>
@@ -40,22 +36,20 @@
     <section id="research" aria-labelledby="research-heading">
       <h2 id="research-heading">Research Experience</h2>
       <article class="publication">
-        <h3>Numerical Valuation and Multi-Factor Strategies for Chinese Convertible Bonds</h3>
-        <p class="meta">M.Phil. research · CUHK-Shenzhen · 2023–2024 · Advisor: Prof. Gongqiu Zhang</p>
-        <p>My master's thesis addresses two connected questions: how to numerically value Chinese convertible bonds with complex contractual provisions, and how to construct and evaluate bond-selection strategies using valuation signals and market factors. The thesis covers simulation-based valuation, empirical pricing studies, and machine-learning-based multi-factor strategies.</p>
-        <ul class="research-contributions">
-          <li><strong>Simulation-based valuation.</strong>Simulated geometric Brownian stock-price paths and incorporated call, put, and conversion-price reset provisions. Used least-squares regression to estimate continuation values within a backward dynamic-programming recursion, and compared global regression with regressions fitted by stock-price region.</li>
-          <li><strong>Empirical pricing and strategy evaluation.</strong>Compared model and market prices for ten AAA-rated convertible bonds. Constructed an undervaluation-based selection strategy and used the double-low strategy as a historical backtesting benchmark.</li>
-          <li><strong>Multi-factor modelling.</strong>Evaluated factors using information coefficient (IC) analysis and stratified backtesting. Compared linear and polynomial regression, SVM, random forests, XGBoost, LightGBM, and MLP using rolling-window train–test splits, including 7-, 10-, and 20-day training windows.</li>
-          <li><strong>Strategy validation.</strong>Constructed multi-factor strategies using SVM and linear regression, and evaluated them in the thesis's 118-trading-day simulation sample with an assumed transaction cost of 0.1%.</li>
-        </ul>
-        <p>The project helped me understand how state variables, regression features, contractual exercise rules, and training windows affect computational results. It also motivated my interest in approximation and error analysis for numerical methods.</p>
-        <details class="research-results"><summary>Thesis validation results and limitations</summary><p>Table 4.8 of the master's thesis reports annualized returns of 13.22% for the SVM strategy and 18.62% for linear regression over a 118-trading-day sample in February–July 2023, assuming a transaction cost of 0.1%. These are historical simulation results under specific sample and modelling choices, rather than live-trading performance. The thesis identifies the limited data sample and overfitting in some nonlinear models as limitations.</p></details>
-        <p class="resource-links"><a href="../assets/Thesis.pdf" target="_blank" rel="noopener">Master's thesis (complete study)</a><a href="../assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">Pricing manuscript PDF</a><a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">Related pricing preprint</a></p>
-        <p class="note">Related preprint: Yu Liu. <cite>Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation.</cite> arXiv:2409.06496, 2024 (updated 2026); not peer-reviewed. It reports the pricing component of the master's research.</p>
-      </article>
+<h3>Monte Carlo Methods for Path-Dependent Convertible Bond Valuation</h3>
+<p class="meta">M.Phil. research · The Chinese University of Hong Kong, Shenzhen · 2023–2024<br>Advisor: Prof. Gongqiu Zhang</p>
+<p>My master's research focused on the numerical valuation of convertible bonds with path-dependent contractual provisions, using Monte Carlo simulation, backward dynamic programming, and regression-based approximation.</p>
+<ul class="research-contributions">
+<li><strong>Stochastic modeling.</strong> Simulated stock-price dynamics using geometric Brownian motion and modeled path-dependent call, put, and conversion-price reset provisions.</li>
+<li><strong>Numerical methods.</strong> Applied least-squares regression to approximate continuation values within a backward dynamic-programming framework.</li>
+<li><strong>Mathematical analysis.</strong> Studied the least-squares formulation and the full-column-rank condition for uniqueness of the regression coefficients.</li>
+<li><strong>Numerical experiments.</strong> Investigated how model assumptions, regression specifications, and contractual exercise rules affect valuation results.</li>
+</ul>
+<p class="resource-links"><a href="../assets/Thesis.pdf" target="_blank" rel="noopener">Master's thesis</a><a href="../assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">Pricing manuscript PDF</a></p>
+<p class="note">Related manuscript: <a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener"><cite>Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation</cite></a> (arXiv:2409.06496; preprint). The full thesis also includes multi-factor strategy research.</p>
+</article>
       <article class="research-note">
-        <h3>Image Restoration and Numerical Optimization with Wavelet Frames</h3>
+        <h3>Wavelet Frames and Numerical Optimization</h3>
         <p class="meta">Undergraduate thesis · Tongji University · Advisor: Jae Kyu Choi</p>
         <p>Studied wavelet-frame regularization for reconstructing images from noisy, blurred, or incomplete observations. Building on existing models and algorithms, the thesis covered the following work.</p>
         <ul class="research-contributions">
@@ -83,22 +77,17 @@
 
     <section id="teaching" aria-labelledby="teaching-heading">
       <h2 id="teaching-heading">Teaching Experience</h2>
-      <article class="dated-entry"><p class="date">2024</p><div><h3>Teaching Assistant, Honours Calculus II</h3><p class="meta">CUHK-Shenzhen · MAT1012</p><p>Prepared and taught tutorials and exam-review sessions covering proof-based and computational problems. Graded assignments, quizzes, and examinations, and supported individual problem-solving discussions. Teaching required me to revisit definitions and proofs carefully, and strengthened my motivation to continue teaching alongside research.</p></div></article>
+      <article class="dated-entry"><p class="date">2024</p><div><h3>Teaching Assistant, Honours Calculus II</h3><p class="meta">CUHK-Shenzhen · MAT1012</p><p>Prepared and taught tutorials and exam-review sessions on proofs and calculations; graded assignments, quizzes, and examinations; provided individual problem-solving support.</p></div></article>
     </section>
 
     <section id="experience" aria-labelledby="experience-heading">
-      <h2 id="experience-heading">Professional Experience</h2>
-      <article class="dated-entry"><p class="date">Jan — Apr 2026</p><div><h3><a href="https://www.mavericksmobile.com/cn/index.html" target="_blank" rel="noopener">Mavericksmobile</a> <span class="role">Backend Developer · Chengdu</span></h3><p>Worked on task creation, callbacks, result retrieval, retries, and monitoring for AI application backends. Maintained billing and subscription logic and investigated streaming-response issues.</p></div></article>
-      <article class="dated-entry"><p class="date">Sep 2024 — Jul 2025</p><div><h3>BYD <span class="role">Backend Software Developer · Shenzhen</span></h3><p>Contributed to content publishing, category management, backend API integration, and workflow automation. This work added experience in implementation, debugging, and engineering collaboration.</p></div></article>
+      <h2 id="experience-heading">Technical Skills &amp; Professional Experience</h2>
+      <p><strong>Programming:</strong> C++, Python, MATLAB, Java. <span class="meta">English: IELTS 7.0.</span></p>
+<article class="dated-entry"><p class="date">Jan — Apr 2026</p><div><h3><a href="https://www.mavericksmobile.com/cn/index.html" target="_blank" rel="noopener">Mavericksmobile</a> <span class="role">Backend Developer · Chengdu</span></h3><p>Developed and maintained backend services for AI applications.</p></div></article>
+      <article class="dated-entry"><p class="date">Sep 2024 — Jul 2025</p><div><h3>BYD <span class="role">Backend Software Developer · Shenzhen</span></h3><p>Developed backend services, content-management features, and workflow automation.</p></div></article>
     </section>
 
-    <section id="projects" aria-labelledby="projects-heading">
-      <h2 id="projects-heading">Additional Projects</h2>
-      <article class="project-entry"><h3>Supervised Fine-Tuning of GPT-2 for Dialogue</h3><p class="meta">MDS5210 group course project · Fall 2023</p><p>Participated in fine-tuning GPT-2 medium on HH-RLHF data, comparing optimizer convergence and GPU memory use, and exploring the effect of training-data quality. </p><p class="resource-links"><a href="../assets/GPT2-SFT-report.pdf" target="_blank" rel="noopener">Group project report</a></p></article>
-      <article class="project-entry"><h3>Convertible-Bond Data Updates and Ranking Display</h3><p>A data-processing and automation project: collect data, generate rankings according to screening rules, and update the page on a schedule using GitHub Actions. The public ranking script is a display and engineering tool; it is not a reproduction of the thesis's full valuation and multi-factor backtesting framework.</p><p class="resource-links"><a href="../bonds/">Rankings (Chinese)</a><a href="https://github.com/Aquareo/Aquareo.github.io/blob/main/update_website.py" target="_blank" rel="noopener">Data update script</a></p></article>
-    </section>
 
-    <section id="more" aria-labelledby="more-heading"><h2 id="more-heading">Skills and Other Interests</h2><dl class="additional-info"><div><dt>Programming</dt><dd>C++, Python, MATLAB, Java</dd></div><div><dt>Languages &amp; interests</dt><dd>IELTS 7.0; table tennis.</dd></div></dl></section>
     <footer><span>Yu Liu</span><a href="mailto:yu130dfb4@gmail.com">Contact</a><a href="#about">Back to top</a></footer>
   </main>
 </body>

@@ -9,7 +9,7 @@ def main():
     content=(dist/'styles.css').read_bytes()
     name='styles.'+sha256(content).hexdigest()[:12]+'.css'
     (dist/name).write_bytes(content)
-    for relative in ('index.html','en/index.html'):
+    for relative in ('index.html','en/index.html','zh/index.html'):
         page=dist/relative
         text=page.read_text()
         updated,count=re.subn(r'(?P<prefix>(?:\.\./)?)styles(?:\.[0-9a-f]{12})?\.css(?:\?[^\"]*)?',lambda m:m.group('prefix')+name,text)

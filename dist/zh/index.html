@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="刘宇（Yu Liu）的博士申请主页：数值分析、科学计算、完整硕士研究、教育与教学经历。">
+  <title>刘宇 · Yu Liu</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.f4c5f8e3c7cb.css">
+<link rel="canonical" href="https://aquareo.github.io/zh/">
+<link rel="alternate" hreflang="en" href="https://aquareo.github.io/">
+<link rel="alternate" hreflang="zh-CN" href="https://aquareo.github.io/zh/">
+<link rel="alternate" hreflang="x-default" href="https://aquareo.github.io/">
+</head>
+<body>
+  <a class="skip-link" href="#about">跳转到正文</a>
+  <main class="page">
+    <header class="profile" id="about">
+      <div class="topbar">
+      <nav aria-label="页面导航"><a href="#research">科研</a><a href="#education">教育</a><a href="#teaching">教学</a><a href="#experience">技能与工作</a></nav>
+      <div class="language-switch" aria-label="语言"><a href="./" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a><span aria-hidden="true"> / </span><a href="../" lang="en" hreflang="en">English</a></div>
+      </div>
+      <img class="profile-portrait" src="../assets/portrait-natural.png" width="108" height="162" alt="刘宇">
+      <h1>刘宇 <span>Yu Liu</span></h1>
+      <p class="subtitle">应用数学 · 数值分析 · 随机分析</p>
+      <div class="bio"><p>我在香港中文大学（深圳）取得数学研究型硕士学位，此前在同济大学完成数学与应用数学本科学习。目前正在申请 2027 年秋季入学的博士项目。</p><p>我的研究兴趣是数值分析、随机分析与科学计算，尤其关注蒙特卡罗方法、数值近似与优化。</p></div>
+      <div class="profile-links" aria-label="联系方式与个人资料">
+        <a href="mailto:yu130dfb4@gmail.com">yu130dfb4@gmail.com</a>
+        <a href="../assets/Yu_Liu_CV.pdf" target="_blank" rel="noopener">简历</a>
+        <a href="https://github.com/Aquareo" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv</a>
+      </div>
+    </header>
+
+    <section id="research" aria-labelledby="research-heading">
+      <h2 id="research-heading">科研经历</h2>
+      <article class="publication">
+<h3>路径依赖可转债估值的蒙特卡罗方法</h3>
+<p class="meta">硕士研究 · 香港中文大学（深圳） · 2023–2024<br>导师：Prof. Gongqiu Zhang</p>
+<p>硕士研究围绕含路径依赖条款的可转债数值估值，结合蒙特卡罗模拟、向后动态规划和基于回归的近似方法。</p>
+<ul class="research-contributions">
+<li><strong>随机建模。</strong>采用几何布朗运动模拟股价动态，建模具有路径依赖性的赎回、回售和转股价下修条款。</li>
+<li><strong>数值方法。</strong>在向后动态规划框架内，用最小二乘回归近似延续价值。</li>
+<li><strong>数学分析。</strong>研究最小二乘问题的形式，以及设计矩阵满列秩时回归系数解的唯一性。</li>
+<li><strong>数值实验。</strong>考察模型假设、回归设定与合约行权规则对估值结果的影响。</li>
+</ul>
+<p class="resource-links"><a href="../assets/Thesis.pdf" target="_blank" rel="noopener">硕士论文</a><a href="../assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">定价研究稿 PDF</a></p>
+<p class="note">相关研究稿：<a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener"><cite>Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation</cite></a>（arXiv:2409.06496，预印本）。完整硕士论文还包含多因子策略研究。</p>
+</article>
+      <article class="research-note">
+        <h3>小波框架与数值优化</h3>
+        <p class="meta">本科毕业论文 · 同济大学 · 导师：Jae Kyu Choi</p>
+        <p>围绕含噪、模糊或缺失观测下的图像重建，研究小波框架正则化模型、数值求解及实验表现。论文以已有模型和算法为基础，工作包括以下几个方面。</p>
+        <ul class="research-contributions">
+          <li><strong>模型关系。</strong>从多分辨率分析与小波紧框架出发，梳理分析型、综合型和平衡型重建模型之间的关系，以及软阈值与稀疏正则化的联系。</li>
+          <li><strong>算法求解。</strong>针对分析型模型推导变量分裂与增广拉格朗日形式，整理 ADMM／Split Bregman 迭代；结合去模糊问题中的 FFT 求解和阈值子问题说明实现方法。</li>
+          <li><strong>收敛性质。</strong>结合已有收敛结论讨论目标函数值收敛，以及解唯一时迭代点收敛所需的条件，并分析计算复杂度。</li>
+          <li><strong>数值实验。</strong>比较 B 样条、Haar 小波框架与全变分方法在去模糊和图像修复中的表现，使用 PSNR、HFEN、SSIM、迭代次数及运行时间评价恢复质量与计算开销。</li>
+        </ul>
+        <p class="meta">论文题目：Image Restoration: a Wavelet Frame Based Approach and Beyond</p>
+      </article>
+
+    </section>
+
+    <section id="education" aria-labelledby="education-heading">
+      <h2 id="education-heading">教育</h2>
+      <div class="dated-entry education-entry">
+        <div class="education-marker"><p class="date">2022 — 2024</p><a class="school-link" href="https://www.cuhk.edu.cn/" target="_blank" rel="noopener" aria-label="香港中文大学（深圳）官网"><img class="school-mark" src="../assets/cuhksz-emblem.png" width="52" height="52" alt="香港中文大学（深圳）校徽" loading="lazy"></a></div>
+        <div><h3>香港中文大学（深圳）</h3><p>数学，研究型硕士（M.Phil.）</p><p class="academic-score">GPA：<strong>3.436/4.000</strong></p><p class="meta">导师：Prof. Gongqiu Zhang<br>学位论文：Pricing and Trading Strategies of Chinese Convertible Bonds</p><details class="course-grades"><summary>课程成绩</summary><table><caption>硕士授课课程成绩</caption><thead><tr><th scope="col">课程</th><th scope="col">学分</th><th scope="col">成绩</th></tr></thead><tbody><tr><td>高等数值方法</td><td>3</td><td>A−</td></tr><tr><td>矩阵分析</td><td>3</td><td>B−</td></tr><tr><td>高等金融模型</td><td>3</td><td>B</td></tr><tr><td>泛函分析</td><td>3</td><td>A−</td></tr><tr><td>机器学习</td><td>3</td><td>B+</td></tr><tr><td>应用数学专题</td><td>3</td><td>A−</td></tr></tbody></table></details></div>
+      </div>
+      <div class="dated-entry education-entry">
+        <div class="education-marker"><p class="date">2016 — 2020</p><a class="school-link" href="https://www.tongji.edu.cn/" target="_blank" rel="noopener" aria-label="同济大学官网"><img class="school-mark" src="../assets/tongji-emblem.svg" width="52" height="52" style="max-width:52px;max-height:52px" alt="同济大学校徽" loading="lazy"></a></div>
+        <div><h3>同济大学</h3><p>数学与应用数学，学士（B.Sc.）</p><p class="academic-score">专业均分：<strong>85.09/100</strong>；总均分：<strong>82.11/100</strong></p><p class="meta">导师：Jae Kyu Choi<br>均分采用官方成绩单列示的百分制折算值。</p><details class="course-grades"><summary>课程成绩</summary><table><caption>本科部分核心课程成绩</caption><thead><tr><th scope="col">课程</th><th scope="col">学分</th><th scope="col">成绩</th></tr></thead><tbody><tr><td>数学分析 I</td><td>6</td><td>A</td></tr><tr><td>数学分析 II</td><td>6</td><td>A</td></tr><tr><td>数学分析 III</td><td>3</td><td>A</td></tr><tr><td>实分析</td><td>4</td><td>A</td></tr><tr><td>概率论</td><td>3</td><td>A</td></tr><tr><td>数值分析（3 学分）</td><td>3</td><td>A</td></tr><tr><td>数值分析（2 学分）</td><td>2</td><td>B</td></tr><tr><td>计算方法</td><td>3</td><td>A</td></tr></tbody></table></details></div>
+      </div>
+    </section>
+
+    <section id="teaching" aria-labelledby="teaching-heading">
+      <h2 id="teaching-heading">教学经历</h2>
+      <article class="dated-entry"><p class="date">2024</p><div><h3>高等微积分课程助教</h3><p class="meta">香港中文大学（深圳） · MAT1012 Honours Calculus II</p><p>准备并讲授习题课与考前复习，讲解证明题和计算题；批改作业、测验和考试，并提供答疑。</p></div></article>
+    </section>
+
+    <section id="experience" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">技术能力与工作经历</h2>
+      <p><strong>编程：</strong>C++、Python、MATLAB、Java。<span class="meta">英语：IELTS 7.0。</span></p>
+<article class="dated-entry"><p class="date">2026.01 — 2026.04</p><div><h3><a href="https://www.mavericksmobile.com/cn/index.html" target="_blank" rel="noopener">小牛互联</a> <span class="role">后端开发工程师 · 成都</span></h3><p>参与 AI 应用后端服务的开发与维护。</p></div></article>
+      <article class="dated-entry"><p class="date">2024.09 — 2025.07</p><div><h3>比亚迪 <span class="role">后端开发工程师 · 深圳</span></h3><p>参与后端服务、内容管理功能和工作流自动化的开发。</p></div></article>
+    </section>
+
+
+    <footer><span>刘宇 · Yu Liu</span><a href="mailto:yu130dfb4@gmail.com">联系我</a><a href="#about">回到顶部</a></footer>
+  </main>
+</body>
+</html>

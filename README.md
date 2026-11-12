@@ -2,11 +2,13 @@
 
 网站地址：https://aquareo.github.io/
 
-中文版：https://aquareo.github.io/
+中文版：https://aquareo.github.io/zh/
 
-English: https://aquareo.github.io/en/
+English (default): https://aquareo.github.io/
 
-两版为独立静态页面，通过顶部语言链接切换，共用 `dist/styles.css`。维护时请同步更新 `dist/index.html` 和 `dist/en/index.html`。
+原 `/en/` 地址保留为英文兼容入口，canonical 指向根网址。
+
+两版为独立静态页面，通过顶部语言链接切换，共用 `dist/styles.css`。维护时请同步更新 `dist/index.html`（英文）、`dist/zh/index.html`（中文）和 `dist/en/index.html`（英文兼容入口）。
 
 教育经历中的成绩摘录自本人提供的官方成绩单：本科展示专业均分与总均分的官方百分制折算值；硕士展示原始 4 分制 GPA。课程表可展开查看。站点不包含成绩单原件或个人陈述，公开简历以 `documents/academic-cv.html` 为可编辑源文件，研究范围按完整硕士论文整理，预印本引用按 arXiv 当前书目记录核对。
 
@@ -19,7 +21,7 @@ English: https://aquareo.github.io/en/
 
 本地查看：`python3 -m http.server 8000 --directory dist`。
 
-页面采用单栏文字排版，依次为简介、科研、教育、教学、工作及补充项目。主研究项目覆盖完整硕士论文；定价预印本作为相关成果列出，排名脚本作为补充工程项目列出。没有前端依赖或 JavaScript。设计参考 [Jon Barron](https://jonbarron.info/) 与 [Andrej Karpathy](https://karpathy.ai/) 的个人主页，页面内容按本人资料整理。
+页面采用单栏文字排版，依次为简介与研究兴趣、科研、教育、教学、技术能力与工作经历。研究突出蒙特卡罗方法、动态规划与最小二乘近似，完整论文和定价预印本分别链接；回测收益及额外课程项目不占据主页篇幅，原排名页面保留。没有前端依赖或 JavaScript。设计参考 [Jon Barron](https://jonbarron.info/) 与 [Andrej Karpathy](https://karpathy.ai/) 的个人主页，页面内容按本人资料整理。
 
 ## 原可转债项目说明
 
