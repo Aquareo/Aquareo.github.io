@@ -1,3 +1,18 @@
+# 刘宇 Yu Liu · 个人主页
+
+网站地址：https://aquareo.github.io/
+
+个人介绍、工作与教学经历、教育背景、科研论文和项目作品位于 `dist/`。GitHub Pages 使用 GitHub Actions 发布该目录，无需前端构建步骤。
+
+- `.github/workflows/deploy-pages.yml`：个人网站更新后自动部署。
+- `dist/bonds/index.html`：原可转债排名页面，保留在 `/bonds/`。
+- `.github/workflows/python_update.yml`：保留原定时更新计划，更新排名后直接发布网站。
+- `update_website.py`：输出已迁移至 `dist/bonds/index.html`，避免覆盖个人主页。
+
+本地查看：`python3 -m http.server 8000 --directory dist`。
+
+## 原可转债项目说明
+
 # 项目说明
 
 ## 主要功能

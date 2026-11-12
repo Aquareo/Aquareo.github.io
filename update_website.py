@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pandas as pd
 import akshare as ak
 from datetime import datetime
@@ -195,8 +197,9 @@ def main():
     full_html = generate_html(table_html)
 
     # 将 HTML 内容写入到 index.html 文件
-    with open("index.html", "w") as file:
-        file.write(full_html)
+    output = Path(__file__).resolve().parent / "dist" / "bonds" / "index.html"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(full_html, encoding="utf-8")
 
 if __name__ == "__main__":
     main()

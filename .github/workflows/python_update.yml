@@ -1,43 +1,57 @@
-name: Update Website
+name: Update convertible bonds project
 
 on:
   schedule:
-    # 每小时的第 43 分钟执行（UTC时间）
-    - cron: '43 0-15/1 * * *'  # 这是 UTC 时间对应的每小时的第43分钟（相当于北京时间8点到23点）
+    - cron: '43 0-15/1 * * *'
   push:
-    branches:
-      - main  # 只要 main 分支有更新，自动触发部署
+    branches: [main]
+    paths:
+      - 'update_website.py'
+      - 'requirements.txt'
+      - '.github/workflows/python_update.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  update-and-deploy:
     runs-on: ubuntu-latest
-
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
+      - name: Checkout website
+        uses: actions/checkout@v6
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v6
         with:
           python-version: '3.10'
-
-      - name: Install dependencies
+      - name: Install data dependencies
+        run: python -m pip install pandas akshare pytz
+      - name: Update bond rankings
+        run: python update_website.py
+      - name: Save updated rankings
         run: |
-          python -m pip install --upgrade pip
-          pip install pandas
-          pip install akshare
-
-      - name: Run Python script to generate website
-        run: python update_website.py  # 运行您的 Python 脚本生成网页内容
-
-      - name: Push website files
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add -A
-          git commit -m "Update website"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
-
-          
-      #- name: Run day_trading.py script
-      #  run: python day_trading.py  # 只运行 day_trading.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/bonds/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Update convertible bond rankings"
+            git push origin HEAD:main
+          fi
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload website and updated rankings
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
