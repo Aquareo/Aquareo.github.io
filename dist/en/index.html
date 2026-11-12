@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Yu Liu: numerical analysis, scientific computing, convertible-bond valuation, and backend development.">
+  <title>Yu Liu · 刘宇</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="canonical" href="https://aquareo.github.io/en/">
+  <link rel="alternate" hreflang="zh-CN" href="https://aquareo.github.io/">
+  <link rel="alternate" hreflang="en" href="https://aquareo.github.io/en/">
+  <link rel="alternate" hreflang="x-default" href="https://aquareo.github.io/">
+</head>
+<body>
+  <a class="skip-link" href="#about">Skip to content</a>
+  <main class="page">
+    <header class="profile" id="about">
+      <div class="topbar">
+        <nav aria-label="Page navigation">
+          <a href="#research">Research</a>
+          <a href="#experience">Work</a>
+          <a href="#projects">Projects</a>
+          <a href="#education">Education</a>
+        </nav>
+        <div class="language-switch" aria-label="Language"><a href="../" lang="zh-CN" hreflang="zh-CN">中文</a><span aria-hidden="true"> / </span><a href="./" lang="en" hreflang="en" aria-current="page">English</a></div>
+      </div>
+      <h1>Yu Liu <span lang="zh-CN">刘宇</span></h1>
+      <p class="subtitle">Mathematics / Scientific Computing / Backend Development</p>
+      <div class="bio">
+        <p>I hold an M.Phil. in Mathematics from The Chinese University of Hong Kong, Shenzhen, and a B.Sc. in Mathematics and Applied Mathematics from Tongji University. My research interests are numerical analysis, scientific computing, and numerical methods for stochastic differential equations.</p>
+        <p>My master's research focused on Monte Carlo valuation and trading strategies for Chinese convertible bonds. I subsequently worked in backend development at BYD and Xiaoniu Hulian, contributing to content-management systems and AI application backends.</p>
+        <p>I am currently strengthening my background in stochastic analysis, including Brownian motion, Itô integration, and Itô's formula, with an interest in approximation and error analysis for numerical methods for stochastic differential equations.</p>
+      </div>
+      <div class="profile-links" aria-label="Contact and profile links">
+        <a href="mailto:yu130dfb4@gmail.com">yu130dfb4@gmail.com</a>
+        <a href="../assets/Yu_Liu_CV.pdf" target="_blank" rel="noopener">CV</a>
+        <a href="https://github.com/Aquareo" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv</a>
+      </div>
+    </header>
+
+    <section id="research" aria-labelledby="research-heading">
+      <h2 id="research-heading">Research</h2>
+      <article class="publication">
+        <h3><a href="../assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation: A Regression-Based Approximation and Error Analysis</a></h3>
+        <p class="meta">Yu Liu · arXiv:2409.06496 · 2024, revised 2026</p>
+        <p>A regression-based Monte Carlo method for Chinese convertible bonds with path-dependent call and put triggers. The method combines least-squares continuation-value estimation with backward dynamic programming, compares global and price-region regressions, and examines convergence and approximation error.</p>
+        <p class="note">Preprint; not peer-reviewed. A smaller one-step population projection error does not guarantee a smaller finite-sample pricing error.</p>
+        <p class="resource-links"><a href="../assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">Paper PDF</a><a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv</a><a href="../assets/Thesis.pdf" target="_blank" rel="noopener">Master's thesis</a></p>
+      </article>
+      <article class="research-note">
+        <h3>Wavelet-Based Image Restoration</h3>
+        <p class="meta">Undergraduate thesis · Tongji University · Advisor: Jae Kyu Choi</p>
+        <p>Studied analysis-based, synthesis-based, and balanced wavelet-frame formulations for image reconstruction, and an alternating direction method of multipliers (ADMM) approach to the analysis-based formulation.</p>
+      </article>
+    </section>
+
+    <section id="experience" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">Work Experience</h2>
+      <article class="dated-entry">
+        <p class="date">Jan — Apr 2026</p>
+        <div>
+          <h3>Xiaoniu Hulian <span class="role">Backend Developer · Chengdu</span></h3>
+          <p>Contributed to backends for AI music, image, and video generation. Worked on task creation, callbacks, result retrieval, and retries; maintained credit and subscription rules, operational reports, and failed-task monitoring; investigated interruptions in streaming conversations.</p>
+          <p class="meta">Python, Flask, MySQL</p>
+        </div>
+      </article>
+      <article class="dated-entry">
+        <p class="date">Sep 2024 — Jul 2025</p>
+        <div>
+          <h3>BYD <span class="role">Backend Software Developer · Shenzhen</span></h3>
+          <p>Developed backend services for a news and content-management application, including publishing, category management, and CRUD operations. Contributed to service integration, API testing, and workflow automation.</p>
+          <p class="meta">Java, Spring Boot, MySQL, Python</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <article class="project-entry">
+        <h3><a href="../bonds/">Convertible-Bond Ranking and Simulated Trading</a></h3>
+        <p>Compared linear regression, SVM, random forests, XGBoost, LightGBM, and MLP models using rolling-window train–test splits. Evaluated factors through information coefficient (IC) analysis and stratified backtesting, and explored automated simulated trading. The ranking page is updated on a schedule using GitHub Actions.</p>
+        <p class="resource-links"><a href="../bonds/">Rankings (Chinese)</a><a href="https://github.com/Aquareo/Aquareo.github.io/blob/main/update_website.py" target="_blank" rel="noopener">Data update script</a></p>
+      </article>
+      <article class="project-entry">
+        <h3><a href="../assets/GPT2-SFT-report.pdf" target="_blank" rel="noopener">Supervised Fine-Tuning of GPT-2 for Dialogue</a></h3>
+        <p class="meta">MDS5210 group course project · Fall 2023</p>
+        <p>Fine-tuned GPT-2 medium on HH-RLHF data. Compared the convergence and GPU memory use of SGD, Momentum, Nesterov, Adam, and AdamW, and explored the effect of training-data quality.</p>
+        <p class="resource-links"><a href="../assets/GPT2-SFT-report.pdf" target="_blank" rel="noopener">Project report</a></p>
+      </article>
+      <article class="project-entry">
+        <h3>News and Blog Management</h3>
+        <p>Worked on news publishing and category management at BYD. At Xiaoniu Hulian, developed blog categories, article-detail endpoints, view counts, pinned and trending posts, and refined database indexes and access patterns for the relevant queries.</p>
+      </article>
+    </section>
+
+    <section id="education" aria-labelledby="education-heading">
+      <h2 id="education-heading">Education</h2>
+      <div class="dated-entry education-entry">
+        <p class="date">2022 — 2024</p>
+        <div><h3>The Chinese University of Hong Kong, Shenzhen</h3><p>M.Phil. in Mathematics</p><p class="academic-score">Cumulative GPA: <strong>3.436/4.000</strong></p><p class="meta">Advisor: Prof. Gongqiu Zhang<br>Thesis: Pricing and Trading Strategies of Chinese Convertible Bonds</p><details class="course-grades"><summary>Course grades</summary><table><caption>Graduate taught-course grades</caption><thead><tr><th scope="col">Course</th><th scope="col">Credits</th><th scope="col">Grade</th></tr></thead><tbody><tr><td>Advanced Numerical Methods</td><td>3</td><td>A−</td></tr><tr><td>Matrix Analysis</td><td>3</td><td>B−</td></tr><tr><td>Advanced Financial Models</td><td>3</td><td>B</td></tr><tr><td>Functional Analysis</td><td>3</td><td>A−</td></tr><tr><td>Machine Learning</td><td>3</td><td>B+</td></tr><tr><td>Topics in Applied Mathematics</td><td>3</td><td>A−</td></tr></tbody></table></details></div>
+      </div>
+      <div class="dated-entry education-entry">
+        <p class="date">2016 — 2020</p>
+        <div><h3>Tongji University</h3><p>B.Sc. in Mathematics and Applied Mathematics</p><p class="academic-score">Major-course average: <strong>85.09/100</strong><br>Overall average: <strong>82.11/100</strong></p><p class="meta">Advisor: Jae Kyu Choi<br>Percentage equivalents as reported on the official transcript.</p><details class="course-grades"><summary>Course grades</summary><table><caption>Selected undergraduate core-course grades</caption><thead><tr><th scope="col">Course</th><th scope="col">Credits</th><th scope="col">Grade</th></tr></thead><tbody><tr><td>Mathematical Analysis I</td><td>6</td><td>A</td></tr><tr><td>Mathematical Analysis II</td><td>6</td><td>A</td></tr><tr><td>Mathematical Analysis III</td><td>3</td><td>A</td></tr><tr><td>Real Analysis</td><td>4</td><td>A</td></tr><tr><td>Theory of Probability</td><td>3</td><td>A</td></tr><tr><td>Numerical Analysis (3 credits)</td><td>3</td><td>A</td></tr><tr><td>Numerical Analysis (2 credits)</td><td>2</td><td>B</td></tr><tr><td>Computational Method</td><td>3</td><td>A</td></tr></tbody></table></details></div>
+      </div>
+    </section>
+
+    <section id="more" aria-labelledby="more-heading">
+      <h2 id="more-heading">Teaching and Other Interests</h2>
+      <dl class="additional-info">
+        <div><dt>Teaching</dt><dd>Teaching Assistant for MAT1012 Honours Calculus II at CUHK-Shenzhen in 2024. Prepared and taught tutorials and exam-review sessions, and graded assignments, quizzes, and examinations.</dd></div>
+        <div><dt>Skills</dt><dd>Python, MATLAB, Java, Spring Boot, Flask, and MySQL; experience using Redis and Go.</dd></div>
+        <div><dt>Languages &amp; interests</dt><dd>IELTS 7.0; table tennis.</dd></div>
+      </dl>
+    </section>
+    <footer><span>Yu Liu</span><a href="mailto:yu130dfb4@gmail.com">Contact</a><a href="#about">Back to top</a></footer>
+  </main>
+</body>
+</html>

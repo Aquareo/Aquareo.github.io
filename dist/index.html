@@ -8,22 +8,30 @@
   <title>刘宇 · Yu Liu</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <link rel="canonical" href="https://aquareo.github.io/">
+  <link rel="alternate" hreflang="zh-CN" href="https://aquareo.github.io/">
+  <link rel="alternate" hreflang="en" href="https://aquareo.github.io/en/">
+  <link rel="alternate" hreflang="x-default" href="https://aquareo.github.io/">
 </head>
 <body>
   <a class="skip-link" href="#about">跳转到正文</a>
   <main class="page">
     <header class="profile" id="about">
+      <div class="topbar">
       <nav aria-label="页面导航">
         <a href="#research">科研</a>
         <a href="#experience">工作</a>
         <a href="#projects">项目</a>
         <a href="#education">教育</a>
       </nav>
+      <div class="language-switch" aria-label="语言"><a href="./" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a><span aria-hidden="true"> / </span><a href="en/" lang="en" hreflang="en">English</a></div>
+      </div>
       <h1>刘宇 <span>Yu Liu</span></h1>
       <p class="subtitle">数学 / 数值计算 / 后端开发</p>
       <div class="bio">
         <p>我毕业于香港中文大学（深圳），获数学研究型硕士学位，本科就读于同济大学数学与应用数学专业。研究兴趣是数值分析、科学计算，以及随机微分方程的数值方法。</p>
         <p>硕士期间，我研究中国可转债的蒙特卡洛定价与交易策略。毕业后先后在比亚迪和小牛互联从事后端开发，参与内容管理系统和 AI 应用后台的开发与维护。</p>
+        <p>最近在补充随机分析基础，学习布朗运动、Itô 积分与 Itô 公式，关注随机微分方程数值方法的近似与误差分析。</p>
       </div>
       <div class="profile-links" aria-label="联系方式与个人资料">
         <a href="mailto:yu130dfb4@gmail.com">yu130dfb4@gmail.com</a>
@@ -73,7 +81,7 @@
       <h2 id="projects-heading">项目</h2>
       <article class="project-entry">
         <h3><a href="bonds/">可转债排名与模拟交易</a></h3>
-        <p>硕士研究的实践延伸：采集可转债数据，探索因子筛选、策略回测与自动化模拟交易。原有排名页面保留在本站，并通过 GitHub Actions 定时更新。</p>
+        <p>使用滚动窗口划分训练与测试集，对比线性回归、SVM、随机森林、XGBoost、LightGBM 与 MLP，结合信息系数（IC）分析和分层回测评估因子，并探索自动化模拟交易。排名页面通过 GitHub Actions 定时更新。</p>
         <p class="resource-links"><a href="bonds/">查看排名</a><a href="https://github.com/Aquareo/Aquareo.github.io/blob/main/update_website.py" target="_blank" rel="noopener">数据更新脚本</a></p>
       </article>
       <article class="project-entry">
@@ -92,11 +100,11 @@
       <h2 id="education-heading">教育</h2>
       <div class="dated-entry education-entry">
         <p class="date">2022 — 2024</p>
-        <div><h3>香港中文大学（深圳）</h3><p>数学，研究型硕士（M.Phil.）</p><p class="meta">导师：张贡球教授（Gongqiu Zhang）<br>学位论文：Pricing and Trading Strategies of Chinese Convertible Bonds</p></div>
+        <div><h3>香港中文大学（深圳）</h3><p>数学，研究型硕士（M.Phil.）</p><p class="academic-score">GPA：<strong>3.436/4.000</strong></p><p class="meta">导师：张贡球教授（Gongqiu Zhang）<br>学位论文：Pricing and Trading Strategies of Chinese Convertible Bonds</p><details class="course-grades"><summary>课程成绩</summary><table><caption>硕士授课课程成绩</caption><thead><tr><th scope="col">课程</th><th scope="col">学分</th><th scope="col">成绩</th></tr></thead><tbody><tr><td>高等数值方法</td><td>3</td><td>A−</td></tr><tr><td>矩阵分析</td><td>3</td><td>B−</td></tr><tr><td>高等金融模型</td><td>3</td><td>B</td></tr><tr><td>泛函分析</td><td>3</td><td>A−</td></tr><tr><td>机器学习</td><td>3</td><td>B+</td></tr><tr><td>应用数学专题</td><td>3</td><td>A−</td></tr></tbody></table></details></div>
       </div>
       <div class="dated-entry education-entry">
         <p class="date">2016 — 2020</p>
-        <div><h3>同济大学</h3><p>数学与应用数学，学士（B.Sc.）</p><p class="meta">导师：Jae Kyu Choi</p></div>
+        <div><h3>同济大学</h3><p>数学与应用数学，学士（B.Sc.）</p><p class="academic-score">专业均分：<strong>85.09/100</strong>；总均分：<strong>82.11/100</strong></p><p class="meta">导师：Jae Kyu Choi<br>均分采用官方成绩单列示的百分制折算值。</p><details class="course-grades"><summary>课程成绩</summary><table><caption>本科部分核心课程成绩</caption><thead><tr><th scope="col">课程</th><th scope="col">学分</th><th scope="col">成绩</th></tr></thead><tbody><tr><td>数学分析 I</td><td>6</td><td>A</td></tr><tr><td>数学分析 II</td><td>6</td><td>A</td></tr><tr><td>数学分析 III</td><td>3</td><td>A</td></tr><tr><td>实分析</td><td>4</td><td>A</td></tr><tr><td>概率论</td><td>3</td><td>A</td></tr><tr><td>数值分析（3 学分）</td><td>3</td><td>A</td></tr><tr><td>数值分析（2 学分）</td><td>2</td><td>B</td></tr><tr><td>计算方法</td><td>3</td><td>A</td></tr></tbody></table></details></div>
       </div>
     </section>
 

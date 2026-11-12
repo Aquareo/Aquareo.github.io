@@ -89,3 +89,29 @@ footer a { color: var(--muted); }
   article, .dated-entry { break-inside: avoid; }
   a { color: inherit; }
 }
+
+/* Language navigation and academic records. */
+.topbar { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+.topbar nav { margin: 0; justify-content: flex-start; flex-wrap: wrap; }
+.language-switch { font-size: 12px; white-space: nowrap; }
+.language-switch span { margin-inline: 6px; color: #a0a3a7; }
+.language-switch a[aria-current="page"] { color: var(--text); }
+.academic-score { font-size: 13px; margin-top: 7px; }
+.academic-score strong { font-weight: 550; }
+.course-grades { margin-top: 9px; }
+.course-grades summary { color: var(--link); font-size: 12px; cursor: pointer; width: fit-content; }
+.course-grades summary:focus-visible { outline: 2px solid var(--link); outline-offset: 4px; }
+.course-grades table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-top: 9px; font-size: 12px; line-height: 1.7; }
+.course-grades caption { text-align: left; color: var(--muted); font-size: 11px; margin-bottom: 7px; }
+.course-grades th, .course-grades td { text-align: left; vertical-align: top; padding: 6px 8px 6px 0; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+.course-grades th { font-weight: 500; color: var(--muted); }
+.course-grades th:nth-child(2), .course-grades td:nth-child(2) { width: 58px; text-align: right; }
+.course-grades th:last-child, .course-grades td:last-child { width: 48px; text-align: right; padding-right: 0; }
+@media (max-width: 600px) {
+  .topbar { flex-direction: column; gap: 11px; margin-bottom: 28px; }
+  .topbar nav { font-size: 12px; gap: 19px; }
+  .language-switch { font-size: 12px; }
+}
+@media print {
+  .topbar { display: none; }
+}

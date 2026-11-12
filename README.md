@@ -2,6 +2,14 @@
 
 网站地址：https://aquareo.github.io/
 
+中文版：https://aquareo.github.io/
+
+English: https://aquareo.github.io/en/
+
+两版为独立静态页面，通过顶部语言链接切换，共用 `dist/styles.css`。维护时请同步更新 `dist/index.html` 和 `dist/en/index.html`。
+
+教育经历中的成绩摘录自本人提供的官方成绩单：本科展示专业均分与总均分的官方百分制折算值；硕士展示原始 4 分制 GPA。课程表可展开查看。站点不包含成绩单原件或个人陈述，公开简历采用新版 `CV.pdf` 的内容。
+
 个人介绍、工作与教学经历、教育背景、科研论文和项目作品位于 `dist/`。GitHub Pages 使用 GitHub Actions 发布该目录，无需前端构建步骤。
 
 - `.github/workflows/deploy-pages.yml`：个人网站更新后自动部署。
