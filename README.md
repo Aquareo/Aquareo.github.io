@@ -11,6 +11,8 @@
 
 本地查看：`python3 -m http.server 8000 --directory dist`。
 
+页面采用单栏文字排版，包含简介、科研、工作、项目和教育经历。没有前端依赖或 JavaScript。设计参考 [Jon Barron](https://jonbarron.info/) 与 [Andrej Karpathy](https://karpathy.ai/) 的个人主页，页面内容按本人资料整理。
+
 ## 原可转债项目说明
 
 # 项目说明

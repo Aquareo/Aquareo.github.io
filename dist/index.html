@@ -3,98 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f7f2">
-  <meta name="description" content="刘宇 Yu Liu 的个人主页。数学、数值计算与后端工程：探索可转债定价、随机模拟和 AI 应用的交汇。">
-  <title>刘宇 Yu Liu — 数学 · 研究 · 工程</title>
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="刘宇（Yu Liu）的个人主页：数学研究、可转债定价、后端开发与项目经历。">
+  <title>刘宇 · Yu Liu</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">跳转到正文</a>
-  <header class="header">
-    <a class="wordmark" href="#" aria-label="刘宇，返回首页">yu liu<span class="brand-dot">.</span></a>
-    <nav aria-label="主导航" id="navigation">
-      <a href="#about">关于</a><a href="#experience">经历</a><a href="#research">科研</a><a href="#projects">项目</a>
-      <a class="nav-contact" href="#contact">联系我 <span aria-hidden="true">↗</span></a>
-    </nav>
-    <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" aria-label="打开导航">菜单 <span aria-hidden="true">☰</span></button>
-  </header>
-
-  <main id="main">
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <div class="hero-topline"><span><span class="status-dot"></span> MATHEMATICS × ENGINEERING</span><span class="edition">PERSONAL WEBSITE / 2026</span></div>
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">你好，我是刘宇</p>
-          <h1 id="hero-title">Yu Liu<span class="hero-period">.</span></h1>
-          <h2>从数学出发，<br>让想法成为<span class="italic-word">现实。</span></h2>
-          <p class="hero-description">数学研究者，后端开发工程师。<br>关注数值计算与随机模拟，也热衷于构建可靠的 AI 应用。</p>
-          <div class="hero-actions"><a class="button primary" href="#research">探索我的研究 <span aria-hidden="true">↗</span></a><a class="text-link" href="assets/Yu_Liu_CV.pdf" target="_blank" rel="noopener">查看简历 <span aria-hidden="true">↓</span></a></div>
-        </div>
-        <div class="hero-art" aria-label="随机路径示意插画，并非实际研究数据" role="img">
-          <div class="art-label"><span>NOTES ON POSSIBILITY</span><span>FIG. 01</span></div>
-          <svg class="path-art" viewBox="0 0 500 420" fill="none" aria-hidden="true">
-            <defs><pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" stroke="#2f634a" stroke-opacity=".1"/></pattern><linearGradient id="wash" x1="80" y1="60" x2="460" y2="390" gradientUnits="userSpaceOnUse"><stop stop-color="#edf0d9"/><stop offset="1" stop-color="#cbdac2"/></linearGradient></defs>
-            <circle cx="260" cy="210" r="183" fill="url(#wash)"/>
-            <circle cx="260" cy="210" r="183" fill="url(#grid)"/>
-            <path d="M68 331H447M94 353V59" stroke="#798c70" stroke-width="1"/>
-            <path d="M94 270L112 257L130 264L149 243L167 251L186 227L204 236L223 203L241 214L260 179L278 197L297 168L315 179L334 146L352 159L371 125L389 140L408 102L426 113" stroke="#527e57" stroke-opacity=".28" stroke-width="1.5"/>
-            <path d="M94 270L112 278L130 258L149 274L167 255L186 264L204 241L223 257L241 225L260 239L278 220L297 229L315 204L334 212L352 190L371 202L389 171L408 184L426 155" stroke="#527e57" stroke-opacity=".35" stroke-width="1.5"/>
-            <path d="M94 270L112 282L130 274L149 288L167 278L186 291L204 277L223 284L241 267L260 278L278 258L297 266L315 243L334 254L352 230L371 243L389 214L408 225L426 198" stroke="#527e57" stroke-opacity=".3" stroke-width="1.5"/>
-            <path d="M94 270L112 260L130 270L149 247L167 257L186 225L204 239L223 217L241 233L260 197L278 212L297 174L315 190L334 152L352 170L371 126L389 147L408 95L426 72" stroke="#245c3f" stroke-width="3" stroke-linejoin="round"/>
-            <circle cx="426" cy="72" r="6" fill="#245c3f"/><circle cx="426" cy="72" r="12" stroke="#245c3f" stroke-opacity=".22"/>
-            <circle cx="94" cy="270" r="4" fill="#245c3f"/>
-            <text x="83" y="375" fill="#61765e" font-size="12" font-family="monospace">0</text><text x="438" y="351" fill="#61765e" font-size="12" font-family="monospace">t</text>
-            <text x="129" y="110" fill="#245c3f" font-size="21" font-family="Georgia,serif" font-style="italic">dS = μS dt + σS dW</text>
-          </svg>
-          <div class="art-bottom"><span>在不确定性中，寻找规律。</span><span class="tiny-arrow" aria-hidden="true">↗</span></div>
-        </div>
+  <a class="skip-link" href="#about">跳转到正文</a>
+  <main class="page">
+    <header class="profile" id="about">
+      <nav aria-label="页面导航">
+        <a href="#research">科研</a>
+        <a href="#experience">工作</a>
+        <a href="#projects">项目</a>
+        <a href="#education">教育</a>
+      </nav>
+      <h1>刘宇 <span>Yu Liu</span></h1>
+      <p class="subtitle">数学 / 数值计算 / 后端开发</p>
+      <div class="bio">
+        <p>我毕业于香港中文大学（深圳），获数学研究型硕士学位，本科就读于同济大学数学与应用数学专业。研究兴趣是数值分析、科学计算，以及随机微分方程的数值方法。</p>
+        <p>硕士期间，我研究中国可转债的蒙特卡洛定价与交易策略。毕业后先后在比亚迪和小牛互联从事后端开发，参与内容管理系统和 AI 应用后台的开发与维护。</p>
       </div>
-      <div class="hero-foot"><span>数学的严谨 · 工程的实践 · 持续的好奇</span><a href="#about">向下了解 <span aria-hidden="true">↓</span></a></div>
+      <div class="profile-links" aria-label="联系方式与个人资料">
+        <a href="mailto:yu130dfb4@gmail.com">yu130dfb4@gmail.com</a>
+        <a href="assets/Yu_Liu_CV.pdf" target="_blank" rel="noopener">简历</a>
+        <a href="https://github.com/Aquareo" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv</a>
+      </div>
+    </header>
+
+    <section id="research" aria-labelledby="research-heading">
+      <h2 id="research-heading">科研</h2>
+      <article class="publication">
+        <h3><a href="assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation: A Regression-Based Approximation and Error Analysis</a></h3>
+        <p class="meta">Yu Liu · arXiv:2409.06496 · 2024，修订于 2026</p>
+        <p>针对带有路径依赖赎回、回售条款的中国可转债，研究基于回归的蒙特卡洛估值方法。使用最小二乘回归与向后动态规划估计延续价值，比较全局回归与分区回归，并分析收敛性与近似误差。</p>
+        <p class="note">预印本，未经同行评审。分区回归的单步投影误差结论不代表有限样本定价误差一定更小。</p>
+        <p class="resource-links"><a href="assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">论文 PDF</a><a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv</a><a href="assets/Thesis.pdf" target="_blank" rel="noopener">硕士论文</a></p>
+      </article>
+      <article class="research-note">
+        <h3>基于小波框架的图像恢复</h3>
+        <p class="meta">同济大学 · 本科毕业论文 · 导师：Jae Kyu Choi</p>
+        <p>研究分析型、综合型与平衡型小波框架下的图像重建模型，以及基于交替方向乘子法（ADMM）的数值求解。</p>
+      </article>
     </section>
 
-    <section class="section wrap about" id="about">
-      <div class="section-heading"><p class="section-index">01 / ABOUT</p><h2>用数学理解问题，<br>用代码探索答案。</h2></div>
-      <div class="about-content"><p class="large-copy">我拥有香港中文大学（深圳）数学研究型硕士学位，以及同济大学数学与应用数学学士学位。</p><p>我的研究围绕数值分析、科学计算，以及随机微分方程的数值方法展开。在可转债定价研究中，我将蒙特卡洛模拟、最小二乘回归与动态规划结合，探索路径依赖金融合约的数值估值。</p><p>从研究走向工程，我先后在比亚迪与小牛互联从事后端开发，参与内容管理、AI 音乐与图像视频生成等业务。对我而言，推导一个模型与打通一条业务链路，都需要清晰的思考和细致的验证。</p><div class="interest-note"><span aria-hidden="true">✳</span><p>工作之外，喜欢乒乓球。也享受把复杂的问题，讲得简单明白。</p></div></div>
-    </section>
-
-    <section class="section wrap" id="experience">
-      <div class="section-title-row"><div><p class="section-index">02 / EXPERIENCE</p><h2>学习，研究，与构建。</h2></div><span class="section-caption">A JOURNEY IN PROGRESS</span></div>
-      <div class="experience-layout">
-        <div class="experience-label"><span class="small-dot"></span><h3>工作与教学</h3><p>将理论带入真实场景。</p></div>
-        <div class="timeline">
-          <article class="timeline-item"><div class="timeline-date">2026.01 — 2026.04</div><div><div class="role-heading"><h3>后端开发工程师</h3><span class="pill">工程</span></div><p class="organization">小牛互联 <span>· 成都</span></p><p>参与 AI 应用后台需求迭代与维护，覆盖音乐生成、图像与视频生成、内容管理和运营配置。</p><ul><li>完成生成任务创建、回调、结果查询与失败重试等链路开发和联调。</li><li>参与积分与订阅规则调整、报表统计和异常任务监控。</li><li>排查流式对话中断，梳理结束信号、异常处理与内容保存问题。</li></ul><div class="tags"><span>Python</span><span>Flask</span><span>MySQL</span><span>AI 应用</span></div></div></article>
-          <article class="timeline-item"><div class="timeline-date">2024.09 — 2025.07</div><div><div class="role-heading"><h3>后端开发工程师</h3><span class="pill">工程</span></div><p class="organization">比亚迪 <span>· 深圳</span></p><p>开发后端服务与工作流自动化，参与资讯中心应用建设，实现新闻发布、多栏目管理及新闻 CRUD，并完成系统集成与接口联调。</p><div class="tags"><span>Java</span><span>Spring Boot</span><span>MySQL</span><span>Python</span></div></div></article>
-          <article class="timeline-item"><div class="timeline-date">2024</div><div><div class="role-heading"><h3>高等微积分课程助教</h3><span class="pill">教学</span></div><p class="organization">香港中文大学（深圳）<span> · MAT1012</span></p><p>准备并讲授习题课与考前复习，涵盖证明与计算问题；批改作业、测验和考试，帮助学生梳理解题思路。</p></div></article>
+    <section id="experience" aria-labelledby="experience-heading">
+      <h2 id="experience-heading">工作经历</h2>
+      <article class="dated-entry">
+        <p class="date">2026.01 — 2026.04</p>
+        <div>
+          <h3>小牛互联 <span class="role">后端开发工程师 · 成都</span></h3>
+          <p>参与 AI 音乐、图像与视频生成应用的后台迭代。开发任务创建、回调、结果查询与重试链路，维护积分和订阅规则、运营报表与异常任务监控；排查流式对话中断问题。</p>
+          <p class="meta">Python、Flask、MySQL</p>
         </div>
-      </div>
-      <div class="education-grid"><article><span class="education-number">M.Phil.</span><p class="timeline-date">2022 — 2024</p><h3>香港中文大学（深圳）</h3><p>数学 · 研究型硕士</p><p class="education-detail">导师：张贡球教授（Gongqiu Zhang）<br>学位论文：中国可转债定价与交易策略</p></article><article><span class="education-number">B.Sc.</span><p class="timeline-date">2016 — 2020</p><h3>同济大学</h3><p>数学与应用数学 · 学士</p><p class="education-detail">导师：Jae Kyu Choi<br>毕业论文：基于小波框架的图像恢复</p></article></div>
+      </article>
+      <article class="dated-entry">
+        <p class="date">2024.09 — 2025.07</p>
+        <div>
+          <h3>比亚迪 <span class="role">后端开发工程师 · 深圳</span></h3>
+          <p>参与资讯中心应用开发，实现新闻发布、多栏目管理和内容增删改查，完成后端服务集成与接口联调，并参与工作流自动化。</p>
+          <p class="meta">Java、Spring Boot、MySQL、Python</p>
+        </div>
+      </article>
     </section>
 
-    <section class="research-section" id="research"><div class="wrap section">
-      <div class="section-title-row"><div><p class="section-index">03 / RESEARCH</p><h2>在随机性中，寻找结构。</h2></div><span class="section-caption">SELECTED RESEARCH</span></div>
-      <article class="featured-paper"><div class="paper-side"><span class="paper-type">PREPRINT / q-fin.PR</span><div class="paper-symbol" aria-hidden="true">∫<span>∞</span></div><p>MONTE CARLO<br>VALUATION</p><span class="paper-id">arXiv:2409.06496</span></div><div class="paper-content"><div class="paper-meta"><span>精选研究</span><span>2024 · 修订于 2026</span></div><h3>Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation</h3><p class="paper-subtitle">A Regression-Based Approximation and Error Analysis</p><p>针对带有路径依赖赎回、回售条款的中国可转债，构建基于回归的蒙特卡洛估值框架。通过向后动态规划近似持有人的行权决策，并比较全局回归与按合约价格区间划分的分区回归。</p><div class="research-points"><span>01 <b>路径依赖条款建模</b></span><span>02 <b>最小二乘延续价值估计</b></span><span>03 <b>收敛性与近似误差分析</b></span></div><p class="paper-note">预印本，未经同行评审。分区回归的单步投影误差结论，不等同于有限样本定价误差的普遍改善。</p><div class="paper-links"><a class="button primary" href="assets/convertible-bonds-preprint.pdf" target="_blank" rel="noopener">阅读论文 PDF <span aria-hidden="true">↗</span></a><a class="text-link" href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv <span aria-hidden="true">↗</span></a><a class="text-link" href="assets/Thesis.pdf" target="_blank" rel="noopener">硕士论文 <span aria-hidden="true">↗</span></a></div></div></article>
-      <div class="research-secondary"><div><span class="section-index">EARLIER EXPLORATION</span><h3>基于小波框架的图像恢复</h3></div><div><p>本科阶段研究了小波框架下的分析型、综合型与平衡型图像重建模型，并探索基于 ADMM 的分析型模型求解。</p><div class="tags"><span>Wavelet Frames</span><span>ADMM</span><span>图像重建</span></div></div></div>
-    </div></section>
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">项目</h2>
+      <article class="project-entry">
+        <h3><a href="bonds/">可转债排名与模拟交易</a></h3>
+        <p>硕士研究的实践延伸：采集可转债数据，探索因子筛选、策略回测与自动化模拟交易。原有排名页面保留在本站，并通过 GitHub Actions 定时更新。</p>
+        <p class="resource-links"><a href="bonds/">查看排名</a><a href="https://github.com/Aquareo/Aquareo.github.io/blob/main/update_website.py" target="_blank" rel="noopener">数据更新脚本</a></p>
+      </article>
+      <article class="project-entry">
+        <h3><a href="assets/GPT2-SFT-report.pdf" target="_blank" rel="noopener">GPT-2 对话模型监督微调</a></h3>
+        <p class="meta">MDS5210 小组课程项目 · 2023 年秋季</p>
+        <p>使用 HH-RLHF 数据对 GPT-2 medium 进行监督微调，比较 SGD、Momentum、Nesterov、Adam 与 AdamW 的收敛表现和显存占用，并探索训练数据质量的影响。</p>
+        <p class="resource-links"><a href="assets/GPT2-SFT-report.pdf" target="_blank" rel="noopener">项目报告</a></p>
+      </article>
+      <article class="project-entry">
+        <h3>资讯与博客管理</h3>
+        <p>在比亚迪参与资讯发布与栏目管理；在小牛互联开发博客分类、文章详情、阅读统计、置顶与热点功能，并根据查询场景调整数据库索引与访问方式。</p>
+      </article>
+    </section>
 
-    <section class="section wrap" id="projects">
-      <div class="section-title-row"><div><p class="section-index">04 / SELECTED WORK</p><h2>从模型，到可运行的系统。</h2></div><span class="section-caption">IDEAS INTO PRACTICE</span></div>
-      <div class="filters" role="group" aria-label="按方向筛选项目"><button class="filter active" data-filter="all" aria-pressed="true">全部 <span>05</span></button><button class="filter" data-filter="research" aria-pressed="false">研究与计算</button><button class="filter" data-filter="engineering" aria-pressed="false">后端工程</button><button class="filter" data-filter="ai" aria-pressed="false">AI 探索</button></div>
-      <p class="sr-only" id="filter-status" aria-live="polite">显示全部 5 个项目</p>
-      <div class="project-grid">
-        <article class="project-card" data-category="research"><div class="project-top"><span>01 / QUANTITATIVE RESEARCH</span><span aria-hidden="true">↗</span></div><h3>可转债定价与交易策略</h3><p>把随机模拟与回归方法用于金融合约估值，并进一步探索策略回测与自动化模拟交易。</p><div class="tags"><span>Monte Carlo</span><span>Python</span><span>动态规划</span></div><details><summary>项目笔记 <span aria-hidden="true">+</span></summary><div class="detail-content"><p>在蒙特卡洛定价框架下使用最小二乘回归估计延续价值，探索价格区间相关的回归方法；结合历史数据进行策略评估，并编写实时数据采集与模拟交易脚本。</p><p>研究阶段：2022—2024。策略模拟与实际投资收益具有不同含义，此处聚焦方法与实现。</p><a href="assets/Thesis.pdf" target="_blank" rel="noopener">查看硕士论文 ↗</a></div></details></article>
-        <article class="project-card" data-category="engineering ai"><div class="project-top"><span>02 / AI APPLICATION BACKEND</span><span aria-hidden="true">↗</span></div><h3>AI 音乐与视觉生成后台</h3><p>参与音乐、图像和视频生成业务，把异步任务、回调、计费与结果查询串联成完整链路。</p><div class="tags"><span>Python</span><span>MySQL</span><span>异步任务</span></div><details><summary>项目笔记 <span aria-hidden="true">+</span></summary><div class="detail-content"><p>参与生成任务创建、失败重试、回调解析与结果落库，处理不同结果字段的兼容性；维护积分、订阅与退款相关业务规则，并开发失败任务监控与告警脚本。</p><p>2026 年 · 小牛互联工作项目。展示个人参与的工程内容。</p></div></details></article>
-        <article class="project-card" data-category="ai research"><div class="project-top"><span>03 / MACHINE LEARNING</span><span aria-hidden="true">↗</span></div><h3>GPT-2 对话模型监督微调</h3><p>基于 HH-RLHF 数据探索监督微调，比较优化器的收敛表现、显存占用与数据质量的影响。</p><div class="tags"><span>GPT-2</span><span>SFT</span><span>优化器对比</span></div><details><summary>项目笔记 <span aria-hidden="true">+</span></summary><div class="detail-content"><p>MDS5210 小组课程项目，使用 GPT-2 medium 进行监督微调，记录训练与验证损失，比较 SGD、Momentum、Nesterov、Adam 和 AdamW 等优化器，并观察高质量样本选择的影响。</p><p>2023 年秋季课程项目 · 小组合作。</p><a href="assets/GPT2-SFT-report.pdf" target="_blank" rel="noopener">查看项目报告 ↗</a></div></details></article>
-        <article class="project-card" data-category="engineering"><div class="project-top"><span>04 / CONTENT INFRASTRUCTURE</span><span aria-hidden="true">↗</span></div><h3>资讯与内容管理系统</h3><p>从资讯发布到博客管理，围绕栏目、内容组织、查询与阅读统计构建后台功能。</p><div class="tags"><span>Spring Boot</span><span>SQL</span><span>API 设计</span></div><details><summary>项目笔记 <span aria-hidden="true">+</span></summary><div class="detail-content"><p>在比亚迪参与资讯中心的新闻发布、多栏目管理和 CRUD 接口开发；在小牛互联参与博客分类、文章详情、阅读统计、置顶与热点功能，结合查询场景改进索引与访问方式。</p></div></details></article>
-        <article class="project-card wide" data-category="research"><div class="project-top"><span>05 / NUMERICAL METHODS</span><span aria-hidden="true">↗</span></div><h3>小波框架与图像重建</h3><p>从数学模型出发，研究图像恢复的不同小波框架表述，以及基于交替方向乘子法的数值求解。</p><div class="tags"><span>Wavelet Frames</span><span>ADMM</span><span>数值优化</span></div><details><summary>项目笔记 <span aria-hidden="true">+</span></summary><div class="detail-content"><p>同济大学本科毕业论文，导师 Jae Kyu Choi。围绕分析型、综合型和平衡型小波框架模型展开，关注模型表述与可计算的迭代求解之间的联系。</p></div></details></article>
+    <section id="education" aria-labelledby="education-heading">
+      <h2 id="education-heading">教育</h2>
+      <div class="dated-entry education-entry">
+        <p class="date">2022 — 2024</p>
+        <div><h3>香港中文大学（深圳）</h3><p>数学，研究型硕士（M.Phil.）</p><p class="meta">导师：张贡球教授（Gongqiu Zhang）<br>学位论文：Pricing and Trading Strategies of Chinese Convertible Bonds</p></div>
+      </div>
+      <div class="dated-entry education-entry">
+        <p class="date">2016 — 2020</p>
+        <div><h3>同济大学</h3><p>数学与应用数学，学士（B.Sc.）</p><p class="meta">导师：Jae Kyu Choi</p></div>
       </div>
     </section>
 
-    <section class="skills-section"><div class="wrap skills-inner"><div><p class="section-index">05 / TOOLKIT</p><h2>思考的工具，<br>构建的语言。</h2></div><div class="skill-groups"><div><h3>研究与计算</h3><p>数值分析 / 蒙特卡洛模拟 / 随机建模<br>最小二乘回归 / 动态规划 / MATLAB</p></div><div><h3>工程与开发</h3><p>Python / Java / Spring Boot / Flask<br>MySQL / Redis / Go</p></div><div><h3>交流与教学</h3><p>英语 · IELTS 7.0<br>微积分习题课 / 技术协作与文档</p></div></div></div></section>
-
-    <section class="section wrap contact" id="contact"><p class="section-index">06 / SAY HELLO</p><div class="contact-grid"><div><h2>好的想法，<br>从一次<span>交流</span>开始。</h2><p>欢迎交流数值计算、随机模拟、后端开发，<br>以及值得一起探索的问题。</p></div><div class="contact-links"><a class="email-link" href="mailto:yu130dfb4@gmail.com">yu130dfb4@gmail.com <span aria-hidden="true">↗</span></a><button class="copy-email" data-email="yu130dfb4@gmail.com">复制邮箱 <span aria-hidden="true">⧉</span></button><span id="copy-status" role="status"></span><a class="contact-cv" href="bonds/">可转债排名项目 <span aria-hidden="true">↗</span></a><a class="contact-cv" href="assets/Yu_Liu_CV.pdf" download="Yu_Liu_CV.pdf">下载完整简历（PDF） <span aria-hidden="true">↓</span></a></div></div></section>
+    <section id="more" aria-labelledby="more-heading">
+      <h2 id="more-heading">其他</h2>
+      <dl class="additional-info">
+        <div><dt>教学</dt><dd>2024 年担任香港中文大学（深圳）MAT1012 高等微积分课程助教，讲授习题课与考前复习，批改作业、测验和考试。</dd></div>
+        <div><dt>技能</dt><dd>Python、MATLAB、Java、Spring Boot、Flask、MySQL；有 Redis 与 Go 的使用经历。</dd></div>
+        <div><dt>语言与兴趣</dt><dd>IELTS 7.0；喜欢乒乓球。</dd></div>
+      </dl>
+    </section>
+    <footer><span>刘宇 · Yu Liu</span><a href="mailto:yu130dfb4@gmail.com">联系我</a><a href="#about">回到顶部</a></footer>
   </main>
-  <footer class="wrap footer"><a class="wordmark" href="#">yu liu<span class="brand-dot">.</span></a><span>© <span id="year">2026</span> 刘宇 · 保持好奇，持续构建。</span><a href="#">回到顶部 ↑</a></footer>
 </body>
 </html>
