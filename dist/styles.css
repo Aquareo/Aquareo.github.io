@@ -140,3 +140,9 @@ footer a { color: var(--muted); }
   .school-mark, .school-mark-frame { width: 42px; height: 42px; }
   .school-mark-composite { height: 42px; }
 }
+
+.profile-portrait { float: right; display: block; width: 108px; height: 162px; margin: 3px 0 18px 28px; object-fit: contain; border-radius: 2px; }
+.profile-links { clear: both; }
+@media (max-width: 600px) {
+  .profile-portrait { width: 76px; height: 114px; margin-left: 18px; margin-bottom: 13px; }
+}
