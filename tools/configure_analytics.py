@@ -14,6 +14,7 @@ class BeaconParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.tokens = []
+        self.module = False
 
     def handle_starttag(self, tag, attributes):
         attributes = dict(attributes)
@@ -24,6 +25,7 @@ class BeaconParser(HTMLParser):
         if not isinstance(token, str) or not re.fullmatch(r'[0-9a-fA-F]{32}', token):
             raise ValueError('Expected the public 32-character Web Analytics site token.')
         self.tokens.append(token)
+        self.module = attributes.get('type') == 'module'
 
 
 def main():
@@ -32,8 +34,9 @@ def main():
     if len(parser.tokens) != 1:
         raise ValueError('Paste exactly one Cloudflare Web Analytics JS snippet, not an API key.')
     config = json.dumps({'token': parser.tokens[0]}, separators=(',', ':'))
+    loading = 'type="module"' if parser.module else 'defer'
     snippet = ('  <!-- Cloudflare Web Analytics -->\n'
-               '  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" '
+               f'  <script {loading} src="https://static.cloudflareinsights.com/beacon.min.js" '
                f"data-cf-beacon='{config}'></script>\n"
                '  <!-- End Cloudflare Web Analytics -->\n')
     dist = Path(__file__).resolve().parents[1] / 'dist'

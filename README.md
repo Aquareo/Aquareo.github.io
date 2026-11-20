@@ -53,6 +53,8 @@ English (default): https://aquareo.github.io/
 
 ## 私有访问统计
 
+已于 2026-11-21 接入站点所有者提供的真实 Cloudflare Web Analytics 代码，部署后开始收集。
+
 选用 Cloudflare Web Analytics，保留 GitHub Pages 托管和现有网址。统计在 Cloudflare 登录后的后台查看，页面不展示访问计数器，不增加访客 IP 数据库。统计覆盖 `/`、`/en/`、`/zh/`，不混入 `/bonds/` 的流量。可按路径区分语言版本，查看访问量、来源和国家等汇总信息；此方案不提供简历 PDF 下载或链接点击事件统计。
 
 首次启用需要站点所有者在 Cloudflare 的 Web Analytics 中添加 `aquareo.github.io`，从 Manage site 复制公开的 JS snippet。此代码中的 site token 用于公开网页，并非账户 API 密钥。接入方式按[官方手动接入说明](https://developers.cloudflare.com/web-analytics/get-started/)；不需要更改 DNS 或迁移托管。
