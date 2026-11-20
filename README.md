@@ -50,3 +50,11 @@ English (default): https://aquareo.github.io/
 编辑 `dist/styles.css` 后运行 `python3 tools/version_styles.py`，生成带内容摘要的样式文件，并同步更新中英文页面的链接。保留旧版文件以兼容缓存页面。这样新的 HTML 会引用对应的新样式，不会复用旧样式缓存。
 
 本科研究摘要已根据 `thesis_original.pdf` 正文的模型、算法、收敛分析与数值实验整理；按本人选择，站点不提供这份原稿的下载。
+
+## 私有访问统计
+
+选用 Cloudflare Web Analytics，保留 GitHub Pages 托管和现有网址。统计在 Cloudflare 登录后的后台查看，页面不展示访问计数器，不增加访客 IP 数据库。统计覆盖 `/`、`/en/`、`/zh/`，不混入 `/bonds/` 的流量。可按路径区分语言版本，查看访问量、来源和国家等汇总信息；此方案不提供简历 PDF 下载或链接点击事件统计。
+
+首次启用需要站点所有者在 Cloudflare 的 Web Analytics 中添加 `aquareo.github.io`，从 Manage site 复制公开的 JS snippet。此代码中的 site token 用于公开网页，并非账户 API 密钥。接入方式按[官方手动接入说明](https://developers.cloudflare.com/web-analytics/get-started/)；不需要更改 DNS 或迁移托管。
+
+运行 `python3 tools/configure_analytics.py`，粘贴整段代码并以 EOF 结束（macOS 终端通常按 Ctrl-D），即可同步安装到三个入口，然后提交并正常部署。重复运行会替换原配置，不重复统计。不要传入密码或 Cloudflare API 密钥。工具尚未执行时，页面不会加载统计脚本；拿到真实站点代码后才启用，不能补录之前的访问。广告拦截器等可能导致统计漏记。
