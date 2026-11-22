@@ -6,7 +6,7 @@
 
 English (default): https://aquareo.github.io/
 
-私人申请记录入口：https://aquareo.github.io/phd-tracker/ 。此目录仅包含登录入口，点击后前往需要本人登录的独立 Sites 站点；不在公开仓库存储申请或邮件数据。入口不再强制自动跳转，以便在私人域名网络不可达时仍能打开说明与返回链接。
+私人申请记录入口：https://aquareo.github.io/phd-tracker/ 。该目录直接显示密码解锁页面，不依赖 ChatGPT 站点跳转。申请快照使用混合加密，公开仓库仅保存密文与密码加密的私钥；摘要原文由独立私人仓库维护。
 
 原 `/en/` 地址保留为英文兼容入口，canonical 指向根网址。
 
@@ -62,3 +62,11 @@ English (default): https://aquareo.github.io/
 首次启用需要站点所有者在 Cloudflare 的 Web Analytics 中添加 `aquareo.github.io`，从 Manage site 复制公开的 JS snippet。此代码中的 site token 用于公开网页，并非账户 API 密钥。接入方式按[官方手动接入说明](https://developers.cloudflare.com/web-analytics/get-started/)；不需要更改 DNS 或迁移托管。
 
 运行 `python3 tools/configure_analytics.py`，粘贴整段代码并以 EOF 结束（macOS 终端通常按 Ctrl-D），即可同步安装到三个入口，然后提交并正常部署。重复运行会替换原配置，不重复统计。不要传入密码或 Cloudflare API 密钥。工具尚未执行时，页面不会加载统计脚本；拿到真实站点代码后才启用，不能补录之前的访问。广告拦截器等可能导致统计漏记。
+
+## 申请记录页构建与更新
+
+`tools/phd-tracker/` 是通用客户端源码，使用 React 和浏览器 Web Crypto；运行 `npm ci` 后运行 `npm run build`，将带版本摘要的 JS/CSS 写入 `dist/phd-tracker/assets/`。正文、导师名单、邮件索引均不得写入源码或打包。
+
+`vault.json` 含 PBKDF2-SHA256（600000 次）加密的 RSA 私钥；`payload.enc.json` 是 RSA-OAEP-SHA256 + AES-256-GCM 加密快照。二者公开可取，但访问密码及明文私钥不保存在仓库。浏览器输入密码后在本机解锁；密码不发往服务器，闲置 15 分钟后自动锁定。此方式是加密内容解锁，不是服务器账户认证。更换密码需要重新封装密钥，不能只改 UI。
+
+每日任务在北京时间 08:00 检查申请相关 Gmail，只把加密快照更新到公开仓库并触发现有 Pages 部署。静态页面不会自行读邮箱。手动笔记和待办勾选保存在本机的加密覆盖层，与每日快照按字段合并；换设备需要导出、导入加密备份。此页不加载访问统计或第三方脚本，不包含任何 ChatGPT 登录跳转。
