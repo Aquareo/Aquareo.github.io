@@ -5,7 +5,7 @@ const date = z.string().refine(v => v === '' || /^\d{4}-\d{2}-\d{2}$/.test(v) &&
 const link = z.string().max(1500).refine(v => v === '' || /^https:\/\/mail\.google\.com\//.test(v), '邮件链接须为 Gmail HTTPS 链接');
 export const roundSchema=z.object({name:short.min(1),opens:date,closes:date,kind:z.enum(['admission','funding','position']),deadlineTime:z.string().max(30),timezone:z.string().max(100),source:z.string().url().refine(v=>v.startsWith('https://'),'来源必须使用 HTTPS'),note:z.string().max(2000),primary:z.boolean(),knownOpen:z.boolean(),verifiedAt:date});
 export const appSchema = z.object({
- id: z.string().min(1).max(100), school: short.min(1), person: short.min(1), topic: short,
+ id: z.string().min(1).max(100), school: short.min(1), schoolZh: short.optional(), schoolEn: short.optional(), person: short.min(1), topic: short,
  status: z.enum(['draft','waiting','positive','meeting','applied','offer','closed']),
  category: z.enum(['application','advice']), latest: date, deadline: date,
  rounds:z.array(roundSchema).max(30).optional(),
