@@ -5,7 +5,7 @@ const date = z.string().refine(v => v === '' || /^\d{4}-\d{2}-\d{2}$/.test(v) &&
 const link = z.string().max(1500).refine(v => v === '' || /^https:\/\/mail\.google\.com\//.test(v), '邮件链接须为 Gmail HTTPS 链接');
 export const roundSchema=z.object({name:short.min(1),opens:date,closes:date,kind:z.enum(['admission','funding','position']),deadlineTime:z.string().max(30),timezone:z.string().max(100),source:z.string().url().refine(v=>v.startsWith('https://'),'来源必须使用 HTTPS'),note:z.string().max(2000),primary:z.boolean(),knownOpen:z.boolean(),verifiedAt:date});
 export const appSchema = z.object({
- id: z.string().min(1).max(100), school: short.min(1), schoolZh: short.optional(), schoolEn: short.optional(), person: short.min(1), topic: short,
+ id: z.string().min(1).max(100), school: short.min(1), schoolZh: short.optional(), schoolEn: short.optional(), person: short, topic: short,
  status: z.enum(['draft','waiting','positive','meeting','applied','offer','closed']),
  category: z.enum(['application','advice']), latest: date, deadline: date,
  rounds:z.array(roundSchema).max(30).optional(),
@@ -20,16 +20,21 @@ export const taskSchema = z.object({
  id: z.string().min(1).max(100), appId: z.string().max(100), title: short.min(1), due: date,
  detail: z.string().max(2000), done: z.boolean(), source: link,
 });
+export const schoolPlanSchema=z.object({id:short.min(1),school:short.min(1),schoolZh:short.optional(),region:short.min(1),core:z.boolean(),stage:z.enum(['planned','preparing','submitted','offer','closed']),contactIds:z.array(short).max(100),notes:z.string().max(6000),rounds:z.array(roundSchema).max(30)});
+export type SchoolPlan=z.infer<typeof schoolPlanSchema>;
+export const planStages={planned:'待启动',preparing:'准备申请',submitted:'已提交网申',offer:'已获录取',closed:'已结束'};
 export const stateSchema = z.object({
  schemaVersion: z.literal(1), importedAt: short, importNote: z.string().max(2000),
  sync: z.object({checkedAt:z.string(),status:z.enum(['ok','error']),newMessages:z.number().int().min(0),summary:z.array(z.string().max(2000)).max(20)}).optional(),
+ schoolPlans:z.array(schoolPlanSchema).max(300).default([]),
  applications: z.array(appSchema).max(300), events: z.array(eventSchema).max(3000), tasks: z.array(taskSchema).max(1000),
 }).superRefine((v,ctx)=>{
- for(const key of ['applications','events','tasks'] as const) {
+ for(const key of ['applications','events','tasks','schoolPlans'] as const) {
   const ids=v[key].map(x=>x.id);
   if(new Set(ids).size!==ids.length)ctx.addIssue({code:'custom',message:'记录 ID 重复',path:[key]});
  }
  const ids=new Set(v.applications.map(x=>x.id));
+ for(const plan of v.schoolPlans)for(const id of plan.contactIds)if(!ids.has(id))ctx.addIssue({code:'custom',message:'学校关联联系人不存在',path:['schoolPlans']});
  for(const key of ['events','tasks'] as const)for(const item of v[key])if(item.appId&&!ids.has(item.appId))ctx.addIssue({code:'custom',message:'关联申请不存在',path:[key]});
 });
 export type TrackerState = z.infer<typeof stateSchema>;

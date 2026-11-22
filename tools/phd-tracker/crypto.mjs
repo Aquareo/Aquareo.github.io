@@ -24,10 +24,10 @@ export async function sealEnvelope(data,vault,kind='local'){
  const encryptedKey=await crypto.subtle.encrypt('RSA-OAEP',publicKey,raw);
  return {format:'phd-tracker-envelope',version:1,kind,keyId:vault.keyId,encryptedKey:bytesToB64(encryptedKey),iv:bytesToB64(iv),ciphertext:bytesToB64(ciphertext)};
 }
-const collections=['applications','events','tasks'];
+const collections=['applications','events','tasks','schoolPlans'];
 export function createOverlay(base,next){
  const result={version:1,updatedAt:new Date().toISOString(),collections:{}};
- for(const name of collections){const before=new Map(base[name].map(item=>[item.id,item])),after=new Map(next[name].map(item=>[item.id,item])),changes=[];
+ for(const name of collections){const before=new Map((base[name]||[]).map(item=>[item.id,item])),after=new Map((next[name]||[]).map(item=>[item.id,item])),changes=[];
   for(const [id,item] of after){const old=before.get(id),patch={};for(const [key,value] of Object.entries(item))if(!old||JSON.stringify(value)!==JSON.stringify(old[key]))Object.defineProperty(patch,key,{value,enumerable:true});if(Object.keys(patch).length)changes.push({id,patch});}
   for(const id of before.keys())if(!after.has(id))changes.push({id,deleted:true});result.collections[name]=changes;
  }return result;
@@ -35,11 +35,12 @@ export function createOverlay(base,next){
 export function applyOverlay(base,overlay){
  if(overlay.version!==1||!overlay.collections)throw Error('本机记录格式有误，请先导出备份。');
  const result=structuredClone(base);
- for(const name of collections){const items=new Map(result[name].map(item=>[item.id,item]));
+ for(const name of collections){const items=new Map((result[name]||[]).map(item=>[item.id,item]));
+  if(name==='schoolPlans'&&!overlay.collections[name])continue;
   if(!Array.isArray(overlay.collections[name]))throw Error('本机记录格式有误。');
   for(const change of overlay.collections[name]){if(typeof change.id!=='string')throw Error('记录 ID 有误。');if(change.deleted)items.delete(change.id);else items.set(change.id,{...items.get(change.id),...change.patch,id:change.id});}
   result[name]=[...items.values()];
  }
- const ids=new Set(result.applications.map(a=>a.id));for(const name of ['events','tasks'])result[name]=result[name].map(item=>item.appId&&!ids.has(item.appId)?{...item,appId:''}:item);
+ const ids=new Set(result.applications.map(a=>a.id));for(const name of ['events','tasks'])result[name]=(result[name]||[]).map(item=>item.appId&&!ids.has(item.appId)?{...item,appId:''}:item);
  return result;
 }

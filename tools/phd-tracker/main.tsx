@@ -43,7 +43,7 @@ function App(){
   if(backup.format==='phd-tracker-backup'&&backup.version===1)return stateSchema.parse(applyOverlay(session.base,backup.overlay));
   // Compatibility with the initial full-snapshot backup format; retain newer mail records.
   const legacy=stateSchema.parse(backup),merged={...session.base};
-  for(const kind of ['applications','events','tasks'] as const){const rows=new Map(session.base[kind].map(item=>[item.id,item]));for(const item of legacy[kind])rows.set(item.id,item as any);(merged as any)[kind]=[...rows.values()];}
+  for(const kind of ['applications','events','tasks','schoolPlans'] as const){const rows=new Map(session.base[kind].map(item=>[item.id,item]));for(const item of legacy[kind])rows.set(item.id,item as any);(merged as any)[kind]=[...rows.values()];}
   return stateSchema.parse(merged);
  }
  if(session)return <Tracker initial={session.initial} initialRevision={0} initialSaved={session.saved} displayName="刘宇" onSave={persist} onExport={exportBackup} onImport={importBackup} onLock={lock}/>;
