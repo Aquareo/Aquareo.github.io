@@ -36,8 +36,16 @@ function App(){
   try{localStorage.setItem(storageKey,raw);}catch{throw Error('浏览器存储不可用或已满。请先导出加密备份。');}
   localRaw.current=raw;return overlay.updatedAt;
  }
- async function exportBackup(state:TrackerState){if(!session)return;const envelope=await sealEnvelope(state,session.vault,'backup');saveDownload(envelope,'phd-tracker-backup-'+new Date().toISOString().slice(0,10)+'.json');}
- async function importBackup(file:File){if(!session)throw Error('请先解锁。');return stateSchema.parse(await openEnvelope(JSON.parse(await file.text()),session.vault,session.key,'backup'));}
+ async function exportBackup(state:TrackerState){if(!session)return;const envelope=await sealEnvelope({format:'phd-tracker-backup',version:1,overlay:createOverlay(session.base,state)},session.vault,'backup');saveDownload(envelope,'phd-tracker-backup-'+new Date().toISOString().slice(0,10)+'.json');}
+ async function importBackup(file:File){
+  if(!session)throw Error('请先解锁。');
+  const backup=await openEnvelope(JSON.parse(await file.text()),session.vault,session.key,'backup');
+  if(backup.format==='phd-tracker-backup'&&backup.version===1)return stateSchema.parse(applyOverlay(session.base,backup.overlay));
+  // Compatibility with the initial full-snapshot backup format; retain newer mail records.
+  const legacy=stateSchema.parse(backup),merged={...session.base};
+  for(const kind of ['applications','events','tasks'] as const){const rows=new Map(session.base[kind].map(item=>[item.id,item]));for(const item of legacy[kind])rows.set(item.id,item as any);(merged as any)[kind]=[...rows.values()];}
+  return stateSchema.parse(merged);
+ }
  if(session)return <Tracker initial={session.initial} initialRevision={0} initialSaved={session.saved} displayName="刘宇" onSave={persist} onExport={exportBackup} onImport={importBackup} onLock={lock}/>;
  return <main className="vault-screen"><div className="vault-box"><span className="monogram">YL</span><h1>博士申请记录</h1><p>输入专用密码，查看申请进展与每日更新。</p><form onSubmit={login}><label htmlFor="password">访问密码</label><input id="password" name="password" type={visible?'text':'password'} autoComplete="current-password" value={password} onChange={e=>setPassword(e.target.value)} required autoFocus disabled={busy}/><label className="show-password"><input type="checkbox" checked={visible} onChange={e=>setVisible(e.target.checked)}/>显示密码</label><button className="primary" type="submit" disabled={busy}>{busy?'正在解锁…':'解锁申请记录'}</button>{error&&<div className="vault-error" role="alert">{error}</div>}</form><p className="vault-footnote">密码仅在本机解锁时使用，不会发送到服务器。<br/>闲置 15 分钟后自动锁定。手动笔记加密保存在此浏览器。</p><a className="mail-link" href="../">返回个人主页</a></div></main>;
 }
