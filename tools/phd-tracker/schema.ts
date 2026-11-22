@@ -20,7 +20,7 @@ export const taskSchema = z.object({
  id: z.string().min(1).max(100), appId: z.string().max(100), title: short.min(1), due: date,
  detail: z.string().max(2000), done: z.boolean(), source: link,
 });
-export const schoolPlanSchema=z.object({id:short.min(1),school:short.min(1),schoolZh:short.optional(),region:short.min(1),core:z.boolean(),stage:z.enum(['planned','preparing','submitted','offer','closed']),contactIds:z.array(short).max(100),notes:z.string().max(6000),rounds:z.array(roundSchema).max(30)});
+export const schoolPlanSchema=z.object({id:short.min(1),school:short.min(1),schoolZh:short.optional(),region:short.min(1),core:z.boolean(),excluded:z.boolean().optional(),stage:z.enum(['planned','preparing','submitted','offer','closed']),contactIds:z.array(short).max(100),notes:z.string().max(6000),rounds:z.array(roundSchema).max(30)});
 export type SchoolPlan=z.infer<typeof schoolPlanSchema>;
 export const planStages={planned:'待启动',preparing:'准备申请',submitted:'已提交网申',offer:'已获录取',closed:'已结束'};
 export const stateSchema = z.object({
@@ -44,4 +44,4 @@ export type Task = z.infer<typeof taskSchema>;
 export const statusNames: Record<Application['status'], string> = {draft:'草稿 · 未发送',waiting:'已联系 · 待回复',positive:'鼓励申请',meeting:'交流安排中',applied:'已提交申请',offer:'已获录取',closed:'已结束'};
 export const eventNames: Record<TimelineEvent['type'], string> = {sent:'发出联系',reply:'收到回复',meeting:'交流安排',note:'个人记录',draft:'草稿',application:'提交申请',result:'结果'};
 
-export function includedSchoolPlan(plan:SchoolPlan,apps:Application[]){return plan.core||plan.stage!=='planned'||!plan.contactIds.length||apps.some(a=>plan.contactIds.includes(a.id)&&a.status!=='draft');}
+export function includedSchoolPlan(plan:SchoolPlan,apps:Application[]){return !plan.excluded&&(plan.core||plan.stage!=='planned'||!plan.contactIds.length||apps.some(a=>plan.contactIds.includes(a.id)&&a.status!=='draft'));}
