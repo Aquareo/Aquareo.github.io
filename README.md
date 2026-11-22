@@ -6,7 +6,7 @@
 
 English (default): https://aquareo.github.io/
 
-私人申请记录入口：https://aquareo.github.io/phd-tracker/ 。此目录仅包含跳转页，前往需要本人登录的独立 Sites 站点；不在公开仓库存储申请或邮件数据。
+私人申请记录入口：https://aquareo.github.io/phd-tracker/ 。此目录仅包含登录入口，点击后前往需要本人登录的独立 Sites 站点；不在公开仓库存储申请或邮件数据。入口不再强制自动跳转，以便在私人域名网络不可达时仍能打开说明与返回链接。
 
 原 `/en/` 地址保留为英文兼容入口，canonical 指向根网址。
 
