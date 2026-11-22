@@ -43,3 +43,5 @@ export type TimelineEvent = z.infer<typeof eventSchema>;
 export type Task = z.infer<typeof taskSchema>;
 export const statusNames: Record<Application['status'], string> = {draft:'草稿 · 未发送',waiting:'已联系 · 待回复',positive:'鼓励申请',meeting:'交流安排中',applied:'已提交申请',offer:'已获录取',closed:'已结束'};
 export const eventNames: Record<TimelineEvent['type'], string> = {sent:'发出联系',reply:'收到回复',meeting:'交流安排',note:'个人记录',draft:'草稿',application:'提交申请',result:'结果'};
+
+export function includedSchoolPlan(plan:SchoolPlan,apps:Application[]){return plan.core||plan.stage!=='planned'||!plan.contactIds.length||apps.some(a=>plan.contactIds.includes(a.id)&&a.status!=='draft');}
