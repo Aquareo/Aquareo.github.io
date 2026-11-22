@@ -1,3 +1,6 @@
 
 # Tracker dependencies and local build state
 node_modules/
+
+__pycache__/
+*.pyc
