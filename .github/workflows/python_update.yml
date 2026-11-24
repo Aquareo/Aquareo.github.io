@@ -52,6 +52,8 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
+      - name: Await artifact registration
+        run: sleep 10
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
