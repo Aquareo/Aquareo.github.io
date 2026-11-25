@@ -307,38 +307,45 @@ function renderKPI() {
 
 function renderBarsSVG(s) {
   const items = [
-    { label: "模型低估组 (Top 1/3)", val: s.top_avg_ret, hl: true },
+    { label: "低估组 (Top 1/3)", val: s.top_avg_ret, hl: true },
     { label: "中间组", val: s.mid_avg_ret },
-    { label: "高估警戒组 (Bottom 1/3)", val: s.bot_avg_ret },
-    { label: "传统双低组 (对照)", val: s.dl_avg_ret },
-    { label: "全市场样本均价", val: s.mkt_avg_ret },
+    { label: "高估组 (Bottom 1/3)", val: s.bot_avg_ret },
+    { label: "传统双低组", val: s.dl_avg_ret },
+    { label: "全市场均价", val: s.mkt_avg_ret },
   ];
-  const maxAbs = Math.max(2, ...items.map(x => Math.abs(x.val)));
-  const W = 440, H = 200, midX = 250, barMaxW = 145;
+  const minVal = Math.min(0, ...items.map(x => x.val));
+  const maxVal = Math.max(0, ...items.map(x => x.val));
+  const span = Math.max(2, maxVal - minVal);
+  const W = 470, H = 200, plotLeft = 200, plotRight = 415;
+  const zeroX = plotLeft + (0 - minVal) / span * (plotRight - plotLeft);
+  const toX = v => plotLeft + (v - minVal) / span * (plotRight - plotLeft);
   let rows = "";
   items.forEach((it, idx) => {
     const y = 18 + idx * 36;
-    const w = Math.abs(it.val) / maxAbs * barMaxW;
-    const x = it.val >= 0 ? midX : midX - w;
+    const vx = toX(it.val);
+    const rx = Math.min(zeroX, vx);
+    const rw = Math.max(2, Math.abs(vx - zeroX));
     const color = it.val >= 0 ? "#c43737" : "#187a62";
     const opacity = it.hl ? "0.95" : "0.65";
+    const textX = it.val >= 0 ? rx + rw + 6 : rx - 6;
+    const anchor = it.val >= 0 ? "start" : "end";
     rows += `
-      <text x="8" y="${y + 15}" font-size="12" fill="${it.hl ? "#1f252e" : "#687382"}" font-weight="${it.hl ? "600" : "400"}">${it.label}</text>
-      <rect x="${x}" y="${y + 2}" width="${Math.max(2, w)}" height="18" fill="${color}" opacity="${opacity}" rx="2"></rect>
-      <text x="${it.val >= 0 ? x + w + 6 : x - 6}" y="${y + 15}" font-size="11" font-weight="600" fill="${color}" text-anchor="${it.val >= 0 ? "start" : "end"}">${signed(it.val)}</text>
+      <text x="6" y="${y + 15}" font-size="12" fill="${it.hl ? "#1f252e" : "#687382"}" font-weight="${it.hl ? "600" : "400"}">${it.label}</text>
+      <rect x="${rx.toFixed(1)}" y="${y + 2}" width="${rw.toFixed(1)}" height="18" fill="${color}" opacity="${opacity}" rx="2"></rect>
+      <text x="${textX.toFixed(1)}" y="${y + 15}" font-size="11" font-weight="600" fill="${color}" text-anchor="${anchor}">${signed(it.val)}</text>
     `;
   });
   return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">
-    <line x1="${midX}" y1="8" x2="${midX}" y2="${H - 8}" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="${zeroX.toFixed(1)}" y1="8" x2="${zeroX.toFixed(1)}" y2="${H - 8}" stroke="#cbd5e1" stroke-width="1"/>
     ${rows}
   </svg>`;
 }
 
 function renderScatterSVG(rows, medRet) {
-  const W = 500, H = 215, padL = 44, padR = 20, padT = 18, padB = 30;
+  const W = 500, H = 225, padL = 46, padR = 22, padT = 22, padB = 34;
   const xs = rows.map(r => r.underval_past), ys = rows.map(r => r.actual_ret);
-  const minX = Math.min(-15, ...xs) - 2, maxX = Math.max(10, ...xs) + 2;
-  const minY = Math.min(-15, ...ys) - 2, maxY = Math.max(10, ...ys) + 2;
+  const minX = Math.min(-12, ...xs) - 2, maxX = Math.max(8, ...xs) + 2;
+  const minY = Math.min(-12, ...ys) - 2, maxY = Math.max(4, ...ys) + 3;
   const px = v => padL + (v - minX) / (maxX - minX) * (W - padL - padR);
   const py = v => H - padB - (v - minY) / (maxY - minY) * (H - padT - padB);
   const zeroX = px(0), medY = py(medRet);
@@ -353,12 +360,12 @@ function renderScatterSVG(rows, medRet) {
   });
 
   return `<svg viewBox="0 0 ${W} ${H}" id="scatterSvg" style="width:100%;height:auto;display:block;">
-    <rect x="${zeroX}" y="${padT}" width="${W - padR - zeroX}" height="${medY - padT}" fill="#fdf2f2" opacity="0.5"/>
-    <rect x="${padL}" y="${medY}" width="${zeroX - padL}" height="${H - padB - medY}" fill="#f1faf7" opacity="0.6"/>
+    <rect x="${zeroX}" y="${padT}" width="${Math.max(0, W - padR - zeroX)}" height="${Math.max(0, medY - padT)}" fill="#fdf2f2" opacity="0.55"/>
+    <rect x="${padL}" y="${medY}" width="${Math.max(0, zeroX - padL)}" height="${Math.max(0, H - padB - medY)}" fill="#f1faf7" opacity="0.65"/>
     <line x1="${padL}" y1="${medY}" x2="${W - padR}" y2="${medY}" stroke="#cbd5e1" stroke-dasharray="3 3"/>
     <line x1="${zeroX}" y1="${padT}" x2="${zeroX}" y2="${H - padB}" stroke="#cbd5e1" stroke-dasharray="3 3"/>
-    <text x="${W - padR - 4}" y="${padT + 12}" text-anchor="end" font-size="10" fill="#c43737">低估且跑赢中位</text>
-    <text x="${padL + 4}" y="${H - padB - 6}" text-anchor="start" font-size="10" fill="#187a62">高估且跑输中位</text>
+    <text x="${W - padR - 4}" y="${padT - 6}" text-anchor="end" font-size="10" fill="#c43737">右上区: 模型看低估且跑赢中位</text>
+    <text x="${padL + 4}" y="${padT - 6}" text-anchor="start" font-size="10" fill="#187a62">左下区: 模型看高估且走弱</text>
     <text x="${W / 2}" y="${H - 6}" text-anchor="middle" font-size="10" fill="#687382">当时模型预测低估度 (%) →</text>
     <text x="12" y="${H / 2}" text-anchor="middle" font-size="10" fill="#687382" transform="rotate(-90 12 ${H / 2})">实际涨跌 (%)</text>
     ${dots}
