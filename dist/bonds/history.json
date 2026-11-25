@@ -1506,6 +1506,14 @@
           "double_low": 141.61,
           "region_code": "R3"
         },
+        "123160": {
+          "name": "泰福转债",
+          "bond_price": 133.1,
+          "model_price": 135.32,
+          "undervaluation": 1.67,
+          "double_low": 179.75,
+          "region_code": "R3"
+        },
         "113043": {
           "name": "财通转债",
           "bond_price": 105.91,
@@ -2241,14 +2249,6 @@
           "undervaluation": -11.61,
           "double_low": 162.45,
           "region_code": "R2"
-        },
-        "123160": {
-          "name": "泰福转债",
-          "bond_price": 133.1,
-          "model_price": 116.16,
-          "undervaluation": -12.73,
-          "double_low": 179.75,
-          "region_code": "R3"
         },
         "123280": {
           "name": "三鑫转债",

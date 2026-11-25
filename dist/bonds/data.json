@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25 21:17:11",
+  "updated_at": "2026-11-25 21:20:58",
   "date": "2026-11-25",
   "author": "Yu Liu (刘宇) · The Chinese University of Hong Kong, Shenzhen",
   "paper_ref": "arXiv:2409.06496v7",
@@ -13296,7 +13296,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 0.17,
-      "lsm_rank": 206,
+      "lsm_rank": 207,
       "dl_rank": 4
     },
     {
@@ -13362,7 +13362,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 1.09,
-      "lsm_rank": 205,
+      "lsm_rank": 206,
       "dl_rank": 7
     },
     {
@@ -13384,7 +13384,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.61,
-      "lsm_rank": 207,
+      "lsm_rank": 208,
       "dl_rank": 8
     },
     {
@@ -13428,7 +13428,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 0.95,
-      "lsm_rank": 215,
+      "lsm_rank": 216,
       "dl_rank": 10
     }
   ],
@@ -17526,6 +17526,28 @@
       "dl_rank": 28
     },
     {
+      "ticker": "123160",
+      "name": "泰福转债",
+      "stock_code": "300992",
+      "stock_name": "泰福泵业",
+      "stock_price": 17.88,
+      "conv_price": 19.7,
+      "bond_price": 133.1,
+      "model_price": 135.32,
+      "undervaluation": 1.67,
+      "pure_debt_val": 102.9,
+      "double_low": 179.75,
+      "conv_val": 90.76,
+      "premium_rate": 46.65,
+      "sigma": 69.5,
+      "region_name": "平衡抗跌区",
+      "region_code": "R3",
+      "region_desc": "兼顾纯债底与转股期权",
+      "maturity_years": 1.92,
+      "lsm_rank": 187,
+      "dl_rank": 109
+    },
+    {
       "ticker": "113043",
       "name": "财通转债",
       "stock_code": "601108",
@@ -17544,7 +17566,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.3,
-      "lsm_rank": 187,
+      "lsm_rank": 188,
       "dl_rank": 17
     },
     {
@@ -17566,7 +17588,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.73,
-      "lsm_rank": 188,
+      "lsm_rank": 189,
       "dl_rank": 147
     },
     {
@@ -17588,7 +17610,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 3.72,
-      "lsm_rank": 189,
+      "lsm_rank": 190,
       "dl_rank": 184
     },
     {
@@ -17610,7 +17632,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.32,
-      "lsm_rank": 190,
+      "lsm_rank": 191,
       "dl_rank": 25
     },
     {
@@ -17632,7 +17654,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 1.71,
-      "lsm_rank": 191,
+      "lsm_rank": 192,
       "dl_rank": 155
     },
     {
@@ -17654,7 +17676,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 1.11,
-      "lsm_rank": 192,
+      "lsm_rank": 193,
       "dl_rank": 237
     },
     {
@@ -17676,7 +17698,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.0,
-      "lsm_rank": 193,
+      "lsm_rank": 194,
       "dl_rank": 22
     },
     {
@@ -17698,7 +17720,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 0.3,
-      "lsm_rank": 194,
+      "lsm_rank": 195,
       "dl_rank": 239
     },
     {
@@ -17720,7 +17742,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 5.64,
-      "lsm_rank": 195,
+      "lsm_rank": 196,
       "dl_rank": 273
     },
     {
@@ -17742,7 +17764,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 3.16,
-      "lsm_rank": 196,
+      "lsm_rank": 197,
       "dl_rank": 92
     },
     {
@@ -17764,7 +17786,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 0.47,
-      "lsm_rank": 197,
+      "lsm_rank": 198,
       "dl_rank": 241
     },
     {
@@ -17786,7 +17808,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.65,
-      "lsm_rank": 198,
+      "lsm_rank": 199,
       "dl_rank": 134
     },
     {
@@ -17808,7 +17830,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.61,
-      "lsm_rank": 199,
+      "lsm_rank": 200,
       "dl_rank": 64
     },
     {
@@ -17830,7 +17852,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.1,
-      "lsm_rank": 200,
+      "lsm_rank": 201,
       "dl_rank": 58
     },
     {
@@ -17852,7 +17874,7 @@
       "region_code": "R1",
       "region_desc": "正股超 130% 强赎触发线",
       "maturity_years": 0.3,
-      "lsm_rank": 201,
+      "lsm_rank": 202,
       "dl_rank": 297
     },
     {
@@ -17874,7 +17896,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 5.75,
-      "lsm_rank": 202,
+      "lsm_rank": 203,
       "dl_rank": 252
     },
     {
@@ -17896,7 +17918,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 4.95,
-      "lsm_rank": 203,
+      "lsm_rank": 204,
       "dl_rank": 186
     },
     {
@@ -17918,7 +17940,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.41,
-      "lsm_rank": 204,
+      "lsm_rank": 205,
       "dl_rank": 60
     },
     {
@@ -17940,7 +17962,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 1.09,
-      "lsm_rank": 205,
+      "lsm_rank": 206,
       "dl_rank": 7
     },
     {
@@ -17962,7 +17984,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 0.17,
-      "lsm_rank": 206,
+      "lsm_rank": 207,
       "dl_rank": 4
     },
     {
@@ -17984,7 +18006,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.61,
-      "lsm_rank": 207,
+      "lsm_rank": 208,
       "dl_rank": 8
     },
     {
@@ -18006,7 +18028,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 2.72,
-      "lsm_rank": 208,
+      "lsm_rank": 209,
       "dl_rank": 141
     },
     {
@@ -18028,7 +18050,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 3.97,
-      "lsm_rank": 209,
+      "lsm_rank": 210,
       "dl_rank": 41
     },
     {
@@ -18050,7 +18072,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.1,
-      "lsm_rank": 210,
+      "lsm_rank": 211,
       "dl_rank": 158
     },
     {
@@ -18072,7 +18094,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 5.73,
-      "lsm_rank": 211,
+      "lsm_rank": 212,
       "dl_rank": 264
     },
     {
@@ -18094,7 +18116,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.65,
-      "lsm_rank": 212,
+      "lsm_rank": 213,
       "dl_rank": 81
     },
     {
@@ -18116,7 +18138,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 1.33,
-      "lsm_rank": 213,
+      "lsm_rank": 214,
       "dl_rank": 45
     },
     {
@@ -18138,7 +18160,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.3,
-      "lsm_rank": 214,
+      "lsm_rank": 215,
       "dl_rank": 59
     },
     {
@@ -18160,7 +18182,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 0.95,
-      "lsm_rank": 215,
+      "lsm_rank": 216,
       "dl_rank": 10
     },
     {
@@ -18182,7 +18204,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 3.09,
-      "lsm_rank": 216,
+      "lsm_rank": 217,
       "dl_rank": 117
     },
     {
@@ -18204,7 +18226,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 3.13,
-      "lsm_rank": 217,
+      "lsm_rank": 218,
       "dl_rank": 204
     },
     {
@@ -18226,7 +18248,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 3.25,
-      "lsm_rank": 218,
+      "lsm_rank": 219,
       "dl_rank": 114
     },
     {
@@ -18248,7 +18270,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.0,
-      "lsm_rank": 219,
+      "lsm_rank": 220,
       "dl_rank": 178
     },
     {
@@ -18270,7 +18292,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 5.64,
-      "lsm_rank": 220,
+      "lsm_rank": 221,
       "dl_rank": 174
     },
     {
@@ -18292,7 +18314,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 3.34,
-      "lsm_rank": 221,
+      "lsm_rank": 222,
       "dl_rank": 65
     },
     {
@@ -18314,7 +18336,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.64,
-      "lsm_rank": 222,
+      "lsm_rank": 223,
       "dl_rank": 44
     },
     {
@@ -18336,7 +18358,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 0.3,
-      "lsm_rank": 223,
+      "lsm_rank": 224,
       "dl_rank": 144
     },
     {
@@ -18358,7 +18380,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 0.3,
-      "lsm_rank": 224,
+      "lsm_rank": 225,
       "dl_rank": 173
     },
     {
@@ -18380,7 +18402,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.51,
-      "lsm_rank": 225,
+      "lsm_rank": 226,
       "dl_rank": 34
     },
     {
@@ -18402,7 +18424,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 2.34,
-      "lsm_rank": 226,
+      "lsm_rank": 227,
       "dl_rank": 31
     },
     {
@@ -18424,7 +18446,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.03,
-      "lsm_rank": 227,
+      "lsm_rank": 228,
       "dl_rank": 23
     },
     {
@@ -18446,7 +18468,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.34,
-      "lsm_rank": 228,
+      "lsm_rank": 229,
       "dl_rank": 84
     },
     {
@@ -18468,7 +18490,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.75,
-      "lsm_rank": 229,
+      "lsm_rank": 230,
       "dl_rank": 212
     },
     {
@@ -18490,7 +18512,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.41,
-      "lsm_rank": 230,
+      "lsm_rank": 231,
       "dl_rank": 26
     },
     {
@@ -18512,7 +18534,7 @@
       "region_code": "R1",
       "region_desc": "正股超 130% 强赎触发线",
       "maturity_years": 3.62,
-      "lsm_rank": 231,
+      "lsm_rank": 232,
       "dl_rank": 103
     },
     {
@@ -18534,7 +18556,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.12,
-      "lsm_rank": 232,
+      "lsm_rank": 233,
       "dl_rank": 56
     },
     {
@@ -18556,7 +18578,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.66,
-      "lsm_rank": 233,
+      "lsm_rank": 234,
       "dl_rank": 27
     },
     {
@@ -18578,7 +18600,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 4.88,
-      "lsm_rank": 234,
+      "lsm_rank": 235,
       "dl_rank": 32
     },
     {
@@ -18600,7 +18622,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.4,
-      "lsm_rank": 235,
+      "lsm_rank": 236,
       "dl_rank": 126
     },
     {
@@ -18622,7 +18644,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 1.6,
-      "lsm_rank": 236,
+      "lsm_rank": 237,
       "dl_rank": 24
     },
     {
@@ -18644,7 +18666,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 4.99,
-      "lsm_rank": 237,
+      "lsm_rank": 238,
       "dl_rank": 187
     },
     {
@@ -18666,7 +18688,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.54,
-      "lsm_rank": 238,
+      "lsm_rank": 239,
       "dl_rank": 52
     },
     {
@@ -18688,7 +18710,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.42,
-      "lsm_rank": 239,
+      "lsm_rank": 240,
       "dl_rank": 55
     },
     {
@@ -18710,7 +18732,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.77,
-      "lsm_rank": 240,
+      "lsm_rank": 241,
       "dl_rank": 182
     },
     {
@@ -18732,7 +18754,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 2.88,
-      "lsm_rank": 241,
+      "lsm_rank": 242,
       "dl_rank": 198
     },
     {
@@ -18754,7 +18776,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.61,
-      "lsm_rank": 242,
+      "lsm_rank": 243,
       "dl_rank": 72
     },
     {
@@ -18776,7 +18798,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.42,
-      "lsm_rank": 243,
+      "lsm_rank": 244,
       "dl_rank": 16
     },
     {
@@ -18798,7 +18820,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.96,
-      "lsm_rank": 244,
+      "lsm_rank": 245,
       "dl_rank": 99
     },
     {
@@ -18820,7 +18842,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.73,
-      "lsm_rank": 245,
+      "lsm_rank": 246,
       "dl_rank": 47
     },
     {
@@ -18842,7 +18864,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.37,
-      "lsm_rank": 246,
+      "lsm_rank": 247,
       "dl_rank": 40
     },
     {
@@ -18864,7 +18886,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.68,
-      "lsm_rank": 247,
+      "lsm_rank": 248,
       "dl_rank": 206
     },
     {
@@ -18886,7 +18908,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.73,
-      "lsm_rank": 248,
+      "lsm_rank": 249,
       "dl_rank": 136
     },
     {
@@ -18908,7 +18930,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.79,
-      "lsm_rank": 249,
+      "lsm_rank": 250,
       "dl_rank": 37
     },
     {
@@ -18930,7 +18952,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.84,
-      "lsm_rank": 250,
+      "lsm_rank": 251,
       "dl_rank": 115
     },
     {
@@ -18952,7 +18974,7 @@
       "region_code": "R4",
       "region_desc": "低于 70% 回售线，博弈下修",
       "maturity_years": 5.92,
-      "lsm_rank": 251,
+      "lsm_rank": 252,
       "dl_rank": 281
     },
     {
@@ -18974,7 +18996,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.3,
-      "lsm_rank": 252,
+      "lsm_rank": 253,
       "dl_rank": 69
     },
     {
@@ -18996,7 +19018,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.59,
-      "lsm_rank": 253,
+      "lsm_rank": 254,
       "dl_rank": 113
     },
     {
@@ -19018,7 +19040,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.94,
-      "lsm_rank": 254,
+      "lsm_rank": 255,
       "dl_rank": 116
     },
     {
@@ -19040,7 +19062,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 3.1,
-      "lsm_rank": 255,
+      "lsm_rank": 256,
       "dl_rank": 20
     },
     {
@@ -19062,7 +19084,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 2.41,
-      "lsm_rank": 256,
+      "lsm_rank": 257,
       "dl_rank": 75
     },
     {
@@ -19084,7 +19106,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.45,
-      "lsm_rank": 257,
+      "lsm_rank": 258,
       "dl_rank": 179
     },
     {
@@ -19106,7 +19128,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 4.15,
-      "lsm_rank": 258,
+      "lsm_rank": 259,
       "dl_rank": 36
     },
     {
@@ -19128,7 +19150,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.77,
-      "lsm_rank": 259,
+      "lsm_rank": 260,
       "dl_rank": 216
     },
     {
@@ -19150,7 +19172,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 0.35,
-      "lsm_rank": 260,
+      "lsm_rank": 261,
       "dl_rank": 49
     },
     {
@@ -19172,7 +19194,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 5.54,
-      "lsm_rank": 261,
+      "lsm_rank": 262,
       "dl_rank": 73
     },
     {
@@ -19194,7 +19216,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 4.62,
-      "lsm_rank": 262,
+      "lsm_rank": 263,
       "dl_rank": 156
     },
     {
@@ -19216,7 +19238,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 2.7,
-      "lsm_rank": 263,
+      "lsm_rank": 264,
       "dl_rank": 111
     },
     {
@@ -19238,7 +19260,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 2.72,
-      "lsm_rank": 264,
+      "lsm_rank": 265,
       "dl_rank": 94
     },
     {
@@ -19260,7 +19282,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 2.71,
-      "lsm_rank": 265,
+      "lsm_rank": 266,
       "dl_rank": 140
     },
     {
@@ -19282,7 +19304,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 4.61,
-      "lsm_rank": 266,
+      "lsm_rank": 267,
       "dl_rank": 107
     },
     {
@@ -19304,7 +19326,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 2.88,
-      "lsm_rank": 267,
+      "lsm_rank": 268,
       "dl_rank": 146
     },
     {
@@ -19326,7 +19348,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 4.22,
-      "lsm_rank": 268,
+      "lsm_rank": 269,
       "dl_rank": 46
     },
     {
@@ -19348,7 +19370,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.9,
-      "lsm_rank": 269,
+      "lsm_rank": 270,
       "dl_rank": 251
     },
     {
@@ -19370,7 +19392,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.33,
-      "lsm_rank": 270,
+      "lsm_rank": 271,
       "dl_rank": 138
     },
     {
@@ -19392,7 +19414,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 2.45,
-      "lsm_rank": 271,
+      "lsm_rank": 272,
       "dl_rank": 124
     },
     {
@@ -19414,7 +19436,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 1.47,
-      "lsm_rank": 272,
+      "lsm_rank": 273,
       "dl_rank": 219
     },
     {
@@ -19436,7 +19458,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 1.9,
-      "lsm_rank": 273,
+      "lsm_rank": 274,
       "dl_rank": 123
     },
     {
@@ -19458,7 +19480,7 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 5.04,
-      "lsm_rank": 274,
+      "lsm_rank": 275,
       "dl_rank": 196
     },
     {
@@ -19480,7 +19502,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.69,
-      "lsm_rank": 275,
+      "lsm_rank": 276,
       "dl_rank": 238
     },
     {
@@ -19502,7 +19524,7 @@
       "region_code": "R3",
       "region_desc": "兼顾纯债底与转股期权",
       "maturity_years": 5.66,
-      "lsm_rank": 276,
+      "lsm_rank": 277,
       "dl_rank": 230
     },
     {
@@ -19524,7 +19546,7 @@
       "region_code": "R1",
       "region_desc": "正股超 130% 强赎触发线",
       "maturity_years": 2.1,
-      "lsm_rank": 277,
+      "lsm_rank": 278,
       "dl_rank": 292
     },
     {
@@ -19546,30 +19568,8 @@
       "region_code": "R2",
       "region_desc": "正股高于转股价，股性凸显",
       "maturity_years": 5.72,
-      "lsm_rank": 278,
-      "dl_rank": 61
-    },
-    {
-      "ticker": "123160",
-      "name": "泰福转债",
-      "stock_code": "300992",
-      "stock_name": "泰福泵业",
-      "stock_price": 17.88,
-      "conv_price": 19.7,
-      "bond_price": 133.1,
-      "model_price": 116.16,
-      "undervaluation": -12.73,
-      "pure_debt_val": 102.9,
-      "double_low": 179.75,
-      "conv_val": 90.76,
-      "premium_rate": 46.65,
-      "sigma": 28.0,
-      "region_name": "平衡抗跌区",
-      "region_code": "R3",
-      "region_desc": "兼顾纯债底与转股期权",
-      "maturity_years": 1.92,
       "lsm_rank": 279,
-      "dl_rank": 109
+      "dl_rank": 61
     },
     {
       "ticker": "123280",
