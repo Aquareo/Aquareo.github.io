@@ -16,11 +16,13 @@ def price_ccb_four_region_lsm(
     put_pay: float = 101.0,
     n_steps: int = 24,
     M: int = 2000,
-    seed: int = 42
+    seed: int = 42,
+    segmented: bool = True
 ) -> float:
     """
     Chinese Convertible Bond Valuation via Four-Region Segmented Least-Squares Monte Carlo.
     Based on Yu Liu (2026), arXiv:2409.06496v7.
+    Set segmented=False for single-region global LSM ablation benchmark.
     """
     if S0 <= 0 or C0 <= 0:
         return B
@@ -90,15 +92,20 @@ def price_ccb_four_region_lsm(
             St * F_t, St * Y_t, F_t * Y_t
         ])
         
-        # 4 regions
-        r1 = St > k_t
-        r2 = (St > Ct) & (St <= k_t)
-        r3 = (St > ptr_t) & (St <= Ct)
-        r4 = St <= ptr_t
-        
+        # 4 regions (or single global region when segmented=False for ablation)
         continuation = np.zeros(M)
-        for r_mask in [r1, r2, r3, r4]:
-            count = np.sum(r_mask)
+        if segmented:
+            masks = [
+                St > k_t,
+                (St > Ct) & (St <= k_t),
+                (St > ptr_t) & (St <= Ct),
+                St <= ptr_t,
+            ]
+        else:
+            masks = [np.ones(M, dtype=bool)]
+
+        for r_mask in masks:
+            count = int(np.sum(r_mask))
             if count >= 12:
                 X_sub = X[r_mask]
                 y_sub = y[r_mask]
