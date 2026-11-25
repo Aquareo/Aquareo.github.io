@@ -135,7 +135,7 @@ function sideLabel(code, mode = "m5") {
   }
   const lv = getLatestLevels(r, q);
   if (lv?.type === "price" && lv.buyPct != null && lv.buyPct > 0 && lv.buyPct <= 1.8) {
-    return { text: `距买 +${lv.buyPct.toFixed(1)}%`, className: "forming", priority: 2 };
+    return { text: `差${lv.buyPct.toFixed(1)}%买`, className: "forming", priority: 2 };
   }
   if (lv?.type === "rsi" && lv.rsi != null && lv.rsi <= 35) {
     return { text: `RSI ${lv.rsi.toFixed(0)}`, className: "forming", priority: 2 };
@@ -443,36 +443,59 @@ function renderActionGuide() {
   if (!box) return;
   const s = selected(); if (!s) return;
   const q = state.quotes[s.code], r = result(s.code, state.mode, state.strategy);
-  const t = tAnalysis();
-  const guide = ActionGuide.resolve({
-    report: r, quote: q, position: state.positions[s.code], t,
-    strategy: state.strategy, healthy: freshness(s.code, state.mode).ok, paused: state.paused || document.hidden
-  });
-
   const lv = getLatestLevels(r, q);
   const events = r ? L.observations(r, { ...evaluationOptions(s.code, state.mode), threshold: 1 }) : [];
   const buyStats = L.stats(events, 3, { side: "buy" });
   const m = r?.metrics;
 
-  let badgeText = "观望中", badgeCls = "wait";
-  if (r?.pending?.side === "buy") { badgeText = "买入信号已确认"; badgeCls = "buy"; }
-  else if (r?.pending?.side === "sell") { badgeText = r.status === "sell_locked" ? "卖出信号 (T+1锁定)" : "卖出信号已确认"; badgeCls = "sell"; }
-  else if (r?.preview) { badgeText = r.preview.side === "buy" ? "买点条件形成中" : "卖点条件形成中"; badgeCls = "forming"; }
-  else if (r?.status === "holding") { badgeText = "模拟持仓 · 暂无卖点"; badgeCls = "holding"; }
+  let badgeText = "观望等待中", badgeCls = "wait", plainExplain = "";
+  if (r?.pending?.side === "buy") {
+    badgeText = "触发买点 · 可关注买入";
+    badgeCls = "buy";
+    plainExplain = `已确认买入信号：${r.pending.reason}。`;
+  } else if (r?.pending?.side === "sell") {
+    badgeText = r.status === "sell_locked" ? "触发卖点 (今日买入 T+1 锁定)" : "触发卖点 · 注意止盈/止损";
+    badgeCls = "sell";
+    plainExplain = `已确认卖出信号：${r.pending.reason}。`;
+  } else if (r?.preview) {
+    badgeText = r.preview.side === "buy" ? "盘中形成买点中" : "盘中形成卖点中";
+    badgeCls = "forming";
+    plainExplain = `当前 K 线尚未收盘，若维持当前价格到收线，将触发${r.preview.side === "buy" ? "买入" : "卖出"}信号。`;
+  } else if (lv?.type === "price") {
+    if (lv.buyPct != null && lv.buyPct > 0 && lv.buyPct <= 1.8) {
+      badgeText = "逼近买点 · 等突破";
+      badgeCls = "forming";
+    } else if (r?.status === "holding") {
+      badgeText = "模拟持仓中 · 未到卖点";
+      badgeCls = "holding";
+    }
+    plainExplain = `现价 ¥${fmt(lv.px)}。${lv.buyPct > 0 ? `只要向上突破 ¥${fmt(lv.buyLevel)}（还差 +${fmt(lv.buyPct, 1)}%），就会发出买入信号；` : "价格已站上突破线，等待量价过滤或下一根 K 线确认；"}若向下跌破 ¥${fmt(lv.sellLevel)}（${pct(lv.sellPct, true)}）则发出卖出/止损信号。`;
+  } else if (lv?.type === "rsi") {
+    if (lv.rsi != null && lv.rsi <= 35) {
+      badgeText = "接近超卖低吸区";
+      badgeCls = "forming";
+    } else if (r?.status === "holding") {
+      badgeText = "模拟持仓中 · 未到止盈";
+      badgeCls = "holding";
+    }
+    plainExplain = `当前 RSI14 为 ${fmt(lv.rsi, 1)}。当跌破 30 进入超卖并拐头向上突破 30 时触发“低吸买点”；反弹至 ≥55 时触发“止盈卖点”。`;
+  } else {
+    plainExplain = "正在等待 K 线数据加载完成后计算具体买卖价位。";
+  }
 
   let levelsHtml = "";
   if (lv?.type === "price") {
     levelsHtml = `
       <div class="trigger-box">
         <div class="trigger-item">
-          <span class="trigger-label up">买点突破价</span>
-          <strong class="mono">${fmt(lv.buyLevel)}</strong>
-          <small class="mono muted">${lv.buyPct != null ? (lv.buyPct > 0 ? `需涨 +${fmt(lv.buyPct, 1)}%` : "已突破!") : "—"}</small>
+          <span class="trigger-label up">买入条件（突破即买）</span>
+          <strong class="mono">¥${fmt(lv.buyLevel)}</strong>
+          <small class="mono muted">${lv.buyPct != null ? (lv.buyPct > 0 ? `再涨 +${fmt(lv.buyPct, 1)}% 触发买入` : "已站上突破位") : "—"}</small>
         </div>
         <div class="trigger-item">
-          <span class="trigger-label down">卖点止损价</span>
-          <strong class="mono">${fmt(lv.sellLevel)}</strong>
-          <small class="mono muted">${lv.sellPct != null ? `距离 ${pct(lv.sellPct, true)}` : "—"}</small>
+          <span class="trigger-label down">卖出条件（跌破即卖）</span>
+          <strong class="mono">¥${fmt(lv.sellLevel)}</strong>
+          <small class="mono muted">${lv.sellPct != null ? `跌 ${pct(lv.sellPct, true)} 触发止损/卖出` : "—"}</small>
         </div>
       </div>
     `;
@@ -481,19 +504,19 @@ function renderActionGuide() {
     levelsHtml = `
       <div class="trigger-box">
         <div class="trigger-item">
-          <span class="trigger-label">当前 RSI14</span>
+          <span class="trigger-label">当前强弱指标 RSI14</span>
           <strong class="mono ${rsiVal <= 30 ? "up" : rsiVal >= 55 ? "down" : ""}">${fmt(rsiVal, 1)}</strong>
-          <small class="muted">${rsiVal <= 30 ? "处于超卖区" : rsiVal >= 55 ? "处于止盈区" : "中性区间"}</small>
+          <small class="muted">${rsiVal <= 30 ? "处于超卖低吸区" : rsiVal >= 55 ? "处于超买止盈区" : "处于正常震荡区间"}</small>
         </div>
         <div class="trigger-item">
-          <span class="trigger-label">触发条件</span>
-          <strong style="font-size:13px;">买: ≤30→30+</strong>
-          <small class="muted">卖: ≥55 止盈 / &lt;20 止损</small>
+          <span class="trigger-label">买卖规则</span>
+          <strong style="font-size:13px;">买: ≤30 拐头向上</strong>
+          <small class="muted">卖: 反弹到 ≥55 止盈</small>
         </div>
       </div>
     `;
   } else {
-    levelsHtml = `<div class="trigger-box"><div class="trigger-item"><span class="muted">加载历史 K 线后显示具体触发价位</span></div></div>`;
+    levelsHtml = `<div class="trigger-box"><div class="trigger-item"><span class="muted">加载中…</span></div></div>`;
   }
 
   const stratButtons = L.STRATEGY_IDS.map(id =>
@@ -502,22 +525,22 @@ function renderActionGuide() {
 
   box.className = `signal-hero ${badgeCls}`;
   box.innerHTML = `
-    <div class="hero-verdict">
-      <div class="verdict-top">
-        <span class="verdict-pill ${badgeCls}">${e(badgeText)}</span>
-        <span class="verdict-time mono">${state.mode === "day" ? "日线" : "5分钟"} · ${e(freshness(s.code, state.mode).text)}</span>
-      </div>
-      <p class="verdict-reason">${e(r?.pending?.reason || guide.reason)}</p>
-    </div>
-    ${levelsHtml}
-    <div class="hero-controls">
+    <div class="hero-topbar">
       <div class="seg-group">${stratButtons}</div>
-      <div class="hero-sub">
-        <button class="filter-toggle ${state.quality === "filtered" ? "on" : ""}" data-detail-action="${state.quality === "filtered" ? "original" : "filtered"}">
-          趋势量价过滤：${state.quality === "filtered" ? "开启" : "关闭"}
-        </button>
-        <span class="hero-win mono">闭环胜率 ${m?.closed_trades ? pct(m.win_rate, false) : "—"} (${m?.winning_trades ?? 0}/${m?.closed_trades ?? 0}) · 3日买胜率 ${buyStats.n ? pct(buyStats.accuracy, false) : "—"}</span>
+      <button class="filter-toggle ${state.quality === "filtered" ? "on" : ""}" data-detail-action="${state.quality === "filtered" ? "original" : "filtered"}">
+        趋势量价过滤：${state.quality === "filtered" ? "开启" : "关闭"}
+      </button>
+      <span class="hero-win mono">闭环胜率 ${m?.closed_trades ? pct(m.win_rate, false) : "—"} (${m?.winning_trades ?? 0}/${m?.closed_trades ?? 0}) · 3日买点胜率 ${buyStats.n ? pct(buyStats.accuracy, false) : "—"}</span>
+    </div>
+    <div class="hero-main-row">
+      <div class="hero-verdict">
+        <div class="verdict-top">
+          <span class="verdict-pill ${badgeCls}">${e(badgeText)}</span>
+          <span class="verdict-time mono">${state.mode === "day" ? "日线" : "5分钟"} · ${e(freshness(s.code, state.mode).text)}</span>
+        </div>
+        <p class="verdict-reason">${e(plainExplain)}</p>
       </div>
+      ${levelsHtml}
     </div>
   `;
 }
