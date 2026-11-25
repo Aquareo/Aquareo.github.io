@@ -478,7 +478,134 @@ def load_and_evaluate():
         if res:
             validation[str(h)] = res
 
-    return evaluated, validation
+    strategy_backtest = run_strategy_backtest(valid_histories) if len(valid_histories) >= 15 else None
+    return evaluated, validation, strategy_backtest
+
+
+def run_strategy_backtest(valid_histories: list, max_days: int = 245):
+    """
+    Simulate multi-strategy, multi-frequency equal-weight CB portfolios over ~1 year (240 trading days)
+    returning daily gross return (%) and two-way turnover (%) arrays for client-side dynamic cost analysis.
+    """
+    if len(valid_histories) < 15:
+        return None
+
+    all_dates = sorted(set.union(*(set(df["date"]) for _, df in valid_histories)))
+    bt_dates = all_dates[-max_days:] if len(all_dates) >= max_days else all_dates
+    date_to_idx = {d: i for i, d in enumerate(bt_dates)}
+    T_len = len(bt_dates)
+    N_bonds = len(valid_histories)
+    if T_len < 40:
+        return None
+
+    ret_mat = np.full((T_len, N_bonds), np.nan)
+    orig_uv = np.full((T_len, N_bonds), np.nan)
+    cal_uv = np.full((T_len, N_bonds), np.nan)
+    dl_mat = np.full((T_len, N_bonds), np.nan)
+
+    for j, (item, df) in enumerate(valid_histories):
+        df = df.sort_values("date").reset_index(drop=True)
+        df_dates = list(df["date"])
+        log_r = np.log(df["close_stock"] / df["close_stock"].shift(1))
+        vols = (log_r.rolling(60, min_periods=15).std() * np.sqrt(252)).fillna(0.28).clip(0.15, 0.65)
+        C0 = item["conv_price"]
+        mat_now = item.get("maturity_years", 2.5)
+        total_rows = len(df)
+        for k in range(total_rows):
+            dt = df_dates[k]
+            if dt not in date_to_idx:
+                continue
+            ti = date_to_idx[dt]
+            Pb = float(df.iloc[k]["close_bond"])
+            Ps = float(df.iloc[k]["close_stock"])
+            if k > 0:
+                prev_pb = float(df.iloc[k - 1]["close_bond"])
+                if prev_pb > 0:
+                    ret_mat[ti, j] = (Pb - prev_pb) / prev_pb
+            if k < 25:
+                continue
+            rem_days = total_rows - 1 - k
+            mat_t = max(0.35, mat_now + rem_days / 252.0)
+            sig_t = float(vols.iloc[k])
+            conv_v = (100.0 / C0) * Ps
+            prem_t = (Pb - conv_v) / max(0.01, conv_v) * 100.0
+            dl_mat[ti, j] = Pb + prem_t
+
+            p_orig = price_ccb_four_region_lsm(
+                S0=Ps, C0=C0, FV=100.0, maturity_years=mat_t, r=0.025, q=0.0,
+                sigma=sig_t, p_reset=0.80, B=108.0, n_steps=14, M=450, seed=42
+            )
+            p_cal, _, _, _ = price_ccb_calibrated_defensive(
+                S0=Ps, C0=C0, bond_price=Pb, maturity_years=mat_t,
+                sigma=sig_t, n_steps=14, M=450, seed=42
+            )
+            orig_uv[ti, j] = (p_orig - Pb) / Pb * 100.0
+            cal_uv[ti, j] = (p_cal - Pb) / Pb * 100.0
+
+    start_t = 5
+    dates_out = [bt_dates[t].strftime("%Y-%m-%d") for t in range(start_t, T_len)]
+
+    def sim_series(strategy_name: str, freq: int):
+        weights = np.zeros(N_bonds)
+        gross_pct = []
+        to_pct = []
+        for t in range(start_t, T_len):
+            elig = [j for j in range(N_bonds) if not np.isnan(cal_uv[t - 1, j]) and not np.isnan(ret_mat[t, j])]
+            if len(elig) < 6:
+                gross_pct.append(0.0)
+                to_pct.append(0.0)
+                continue
+            k_pick = min(10, max(4, len(elig) // 3))
+            should_rebal = (t == start_t) or ((t - start_t) % freq == 0)
+            if should_rebal or weights.sum() == 0:
+                if strategy_name == "cal_lsm":
+                    chosen = sorted(elig, key=lambda j: cal_uv[t - 1, j], reverse=True)[:k_pick]
+                elif strategy_name == "orig_lsm":
+                    chosen = sorted(elig, key=lambda j: orig_uv[t - 1, j], reverse=True)[:k_pick]
+                elif strategy_name == "double_low":
+                    chosen = sorted(elig, key=lambda j: dl_mat[t - 1, j], reverse=False)[:k_pick]
+                elif strategy_name == "hybrid":
+                    cal_rank = pd.Series({j: cal_uv[t - 1, j] for j in elig}).rank(ascending=True)
+                    dl_rank = pd.Series({j: dl_mat[t - 1, j] for j in elig}).rank(ascending=False)
+                    blend = 0.55 * cal_rank + 0.45 * dl_rank
+                    chosen = list(blend.sort_values(ascending=False).index[:k_pick])
+                else:
+                    chosen = elig
+                target_w = np.zeros(N_bonds)
+                for j in chosen:
+                    target_w[j] = 1.0 / len(chosen)
+                two_way_to = float(np.sum(np.abs(target_w - weights)))
+                weights = target_w
+            else:
+                two_way_to = 0.0
+
+            r_vec = np.where(np.isnan(ret_mat[t]), 0.0, ret_mat[t])
+            port_r = float(np.dot(weights, r_vec))
+            gross_pct.append(round(port_r * 100.0, 4))
+            to_pct.append(round(two_way_to * 100.0, 3))
+
+            new_w = weights * (1.0 + r_vec)
+            if new_w.sum() > 0:
+                weights = new_w / new_w.sum()
+
+        return {"gross_pct": gross_pct, "to_pct": to_pct}
+
+    freqs = [1, 5, 10, 20]
+    series = {}
+    for strat in ("orig_lsm", "cal_lsm", "double_low", "hybrid"):
+        series[strat] = {str(f): sim_series(strat, f) for f in freqs}
+    bench = sim_series("mkt_ew", 20)
+
+    return {
+        "dates": dates_out,
+        "start_date": dates_out[0],
+        "end_date": dates_out[-1],
+        "n_days": len(dates_out),
+        "sample_bonds": N_bonds,
+        "frequencies": freqs,
+        "series": series,
+        "benchmark": bench,
+    }
 
 
 def generate_page_and_data():
@@ -487,7 +614,7 @@ def generate_page_and_data():
     update_time_str = now.strftime("%Y-%m-%d %H:%M:%S")
     date_str = now.strftime("%Y-%m-%d")
 
-    evaluated, validation = load_and_evaluate()
+    evaluated, validation, strategy_backtest = load_and_evaluate()
 
     cal_sorted = sorted(evaluated, key=lambda x: x["undervaluation_cal"], reverse=True)
     orig_sorted = sorted(evaluated, key=lambda x: x["undervaluation"], reverse=True)
@@ -534,6 +661,9 @@ def generate_page_and_data():
         for i, b in enumerate(dl_sorted, 1):
             b["dl_rank"] = i
 
+    if strategy_backtest is None and existing_data.get("strategy_backtest"):
+        strategy_backtest = existing_data["strategy_backtest"]
+
     live_ledger = update_live_history(dist_dir, date_str, cal_sorted)
 
     data_payload = {
@@ -548,6 +678,7 @@ def generate_page_and_data():
             "cal": {"name": "修正防守模型", "p_reset": 0.40, "B": "min(106, 99+1.8T)", "desc": "保守下修 + 波动率封顶 + 高价/高溢价滞后折价"},
         },
         "validation": validation,
+        "strategy_backtest": strategy_backtest,
         "live_ledger": live_ledger,
         "cal_top10": cal_sorted[:10],
         "orig_top10": orig_sorted[:10],
@@ -736,6 +867,12 @@ def build_clean_html(data):
       background: var(--blue); cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }}
     .calc-result-box {{ background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }}
+    .bt-wrap {{ padding: 18px 20px; }}
+    .bt-legend {{ display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; margin-bottom: 10px; }}
+    .bt-legend span {{ display: inline-flex; align-items: center; gap: 6px; color: var(--ink); }}
+    .bt-dot {{ width: 10px; height: 3px; display: inline-block; border-radius: 2px; }}
+    .best-row td {{ background: #f0f5fc; }}
+    .bt-note {{ padding: 12px 18px; background: #fcfdfe; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.6; }}
     .res-metric {{
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
       margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
@@ -879,6 +1016,31 @@ def build_clean_html(data):
     </div>
 
     <div id="validationContent"></div>
+  </div>
+
+  <!-- Section 2.5: Multi-Strategy x Multi-Frequency Cost-Aware Backtest -->
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <h2 class="card-title">多策略与多调仓频率回测对比（近 1 年日线 · 含交易成本）</h2>
+        <div class="card-subtitle">对比原始论文模型、修正防守模型、传统双低与混合因子在日频 (1D) / 周频 (5D) / 双周 (10D) / 月频 (20D) 下的净值、换手与费后收益</div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <div class="tab-pills" id="btFreqPills">
+          <button class="tab-btn" data-freq="1">日频 (1D)</button>
+          <button class="tab-btn active" data-freq="5">周频 (5D)</button>
+          <button class="tab-btn" data-freq="10">双周 (10D)</button>
+          <button class="tab-btn" data-freq="20">月频 (20D)</button>
+        </div>
+        <div class="tab-pills" id="btCostPills">
+          <button class="tab-btn" data-cost="0">0% 无费</button>
+          <button class="tab-btn" data-cost="0.0005">0.05% 低佣</button>
+          <button class="tab-btn active" data-cost="0.001">0.10% 标准成本</button>
+          <button class="tab-btn" data-cost="0.002">0.20% 高滑点</button>
+        </div>
+      </div>
+    </div>
+    <div id="backtestContent"></div>
   </div>
 
   <!-- Section 3: Interactive Single-Bond Calculator (always visible, both models) -->
@@ -1307,6 +1469,223 @@ function doCalc() {{
   document.getElementById("res-cal-sub").textContent = "折价 -" + (haircut * 100).toFixed(1) + "% · vs 市价 " + (((totalCal - Pmkt) / Pmkt) * 100 >= 0 ? "+" : "") + (((totalCal - Pmkt) / Pmkt) * 100).toFixed(1) + "%";
 }}
 
+let currentBtFreq = "5";
+let currentBtCost = 0.001;
+
+const BT_META = [
+  {{ key: "orig_lsm", name: "原始论文模型 (Top 1/3)", color: "#0f766e" }},
+  {{ key: "cal_lsm", name: "修正防守模型 (Top 1/3)", color: "#245ca9" }},
+  {{ key: "double_low", name: "传统双低策略 (Top 1/3)", color: "#d97706" }},
+  {{ key: "hybrid", name: "混合多因子 (修正55%+双低45%)", color: "#7c3aed" }},
+  {{ key: "mkt_ew", name: "全市场等权基准", color: "#94a3b8", dashed: true }}
+];
+
+function computeBtMetrics(seriesObj, oneWayCost) {{
+  const gr = seriesObj.gross_pct;
+  const to = seriesObj.to_pct;
+  const n = gr.length;
+  const netNav = [1.0];
+  let gVal = 1.0, nVal = 1.0, peak = 1.0, mdd = 0.0;
+  let sumNet = 0, sumSq = 0, sumTo = 0, wins = 0;
+
+  for (let i = 0; i < n; i++) {{
+    const g = gr[i] / 100.0;
+    const c = (to[i] / 100.0) * oneWayCost;
+    const netR = g - c;
+    gVal *= (1.0 + g);
+    nVal *= (1.0 + netR);
+    netNav.push(nVal);
+    if (nVal > peak) peak = nVal;
+    const dd = (nVal / peak - 1.0) * 100.0;
+    if (dd < mdd) mdd = dd;
+    sumNet += netR;
+    sumSq += netR * netR;
+    sumTo += to[i];
+    if (netR > 0) wins++;
+  }}
+
+  const meanR = sumNet / Math.max(1, n);
+  const varR = Math.max(1e-12, sumSq / Math.max(1, n) - meanR * meanR);
+  const stdAnn = Math.sqrt(varR * 252.0);
+  const sharpe = (meanR * 252.0 - 0.02) / (stdAnn + 1e-9);
+  const totalGross = (gVal - 1.0) * 100.0;
+  const totalNet = (nVal - 1.0) * 100.0;
+  const annNet = (Math.pow(nVal, 252.0 / Math.max(1, n)) - 1.0) * 100.0;
+  const annOneWayTo = (sumTo * 0.5) * (252.0 / Math.max(1, n));
+
+  return {{
+    nav: netNav,
+    grossPct: totalGross,
+    netPct: totalNet,
+    feeDragPct: totalGross - totalNet,
+    annNetPct: annNet,
+    mddPct: mdd,
+    sharpe: sharpe,
+    annToPct: annOneWayTo,
+    winRatePct: (wins / Math.max(1, n)) * 100.0
+  }};
+}}
+
+function renderBtNavSVG(btDates, curves) {{
+  const W = 940, H = 260, padL = 52, padR = 82, padT = 18, padB = 30;
+  const allVals = curves.flatMap(c => c.nav);
+  let minY = Math.min(0.95, ...allVals);
+  let maxY = Math.max(1.05, ...allVals);
+  const spanY = Math.max(0.08, maxY - minY);
+  minY -= spanY * 0.06;
+  maxY += spanY * 0.08;
+
+  const nPts = curves[0].nav.length;
+  const px = i => padL + (i / Math.max(1, nPts - 1)) * (W - padL - padR);
+  const py = v => H - padB - ((v - minY) / (maxY - minY)) * (H - padT - padB);
+
+  let grid = "";
+  for (let g = 0; g <= 4; g++) {{
+    const v = minY + (maxY - minY) * (g / 4);
+    const y = py(v).toFixed(1);
+    grid += `<line x1="${{padL}}" y1="${{y}}" x2="${{W - padR}}" y2="${{y}}" stroke="#eef2f6"/>
+      <text x="${{padL - 8}}" y="${{Number(y) + 4}}" text-anchor="end" font-size="10" fill="#697583">${{v.toFixed(2)}}</text>`;
+  }}
+  const yOne = py(1.0).toFixed(1);
+  grid += `<line x1="${{padL}}" y1="${{yOne}}" x2="${{W - padR}}" y2="${{yOne}}" stroke="#cbd5e1" stroke-dasharray="3 3"/>`;
+
+  const xTicks = [0, Math.floor(btDates.length / 3), Math.floor((btDates.length * 2) / 3), btDates.length - 1];
+  xTicks.forEach(idx => {{
+    if (btDates[idx]) {{
+      const x = px(idx + 1).toFixed(1);
+      grid += `<text x="${{x}}" y="${{H - 8}}" text-anchor="middle" font-size="10" fill="#697583">${{btDates[idx]}}</text>`;
+    }}
+  }});
+
+  let paths = "";
+  curves.forEach(c => {{
+    const pts = c.nav.map((v, i) => `${{px(i).toFixed(1)}},${{py(v).toFixed(1)}}`).join(" ");
+    const lastV = c.nav[c.nav.length - 1];
+    const lastY = py(lastV).toFixed(1);
+    paths += `<polyline fill="none" stroke="${{c.color}}" stroke-width="${{c.dashed ? "1.6" : "2.1"}}" ${{c.dashed ? 'stroke-dasharray="5 4"' : ""}} points="${{pts}}"/>
+      <text x="${{W - padR + 6}}" y="${{Number(lastY) + 3}}" font-size="10" font-weight="600" fill="${{c.color}}">${{lastV.toFixed(3)}} (${{c.netPct >= 0 ? "+" : ""}}${{c.netPct.toFixed(1)}}%)</text>`;
+  }});
+
+  return `<svg viewBox="0 0 ${{W}} ${{H}}" style="width:100%;height:auto;display:block;">${{grid}}${{paths}}</svg>`;
+}}
+
+function renderBacktest() {{
+  const box = document.getElementById("backtestContent");
+  const bt = DATA.strategy_backtest;
+  if (!bt || !bt.dates || !bt.dates.length) {{
+    box.innerHTML = `<div style="padding:24px;color:var(--muted);">暂无足够连续日线数据进行策略回测。</div>`;
+    return;
+  }}
+
+  const curves = BT_META.map(m => {{
+    const raw = m.key === "mkt_ew" ? bt.benchmark : bt.series[m.key][currentBtFreq];
+    const stats = computeBtMetrics(raw, currentBtCost);
+    return {{ ...m, ...stats }};
+  }});
+
+  const freqLabel = {{ "1": "日频 (1D)", "5": "周频 (5D)", "10": "双周 (10D)", "20": "月频 (20D)" }}[currentBtFreq];
+  const costLabel = (currentBtCost * 100).toFixed(2) + "%";
+
+  const freqRows = curves.map(c => `
+    <tr>
+      <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${{c.color}};margin-right:7px;"></span><strong>${{c.name}}</strong></td>
+      <td class="num font-mono ${{retCls(c.grossPct)}}">${{signed(c.grossPct)}}</td>
+      <td class="num font-mono" style="color:var(--muted);">-${{fmt(c.feeDragPct, 2)}}%</td>
+      <td class="num font-mono ${{retCls(c.netPct)}}" style="font-weight:700;">${{signed(c.netPct)}}</td>
+      <td class="num font-mono ${{retCls(c.annNetPct)}}">${{signed(c.annNetPct)}}</td>
+      <td class="num font-mono neg">${{fmt(c.mddPct, 2)}}%</td>
+      <td class="num font-mono">${{fmt(c.sharpe, 2)}}</td>
+      <td class="num font-mono">${{fmt(c.annToPct, 0)}}%</td>
+    </tr>
+  `).join("");
+
+  // Build All-Strategy x All-Frequency matrix at currentBtCost
+  const allCombos = [];
+  ["orig_lsm", "cal_lsm", "double_low", "hybrid"].forEach(sk => {{
+    const meta = BT_META.find(m => m.key === sk);
+    bt.frequencies.forEach(f => {{
+      const fk = String(f);
+      const st = computeBtMetrics(bt.series[sk][fk], currentBtCost);
+      allCombos.push({{ strat: meta.name.replace(" (Top 1/3)", ""), freq: fk + "D", ...st }});
+    }});
+  }});
+  const bestSharpe = Math.max(...allCombos.map(x => x.sharpe));
+  const bestNet = Math.max(...allCombos.map(x => x.netPct));
+
+  const matrixRows = allCombos.map(r => {{
+    const isBest = Math.abs(r.sharpe - bestSharpe) < 1e-6 || Math.abs(r.netPct - bestNet) < 1e-6;
+    return `
+      <tr class="${{isBest ? "best-row" : ""}}">
+        <td><strong>${{r.strat}}</strong>${{isBest ? ' <span class="badge tag-hit" style="margin-left:4px;">当前费率最优</span>' : ""}}</td>
+        <td class="num font-mono">${{r.freq}}</td>
+        <td class="num font-mono ${{retCls(r.grossPct)}}">${{signed(r.grossPct)}}</td>
+        <td class="num font-mono" style="color:var(--muted);">-${{fmt(r.feeDragPct, 2)}}%</td>
+        <td class="num font-mono ${{retCls(r.netPct)}}" style="font-weight:600;">${{signed(r.netPct)}}</td>
+        <td class="num font-mono neg">${{fmt(r.mddPct, 2)}}%</td>
+        <td class="num font-mono">${{fmt(r.sharpe, 2)}}</td>
+        <td class="num font-mono">${{fmt(r.annToPct, 0)}}%</td>
+      </tr>
+    `;
+  }}).join("");
+
+  box.innerHTML = `
+    <div class="bt-wrap">
+      <div class="bt-legend">
+        ${{curves.map(c => `<span><i class="bt-dot" style="background:${{c.color}};"></i>${{c.name}}</span>`).join("")}}
+      </div>
+      ${{renderBtNavSVG(bt.dates, curves)}}
+    </div>
+
+    <div class="subtoolbar">
+      <strong>${{freqLabel}} 策略净值绩效对比（区间 ${{bt.start_date}} → ${{bt.end_date}}，共 ${{bt.n_days}} 个交易日 · 单边成本 ${{costLabel}}）</strong>
+      <span class="subtext" style="margin:0;">等权买入前 1/3（最多 10 只），扣减双边换手成本</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>策略名称</th>
+            <th>扣费前毛收益</th>
+            <th>成本损耗</th>
+            <th>扣费后净收益</th>
+            <th>年化净收益</th>
+            <th>最大回撤</th>
+            <th>夏普比率</th>
+            <th>年化单边换手</th>
+          </tr>
+        </thead>
+        <tbody>${{freqRows}}</tbody>
+      </table>
+    </div>
+
+    <div class="subtoolbar">
+      <strong>全策略 × 全调仓频率总览矩阵（按当前选定单边成本 ${{costLabel}} 实时重算）</strong>
+      <span class="subtext" style="margin:0;">高亮行为当前成本口径下综合夏普 / 净收益最优组合</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>策略逻辑</th>
+            <th>调仓周期</th>
+            <th>毛收益</th>
+            <th>成本损耗</th>
+            <th>扣费净收益</th>
+            <th>最大回撤</th>
+            <th>夏普比率</th>
+            <th>年化单边换手</th>
+          </tr>
+        </thead>
+        <tbody>${{matrixRows}}</tbody>
+      </table>
+    </div>
+
+    <div class="bt-note">
+      <strong>回测口径说明：</strong>A 股可转债卖出<strong>免征印花税</strong>，标准单边成本 <code>0.10%</code> 对应券商佣金/经手费（约万2）+ 买卖盘口冲击滑点（约万8），双边调仓一次合计扣减约 <code>0.20% × 单边换手</code>；每日均以 <code>T-1</code> 日收盘数据计算排序信号，计入 <code>T</code> 日真实收盘收益（无前瞻偏差），新上市前 25 个交易日不纳入打分池。注：受公开日线数据限制，全历史期转股价按最新转股价近似且样本为当前在市活跃转债（共 ${{bt.sample_bonds}} 只），存在一定幸存者偏差，主要用于各策略在同一基准池内的横向优劣对比。
+    </div>
+  `;
+}}
+
 document.querySelectorAll("#portfolioPills [data-port]").forEach(btn => {{
   btn.addEventListener("click", () => {{
     currentPort = btn.dataset.port;
@@ -1323,11 +1702,28 @@ document.querySelectorAll("#horizonPills [data-horizon]").forEach(btn => {{
   }});
 }});
 
+document.querySelectorAll("#btFreqPills [data-freq]").forEach(btn => {{
+  btn.addEventListener("click", () => {{
+    currentBtFreq = btn.dataset.freq;
+    document.querySelectorAll("#btFreqPills .tab-btn").forEach(b => b.classList.toggle("active", b === btn));
+    renderBacktest();
+  }});
+}});
+
+document.querySelectorAll("#btCostPills [data-cost]").forEach(btn => {{
+  btn.addEventListener("click", () => {{
+    currentBtCost = parseFloat(btn.dataset.cost);
+    document.querySelectorAll("#btCostPills .tab-btn").forEach(b => b.classList.toggle("active", b === btn));
+    renderBacktest();
+  }});
+}});
+
 ["liveSearch", "liveRegion", "liveSort"].forEach(id => document.getElementById(id).addEventListener("input", renderPortfolio));
 ["slider-s0", "slider-c0", "slider-pmkt", "slider-p", "slider-sig"].forEach(id => document.getElementById(id).addEventListener("input", doCalc));
 
 renderPortfolio();
 renderValidation();
+renderBacktest();
 doCalc();
 </script>
 </body>
