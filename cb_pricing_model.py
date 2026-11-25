@@ -123,3 +123,48 @@ def price_ccb_four_region_lsm(
         
     V0 = float(discount * np.mean(V))
     return round(V0, 2)
+
+
+def price_ccb_calibrated_defensive(
+    S0: float,
+    C0: float,
+    bond_price: float,
+    maturity_years: float = 2.0,
+    sigma: float = 0.28,
+    FV: float = 100.0,
+    r: float = 0.025,
+    q: float = 0.0,
+    p_reset: float = 0.40,
+    sigma_cap: float = 0.35,
+    n_steps: int = 24,
+    M: int = 1600,
+    seed: int = 42,
+) -> tuple[float, float, float, float]:
+    """
+    Calibrated Defensive Four-Region LSM Valuation.
+
+    Addresses short-horizon downward-reset execution lag and missing pure-bond cushion
+    in high-price / high-premium bonds by applying:
+    1) Conservative reset probability (p_reset=0.40) and capped implied vol (<=35%)
+    2) Maturity-aware conservative pure-bond floor B_cal = min(106, 99 + 1.8*T)
+    3) Downside cushion & premium-lag haircut above ¥115 price and 25% premium.
+
+    Returns (calibrated_price, raw_conservative_lsm, bond_floor_cal, haircut_pct).
+    """
+    B_cal = round(min(106.0, 99.0 + 1.8 * max(0.35, min(maturity_years, 4.0))), 2)
+    sigma_cal = min(float(sigma), sigma_cap)
+    raw_cal = price_ccb_four_region_lsm(
+        S0=S0, C0=C0, FV=FV, maturity_years=maturity_years,
+        r=r, q=q, sigma=sigma_cal,
+        call_ratio=1.30, put_ratio=0.70, p_reset=p_reset,
+        B=B_cal, n_steps=n_steps, M=M, seed=seed,
+    )
+    conv_val = (FV / max(0.01, C0)) * S0
+    prem_pct = (bond_price - conv_val) / max(0.01, conv_val) * 100.0
+    haircut = min(
+        0.22,
+        0.25 * max(0.0, (bond_price - 115.0) / 100.0)
+        + 0.12 * max(0.0, (prem_pct - 25.0) / 100.0),
+    )
+    cal_price = round(raw_cal * (1.0 - haircut), 2)
+    return cal_price, round(raw_cal, 2), B_cal, round(haircut * 100.0, 2)
