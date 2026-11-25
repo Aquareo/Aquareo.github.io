@@ -43,8 +43,10 @@ English (default): https://aquareo.github.io/
 
 ## 程序说明
 
-- **update_website.py**：更新网站内容的脚本，每天运行并自动刷新网页数据。
-- **day_trading.py**：日内自动交易模拟脚本，使用内置的移动平均交叉策略进行交易模拟，并支持用户自定义策略。
+- **update_website.py**：更新网站内容的脚本，每天运行并自动刷新全市场转债冻结参数前瞻快照与模拟持仓账本。
+- **tools/fetch_all_cbs.py**：全市场 2017–2026 年在市、强赎、到期与违约退市转债历史数据抓取与本地缓存工具。
+- **tools/run_full_validation.py**：基于全局市场日历对齐的无幸存者偏差、零未来泄漏五阶段实证验证与 Fama-MacBeth 检验脚本。
+- **documents/VALIDATION_AUDIT.md**：独立代码审计报告、修复前后指标对照及完整本地复现命令说明。
 
 
 ## 样式发布
