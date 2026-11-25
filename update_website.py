@@ -503,6 +503,37 @@ def generate_page_and_data():
 
     dist_dir = Path(__file__).resolve().parent / "dist" / "bonds"
     dist_dir.mkdir(parents=True, exist_ok=True)
+
+    existing_data = {}
+    data_file = dist_dir / "data.json"
+    if data_file.exists():
+        try:
+            existing_data = json.loads(data_file.read_text(encoding="utf-8"))
+        except Exception:
+            existing_data = {}
+
+    # Preserve verified historical validation & pool breadth if remote CI runner (e.g. overseas IP) fails history fetches
+    if existing_data.get("validation"):
+        for hk, hv in existing_data["validation"].items():
+            if hk not in validation:
+                validation[hk] = hv
+
+    if len(evaluated) < 25 and existing_data.get("all_bonds"):
+        seen = {b["ticker"] for b in evaluated}
+        for old_b in existing_data["all_bonds"]:
+            if old_b.get("ticker") not in seen and len(evaluated) < 36:
+                evaluated.append(old_b)
+                seen.add(old_b.get("ticker"))
+        cal_sorted = sorted(evaluated, key=lambda x: x["undervaluation_cal"], reverse=True)
+        orig_sorted = sorted(evaluated, key=lambda x: x["undervaluation"], reverse=True)
+        dl_sorted = sorted(evaluated, key=lambda x: x["double_low"], reverse=False)
+        for i, b in enumerate(cal_sorted, 1):
+            b["cal_rank"] = i
+        for i, b in enumerate(orig_sorted, 1):
+            b["lsm_rank"] = i
+        for i, b in enumerate(dl_sorted, 1):
+            b["dl_rank"] = i
+
     live_ledger = update_live_history(dist_dir, date_str, cal_sorted)
 
     data_payload = {
