@@ -6540,6 +6540,1264 @@
         }
       ],
       "frozen_since": "2026-11-26"
+    },
+    "all": {
+      "rebalance_freq_days": 5,
+      "one_way_cost": 0.001,
+      "nav_net": 1.0,
+      "last_rebal_date": "2026-11-25",
+      "holdings": [
+        {
+          "ticker": "118027",
+          "name": "宏图转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 82.73,
+          "last_price": 82.73,
+          "rating": "CC"
+        },
+        {
+          "ticker": "110092",
+          "name": "三房转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 78.0,
+          "last_price": 78.0,
+          "rating": "A-"
+        },
+        {
+          "ticker": "110081",
+          "name": "闻泰转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 85.37,
+          "last_price": 85.37,
+          "rating": "BBB-"
+        },
+        {
+          "ticker": "118020",
+          "name": "芳源转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 89.87,
+          "last_price": 89.87,
+          "rating": "BBB"
+        },
+        {
+          "ticker": "113575",
+          "name": "东时转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 81.44,
+          "last_price": 81.44,
+          "rating": "C"
+        },
+        {
+          "ticker": "127061",
+          "name": "美锦转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 82.99,
+          "last_price": 82.99,
+          "rating": "A"
+        },
+        {
+          "ticker": "123175",
+          "name": "百畅转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 93.1,
+          "last_price": 93.1,
+          "rating": "BBB+"
+        },
+        {
+          "ticker": "127089",
+          "name": "晶澳转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 92.2,
+          "last_price": 92.2,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "110095",
+          "name": "双良转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 97.53,
+          "last_price": 97.53,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118031",
+          "name": "天23转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 97.12,
+          "last_price": 97.12,
+          "rating": "AA"
+        },
+        {
+          "ticker": "123264",
+          "name": "双乐转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 110.19,
+          "last_price": 110.19,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "110100",
+          "name": "龙建转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 112.37,
+          "last_price": 112.37,
+          "rating": "AA"
+        },
+        {
+          "ticker": "118066",
+          "name": "统联转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 113.58,
+          "last_price": 113.58,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "123142",
+          "name": "申昊转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 109.08,
+          "last_price": 109.08,
+          "rating": "BBB+"
+        },
+        {
+          "ticker": "123250",
+          "name": "嘉益转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 114.15,
+          "last_price": 114.15,
+          "rating": "A+"
+        },
+        {
+          "ticker": "111015",
+          "name": "东亚转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 112.65,
+          "last_price": 112.65,
+          "rating": "A+"
+        },
+        {
+          "ticker": "123216",
+          "name": "科顺转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 105.88,
+          "last_price": 105.88,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118042",
+          "name": "奥维转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 113.99,
+          "last_price": 113.99,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "123262",
+          "name": "神宇转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 116.28,
+          "last_price": 116.28,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "110085",
+          "name": "通22转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 98.25,
+          "last_price": 98.25,
+          "rating": "AAA"
+        },
+        {
+          "ticker": "127103",
+          "name": "东南转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 107.69,
+          "last_price": 107.69,
+          "rating": "AA"
+        },
+        {
+          "ticker": "113700",
+          "name": "海天转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 111.91,
+          "last_price": 111.91,
+          "rating": "AA"
+        },
+        {
+          "ticker": "113679",
+          "name": "芯能转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 115.58,
+          "last_price": 115.58,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118010",
+          "name": "洁特转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 114.37,
+          "last_price": 114.37,
+          "rating": "A+"
+        },
+        {
+          "ticker": "113648",
+          "name": "巨星转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 103.52,
+          "last_price": 103.52,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118065",
+          "name": "艾为转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 119.81,
+          "last_price": 119.81,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "118068",
+          "name": "迪威转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 113.1,
+          "last_price": 113.1,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "123193",
+          "name": "海能转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 115.29,
+          "last_price": 115.29,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118034",
+          "name": "晶能转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 104.19,
+          "last_price": 104.19,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "118060",
+          "name": "瑞可转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 120.81,
+          "last_price": 120.81,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118039",
+          "name": "煜邦转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 113.01,
+          "last_price": 113.01,
+          "rating": "A"
+        },
+        {
+          "ticker": "127098",
+          "name": "欧晶转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 110.77,
+          "last_price": 110.77,
+          "rating": "A+"
+        },
+        {
+          "ticker": "123172",
+          "name": "漱玉转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 114.79,
+          "last_price": 114.79,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "123288",
+          "name": "隆新转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 117.93,
+          "last_price": 117.93,
+          "rating": "AA"
+        },
+        {
+          "ticker": "123144",
+          "name": "裕兴转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 108.08,
+          "last_price": 108.08,
+          "rating": "A"
+        },
+        {
+          "ticker": "113692",
+          "name": "保隆转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 117.28,
+          "last_price": 117.28,
+          "rating": "AA"
+        },
+        {
+          "ticker": "118024",
+          "name": "冠宇转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 113.82,
+          "last_price": 113.82,
+          "rating": "AA"
+        },
+        {
+          "ticker": "127112",
+          "name": "尚太转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 120.18,
+          "last_price": 120.18,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "118073",
+          "name": "赛斯转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 119.63,
+          "last_price": 119.63,
+          "rating": "AA"
+        },
+        {
+          "ticker": "110093",
+          "name": "神马转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 106.05,
+          "last_price": 106.05,
+          "rating": "AAA"
+        },
+        {
+          "ticker": "113694",
+          "name": "清源转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 116.88,
+          "last_price": 116.88,
+          "rating": "A+"
+        },
+        {
+          "ticker": "113693",
+          "name": "志邦转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 109.4,
+          "last_price": 109.4,
+          "rating": "AA"
+        },
+        {
+          "ticker": "127049",
+          "name": "希望转2",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 102.67,
+          "last_price": 102.67,
+          "rating": "AAA"
+        },
+        {
+          "ticker": "118072",
+          "name": "鼎通转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 123.25,
+          "last_price": 123.25,
+          "rating": "A+"
+        },
+        {
+          "ticker": "123271",
+          "name": "通合转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 123.5,
+          "last_price": 123.5,
+          "rating": "AA"
+        },
+        {
+          "ticker": "118015",
+          "name": "芯海转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 117.14,
+          "last_price": 117.14,
+          "rating": "A+"
+        },
+        {
+          "ticker": "111018",
+          "name": "华康转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 115.79,
+          "last_price": 115.79,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "118052",
+          "name": "浩瀚转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 124.36,
+          "last_price": 124.36,
+          "rating": "A+"
+        },
+        {
+          "ticker": "123252",
+          "name": "银邦转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 114.2,
+          "last_price": 114.2,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "111025",
+          "name": "圣泉转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 122.16,
+          "last_price": 122.16,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "127068",
+          "name": "顺博转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 102.32,
+          "last_price": 102.32,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "110087",
+          "name": "天业转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 107.83,
+          "last_price": 107.83,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "111009",
+          "name": "盛泰转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 107.67,
+          "last_price": 107.67,
+          "rating": "AA"
+        },
+        {
+          "ticker": "118022",
+          "name": "锂科转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 108.64,
+          "last_price": 108.64,
+          "rating": "AA"
+        },
+        {
+          "ticker": "123155",
+          "name": "中陆转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 115.04,
+          "last_price": 115.04,
+          "rating": "A+"
+        },
+        {
+          "ticker": "123274",
+          "name": "维科转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 122.29,
+          "last_price": 122.29,
+          "rating": "A+"
+        },
+        {
+          "ticker": "113701",
+          "name": "祥和转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 124.36,
+          "last_price": 124.36,
+          "rating": "A+"
+        },
+        {
+          "ticker": "113703",
+          "name": "翔26转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 123.98,
+          "last_price": 123.98,
+          "rating": "AA-"
+        },
+        {
+          "ticker": "113656",
+          "name": "嘉诚转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 111.43,
+          "last_price": 111.43,
+          "rating": "A+"
+        },
+        {
+          "ticker": "118063",
+          "name": "金05转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 124.24,
+          "last_price": 124.24,
+          "rating": "AA+"
+        },
+        {
+          "ticker": "127044",
+          "name": "蒙娜转债",
+          "weight": 0.016393,
+          "entry_date": "2026-11-25",
+          "entry_price": 110.15,
+          "last_price": 110.15,
+          "rating": "AA-"
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-25",
+          "nav_net": 1.0,
+          "holdings_count": 61,
+          "delisted_exits": 0,
+          "rebalanced": 1
+        },
+        {
+          "date": "2026-11-26",
+          "nav_net": 1.0,
+          "holdings_count": 61,
+          "delisted_exits": 0,
+          "rebalanced": 0
+        }
+      ],
+      "frozen_since": "2026-11-25"
+    },
+    "aa_minus": {
+      "rebalance_freq_days": 5,
+      "one_way_cost": 0.001,
+      "nav_net": 1.0,
+      "last_rebal_date": "2026-11-26",
+      "holdings": [
+        {
+          "ticker": "127089",
+          "name": "晶澳转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 92.2,
+          "last_price": 92.2
+        },
+        {
+          "ticker": "110095",
+          "name": "双良转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 97.53,
+          "last_price": 97.53
+        },
+        {
+          "ticker": "118031",
+          "name": "天23转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 97.12,
+          "last_price": 97.12
+        },
+        {
+          "ticker": "123264",
+          "name": "双乐转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 110.19,
+          "last_price": 110.19
+        },
+        {
+          "ticker": "110100",
+          "name": "龙建转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 112.37,
+          "last_price": 112.37
+        },
+        {
+          "ticker": "118066",
+          "name": "统联转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.58,
+          "last_price": 113.58
+        },
+        {
+          "ticker": "123216",
+          "name": "科顺转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 105.88,
+          "last_price": 105.88
+        },
+        {
+          "ticker": "118042",
+          "name": "奥维转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.99,
+          "last_price": 113.99
+        },
+        {
+          "ticker": "123262",
+          "name": "神宇转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 116.28,
+          "last_price": 116.28
+        },
+        {
+          "ticker": "110085",
+          "name": "通22转债",
+          "rating": "AAA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 98.25,
+          "last_price": 98.25
+        },
+        {
+          "ticker": "127103",
+          "name": "东南转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 107.69,
+          "last_price": 107.69
+        },
+        {
+          "ticker": "113700",
+          "name": "海天转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 111.91,
+          "last_price": 111.91
+        },
+        {
+          "ticker": "113679",
+          "name": "芯能转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 115.58,
+          "last_price": 115.58
+        },
+        {
+          "ticker": "113648",
+          "name": "巨星转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 103.52,
+          "last_price": 103.52
+        },
+        {
+          "ticker": "118065",
+          "name": "艾为转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 119.81,
+          "last_price": 119.81
+        },
+        {
+          "ticker": "118068",
+          "name": "迪威转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.1,
+          "last_price": 113.1
+        },
+        {
+          "ticker": "123193",
+          "name": "海能转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 115.29,
+          "last_price": 115.29
+        },
+        {
+          "ticker": "118034",
+          "name": "晶能转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 104.19,
+          "last_price": 104.19
+        },
+        {
+          "ticker": "118060",
+          "name": "瑞可转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 120.81,
+          "last_price": 120.81
+        },
+        {
+          "ticker": "123172",
+          "name": "漱玉转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 114.79,
+          "last_price": 114.79
+        },
+        {
+          "ticker": "123288",
+          "name": "隆新转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 117.93,
+          "last_price": 117.93
+        },
+        {
+          "ticker": "113692",
+          "name": "保隆转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 117.28,
+          "last_price": 117.28
+        },
+        {
+          "ticker": "118024",
+          "name": "冠宇转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.82,
+          "last_price": 113.82
+        },
+        {
+          "ticker": "127112",
+          "name": "尚太转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 120.18,
+          "last_price": 120.18
+        },
+        {
+          "ticker": "118073",
+          "name": "赛斯转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 119.63,
+          "last_price": 119.63
+        },
+        {
+          "ticker": "110093",
+          "name": "神马转债",
+          "rating": "AAA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 106.05,
+          "last_price": 106.05
+        },
+        {
+          "ticker": "113693",
+          "name": "志邦转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 109.4,
+          "last_price": 109.4
+        },
+        {
+          "ticker": "127049",
+          "name": "希望转2",
+          "rating": "AAA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 102.67,
+          "last_price": 102.67
+        },
+        {
+          "ticker": "123271",
+          "name": "通合转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 123.5,
+          "last_price": 123.5
+        },
+        {
+          "ticker": "111018",
+          "name": "华康转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 115.79,
+          "last_price": 115.79
+        },
+        {
+          "ticker": "123252",
+          "name": "银邦转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 114.2,
+          "last_price": 114.2
+        },
+        {
+          "ticker": "111025",
+          "name": "圣泉转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 122.16,
+          "last_price": 122.16
+        },
+        {
+          "ticker": "127068",
+          "name": "顺博转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 102.32,
+          "last_price": 102.32
+        },
+        {
+          "ticker": "110087",
+          "name": "天业转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 107.83,
+          "last_price": 107.83
+        },
+        {
+          "ticker": "111009",
+          "name": "盛泰转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 107.67,
+          "last_price": 107.67
+        },
+        {
+          "ticker": "118022",
+          "name": "锂科转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 108.64,
+          "last_price": 108.64
+        },
+        {
+          "ticker": "113703",
+          "name": "翔26转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 123.98,
+          "last_price": 123.98
+        },
+        {
+          "ticker": "118063",
+          "name": "金05转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 124.24,
+          "last_price": 124.24
+        },
+        {
+          "ticker": "127044",
+          "name": "蒙娜转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 110.15,
+          "last_price": 110.15
+        },
+        {
+          "ticker": "127114",
+          "name": "宜化转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 116.4,
+          "last_price": 116.4
+        },
+        {
+          "ticker": "113666",
+          "name": "爱玛转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.72,
+          "last_price": 113.72
+        },
+        {
+          "ticker": "123194",
+          "name": "百洋转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 123.5,
+          "last_price": 123.5
+        },
+        {
+          "ticker": "113709",
+          "name": "振26转债",
+          "rating": "AA",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 127.29,
+          "last_price": 127.29
+        },
+        {
+          "ticker": "127105",
+          "name": "龙星转债",
+          "rating": "AA-",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 116.33,
+          "last_price": 116.33
+        },
+        {
+          "ticker": "118070",
+          "name": "南芯转债",
+          "rating": "AA+",
+          "weight": 0.022222,
+          "entry_date": "2026-11-26",
+          "entry_price": 124.62,
+          "last_price": 124.62
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-26",
+          "nav_net": 1.0,
+          "holdings_count": 45,
+          "delisted_exits": 0,
+          "rebalanced": 1
+        }
+      ],
+      "frozen_since": "2026-11-26"
+    },
+    "aa": {
+      "rebalance_freq_days": 5,
+      "one_way_cost": 0.001,
+      "nav_net": 1.0,
+      "last_rebal_date": "2026-11-26",
+      "holdings": [
+        {
+          "ticker": "127089",
+          "name": "晶澳转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 92.2,
+          "last_price": 92.2
+        },
+        {
+          "ticker": "118031",
+          "name": "天23转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 97.12,
+          "last_price": 97.12
+        },
+        {
+          "ticker": "110100",
+          "name": "龙建转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 112.37,
+          "last_price": 112.37
+        },
+        {
+          "ticker": "110085",
+          "name": "通22转债",
+          "rating": "AAA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 98.25,
+          "last_price": 98.25
+        },
+        {
+          "ticker": "127103",
+          "name": "东南转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 107.69,
+          "last_price": 107.69
+        },
+        {
+          "ticker": "113700",
+          "name": "海天转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 111.91,
+          "last_price": 111.91
+        },
+        {
+          "ticker": "118065",
+          "name": "艾为转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 119.81,
+          "last_price": 119.81
+        },
+        {
+          "ticker": "118034",
+          "name": "晶能转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 104.19,
+          "last_price": 104.19
+        },
+        {
+          "ticker": "123288",
+          "name": "隆新转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 117.93,
+          "last_price": 117.93
+        },
+        {
+          "ticker": "113692",
+          "name": "保隆转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 117.28,
+          "last_price": 117.28
+        },
+        {
+          "ticker": "118024",
+          "name": "冠宇转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.82,
+          "last_price": 113.82
+        },
+        {
+          "ticker": "127112",
+          "name": "尚太转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 120.18,
+          "last_price": 120.18
+        },
+        {
+          "ticker": "118073",
+          "name": "赛斯转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 119.63,
+          "last_price": 119.63
+        },
+        {
+          "ticker": "110093",
+          "name": "神马转债",
+          "rating": "AAA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 106.05,
+          "last_price": 106.05
+        },
+        {
+          "ticker": "113693",
+          "name": "志邦转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 109.4,
+          "last_price": 109.4
+        },
+        {
+          "ticker": "127049",
+          "name": "希望转2",
+          "rating": "AAA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 102.67,
+          "last_price": 102.67
+        },
+        {
+          "ticker": "123271",
+          "name": "通合转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 123.5,
+          "last_price": 123.5
+        },
+        {
+          "ticker": "111025",
+          "name": "圣泉转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 122.16,
+          "last_price": 122.16
+        },
+        {
+          "ticker": "110087",
+          "name": "天业转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 107.83,
+          "last_price": 107.83
+        },
+        {
+          "ticker": "111009",
+          "name": "盛泰转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 107.67,
+          "last_price": 107.67
+        },
+        {
+          "ticker": "118022",
+          "name": "锂科转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 108.64,
+          "last_price": 108.64
+        },
+        {
+          "ticker": "118063",
+          "name": "金05转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 124.24,
+          "last_price": 124.24
+        },
+        {
+          "ticker": "127114",
+          "name": "宜化转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 116.4,
+          "last_price": 116.4
+        },
+        {
+          "ticker": "113666",
+          "name": "爱玛转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 113.72,
+          "last_price": 113.72
+        },
+        {
+          "ticker": "113709",
+          "name": "振26转债",
+          "rating": "AA",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 127.29,
+          "last_price": 127.29
+        },
+        {
+          "ticker": "118070",
+          "name": "南芯转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 124.62,
+          "last_price": 124.62
+        },
+        {
+          "ticker": "110102",
+          "name": "江农转债",
+          "rating": "AA+",
+          "weight": 0.037037,
+          "entry_date": "2026-11-26",
+          "entry_price": 119.79,
+          "last_price": 119.79
+        }
+      ],
+      "history": [
+        {
+          "date": "2026-11-26",
+          "nav_net": 1.0,
+          "holdings_count": 27,
+          "delisted_exits": 0,
+          "rebalanced": 1
+        }
+      ],
+      "frozen_since": "2026-11-26"
     }
   }
 }

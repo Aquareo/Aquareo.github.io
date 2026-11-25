@@ -65,6 +65,7 @@ def fetch_cninfo_bond_events(code: str, name: str, stock_code: str, iss_dt: str)
         rat = df[
             df["公告标题"].str.contains("评级|信用等级", na=False)
             & ~df["公告标题"].str.contains("延迟|提示性|预计|修订|制度|发行结果|上市|募集说明书|担保|授信|变更.*机构", na=False)
+            & ~(df["公告标题"].str.contains("主体信用等级|主体长期信用等级", na=False) & ~df["公告标题"].str.contains("转债|债项|债券|" + re.escape(name), na=False))
         ].copy()
         rat["ann_ymd"] = rat["公告时间"].astype(str).str[:10].str.replace("-", "")
         if iss_dt:
@@ -125,6 +126,7 @@ def fetch_cninfo_bond_events(code: str, name: str, stock_code: str, iss_dt: str)
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", default=".cache_bonds/rating_events.csv")
+    ap.add_argument("--all-changed", action="store_true", help="Extract CNInfo PDFs for ALL CBs whose rating changed (needed for AA-/AA pools)")
     args = ap.parse_args()
 
     df_em = None
@@ -191,7 +193,7 @@ def main():
             })
 
         if fx != cur:
-            if fx in ("AA+", "AAA") or cur in ("AA+", "AAA"):
+            if args.all_changed or fx in ("AA+", "AAA") or cur in ("AA+", "AAA"):
                 boundary_codes.append(code)
             elif cur and new_dt and len(new_dt) == 8:
                 events.append({

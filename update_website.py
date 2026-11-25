@@ -27,6 +27,8 @@ FROZEN_PARAMS = {
     "M": 1200,
     "seed": 42,
 }
+SPECULATIVE_GRADES = {"BBB+", "BBB", "BBB-", "BB+", "BB", "BB-", "B+", "B", "B-", "CCC", "CC", "C"}
+LOW_LIQ_WAN = 500.0  # ¥500万元 daily turnover threshold
 
 
 def sanitize_json(obj):
@@ -50,16 +52,15 @@ def norm_rating(val) -> str:
     s = str(val or "").strip().upper().replace("＋", "+").replace("－", "-")
     if s in ("", "NAN", "NONE", "NULL", "-", "--"):
         return ""
-    s = re.sub(r"STI$", "", s).strip()
-    return s
+    return re.sub(r"STI$", "", s).strip()
 
 
 def get_default_bonds_pool():
     return [
-        {"ticker": "110075", "name": "南航转债", "stock_code": "600029", "stock_name": "南方航空", "stock_price": 5.92, "conv_price": 6.24, "bond_price": 128.40, "maturity_years": 2.8, "rating": "AAA"},
-        {"ticker": "127025", "name": "冀东转债", "stock_code": "000401", "stock_name": "冀东水泥", "stock_price": 5.12, "conv_price": 5.88, "bond_price": 111.20, "maturity_years": 1.9, "rating": "AAA"},
-        {"ticker": "113049", "name": "长汽转债", "stock_code": "601633", "stock_name": "长城汽车", "stock_price": 26.80, "conv_price": 34.20, "bond_price": 114.50, "maturity_years": 3.2, "rating": "AAA"},
-        {"ticker": "123107", "name": "温氏转债", "stock_code": "300498", "stock_name": "温氏股份", "stock_price": 17.50, "conv_price": 19.80, "bond_price": 119.30, "maturity_years": 2.6, "rating": "AAA"},
+        {"ticker": "110075", "name": "南航转债", "stock_code": "600029", "stock_name": "南方航空", "stock_price": 5.92, "conv_price": 6.24, "bond_price": 128.40, "maturity_years": 2.8, "rating": "AAA", "amt_wan": 5000.0},
+        {"ticker": "127025", "name": "冀东转债", "stock_code": "000401", "stock_name": "冀东水泥", "stock_price": 5.12, "conv_price": 5.88, "bond_price": 111.20, "maturity_years": 1.9, "rating": "AAA", "amt_wan": 3200.0},
+        {"ticker": "113049", "name": "长汽转债", "stock_code": "601633", "stock_name": "长城汽车", "stock_price": 26.80, "conv_price": 34.20, "bond_price": 114.50, "maturity_years": 3.2, "rating": "AAA", "amt_wan": 4100.0},
+        {"ticker": "123107", "name": "温氏转债", "stock_code": "300498", "stock_name": "温氏股份", "stock_price": 17.50, "conv_price": 19.80, "bond_price": 119.30, "maturity_years": 2.6, "rating": "AAA", "amt_wan": 8000.0},
     ]
 
 
@@ -76,14 +77,13 @@ def classify_region(S0: float, C0: float):
 
 
 def fetch_active_pool(max_bonds: int = 500):
-    """Fetch ALL active, liquid, already-listed exchange CBs across the whole market."""
+    """Fetch ALL active, liquid, already-listed exchange CBs with live ratings & turnover."""
     import akshare as ak
 
     pool = {}
     rating_lookup = {}
     now_ts = pd.Timestamp.now()
 
-    # 1. Primary whole-market list from Eastmoney (covers ~300+ active listed CBs + bond credit rating)
     try:
         df_em = ak.bond_cb_list_em()
         if df_em is not None and not df_em.empty:
@@ -123,11 +123,11 @@ def fetch_active_pool(max_bonds: int = 500):
                     "bond_price": float(r["债现价"]),
                     "maturity_years": rem_years,
                     "rating": rating_lookup.get(code, norm_rating(r.get("信用评级"))),
+                    "amt_wan": None,
                 }
     except Exception as e:
         print(f"Notice: bond_cb_list_em fetch warning: {e}")
 
-    # 2. Enrich / fill remaining maturity from Jisilu where available
     try:
         df_jsl = ak.bond_cb_jsl()
         if df_jsl is not None and not df_jsl.empty:
@@ -139,11 +139,15 @@ def fetch_active_pool(max_bonds: int = 500):
                 price = float(r.get("现价", 0) or 0)
                 c_price = float(r.get("转股价", 0) or 0)
                 s_price = float(r.get("正股价", 0) or 0)
+                amt_wan = pd.to_numeric(r.get("成交额"), errors="coerce")
+                amt_val = round(float(amt_wan), 1) if pd.notna(amt_wan) else None
                 if rem < 0.1 or price <= 10 or abs(price - 100.0) < 1e-4 or c_price <= 0 or s_price <= 0:
                     continue
                 jsl_rating = norm_rating(r.get("评级") or r.get("信用评级") or "")
                 if code in pool:
                     pool[code]["maturity_years"] = round(rem, 2)
+                    if amt_val is not None:
+                        pool[code]["amt_wan"] = amt_val
                     if not pool[code].get("rating") and jsl_rating:
                         pool[code]["rating"] = jsl_rating
                 elif len(pool) < max_bonds:
@@ -157,6 +161,7 @@ def fetch_active_pool(max_bonds: int = 500):
                         "bond_price": price,
                         "maturity_years": round(rem, 2),
                         "rating": rating_lookup.get(code, jsl_rating),
+                        "amt_wan": amt_val,
                     }
     except Exception as e:
         print(f"Notice: bond_cb_jsl fetch warning: {e}")
@@ -187,7 +192,6 @@ def fetch_stock_vol_map(stock_codes: list, fallback_sigmas: dict) -> dict:
                     fetched += 1
         except Exception:
             if fetched == 0 and len(vol_map) > 10:
-                # Fail fast on overseas CI runners where Sina times out
                 break
     return vol_map
 
@@ -238,7 +242,6 @@ def _step_pool_ledger(pl: dict, pool_eval: list, current_map: dict, date_str: st
         port_ret = 0.0
         delisted_exits = 0
         surviving = []
-        pool_tks = {b["ticker"] for b in pool_eval}
         for h in cur_holdings:
             tk = h["ticker"]
             w = float(h["weight"])
@@ -248,7 +251,6 @@ def _step_pool_ledger(pl: dict, pool_eval: list, current_map: dict, date_str: st
                 port_ret += w * ((np_px - lp) / lp)
                 h["last_price"] = np_px
                 h["rating"] = current_map[tk].get("rating", h.get("rating", ""))
-                # Keep holding until scheduled rebalance if downgraded out, or liquidate if delisted
                 surviving.append(h)
             else:
                 delisted_exits += 1
@@ -329,10 +331,7 @@ def _calc_pool_comparisons(snapshots: list, current_map: dict, date_str: str, al
 
 
 def update_live_history(dist_dir: Path, date_str: str, evaluated: list):
-    """
-    Maintain survivorship-free forward ledger (`history.json`) across all 3 universes
-    ('full', 'aa_plus', 'aaa'), preserving backward compatibility for `portfolio_ledger`.
-    """
+    """Maintain survivorship-free forward ledgers across all 5 credit rating pools."""
     hist_path = dist_dir / "history.json"
     ledger = {
         "frozen_since": "2026-11-25",
@@ -345,12 +344,9 @@ def update_live_history(dist_dir: Path, date_str: str, evaluated: list):
         try:
             old = json.loads(hist_path.read_text(encoding="utf-8"))
             if isinstance(old, dict):
-                if "snapshots" in old:
-                    ledger["snapshots"] = old["snapshots"]
-                if "portfolio_ledger" in old:
-                    ledger["portfolio_ledger"] = old["portfolio_ledger"]
-                if "portfolio_ledgers" in old:
-                    ledger["portfolio_ledgers"] = old["portfolio_ledgers"]
+                for k in ("snapshots", "portfolio_ledger", "portfolio_ledgers"):
+                    if k in old:
+                        ledger[k] = old[k]
         except Exception:
             pass
 
@@ -380,13 +376,17 @@ def update_live_history(dist_dir: Path, date_str: str, evaluated: list):
     reset_needed = len(snapshots) >= 2 and snapshots[0]["date"] == date_str
 
     pool_defs = [
-        ("full", None, 10),
+        ("all", None, 10),
+        ("aa_minus", {"AA-", "AA", "AA+", "AAA"}, 10),
+        ("aa", {"AA", "AA+", "AAA"}, 8),
         ("aa_plus", {"AA+", "AAA"}, 5),
         ("aaa", {"AAA"}, 5),
     ]
     pls = ledger.get("portfolio_ledgers") or {}
-    if ledger.get("portfolio_ledger") and "full" not in pls:
-        pls["full"] = ledger["portfolio_ledger"]
+    if ledger.get("portfolio_ledger") and "all" not in pls:
+        pls["all"] = ledger["portfolio_ledger"]
+    if "full" in pls and "all" not in pls:
+        pls["all"] = pls["full"]
 
     portfolio_by_pool = {}
     comparisons_by_pool = {}
@@ -399,7 +399,7 @@ def update_live_history(dist_dir: Path, date_str: str, evaluated: list):
         portfolio_by_pool[pkey] = pl_updated
         comparisons_by_pool[pkey] = _calc_pool_comparisons(snapshots, current_map, date_str, grades)
 
-    ledger["portfolio_ledger"] = portfolio_by_pool["full"]
+    ledger["portfolio_ledger"] = portfolio_by_pool["all"]
     ledger["portfolio_ledgers"] = pls
 
     clean_ledger = sanitize_json(ledger)
@@ -409,9 +409,9 @@ def update_live_history(dist_dir: Path, date_str: str, evaluated: list):
         "frozen_since": ledger["frozen_since"],
         "pool_size_today": len(evaluated),
         "pool_sizes_today": pool_sizes_today,
-        "portfolio": portfolio_by_pool["full"],
+        "portfolio": portfolio_by_pool["all"],
         "portfolio_by_pool": portfolio_by_pool,
-        "comparisons": comparisons_by_pool["full"],
+        "comparisons": comparisons_by_pool["all"],
         "comparisons_by_pool": comparisons_by_pool,
     }
 
@@ -428,6 +428,12 @@ def load_live_pool(existing_bonds: list):
         C0 = item["conv_price"]
         mat = item.get("maturity_years", 2.5)
         sigma = vol_map.get(item["stock_code"], 0.28)
+        rt = norm_rating(item.get("rating"))
+        sname = str(item.get("stock_name") or "")
+        amt_wan = item.get("amt_wan")
+        is_st = "ST" in sname.upper()
+        has_spec_rat = rt in SPECULATIVE_GRADES
+        is_low_liq = (amt_wan is not None) and (float(amt_wan) < LOW_LIQ_WAN)
 
         conv_val = round((100.0 / C0) * S0, 2)
         premium_rate = round(((Pmkt - conv_val) / max(0.01, conv_val)) * 100, 2)
@@ -447,9 +453,9 @@ def load_live_pool(existing_bonds: list):
         evaluated.append({
             "ticker": item["ticker"],
             "name": item["name"],
-            "rating": item.get("rating", ""),
+            "rating": rt,
             "stock_code": item["stock_code"],
-            "stock_name": item["stock_name"],
+            "stock_name": sname,
             "stock_price": round(S0, 2),
             "conv_price": round(C0, 2),
             "bond_price": round(Pmkt, 2),
@@ -460,6 +466,11 @@ def load_live_pool(existing_bonds: list):
             "conv_val": conv_val,
             "premium_rate": premium_rate,
             "sigma": round(sigma * 100, 1),
+            "amt_wan": amt_wan,
+            "is_st": is_st,
+            "has_spec_rat": has_spec_rat,
+            "is_low_liq": is_low_liq,
+            "is_risk_excluded": bool(is_st or has_spec_rat or is_low_liq),
             "region_name": region_name,
             "region_code": region_code,
             "region_desc": region_desc,
@@ -500,9 +511,33 @@ def generate_page_and_data():
         b["dl_rank"] = dl_rank[b["ticker"]]
         b["rating"] = norm_rating(b.get("rating"))
 
-    research = _load_json_if_exists(dist_dir / "research_validation.json")
-    research_aa = _load_json_if_exists(dist_dir / "research_validation_aa_plus.json")
-    research_aaa = _load_json_if_exists(dist_dir / "research_validation_aaa.json")
+    research_pools = {
+        "all": _load_json_if_exists(dist_dir / "research_validation.json"),
+        "aa_minus": _load_json_if_exists(dist_dir / "research_validation_aa_minus.json"),
+        "aa": _load_json_if_exists(dist_dir / "research_validation_aa.json"),
+        "aa_plus": _load_json_if_exists(dist_dir / "research_validation_aa_plus.json"),
+        "aaa": _load_json_if_exists(dist_dir / "research_validation_aaa.json"),
+    }
+
+    exp_full = _load_json_if_exists(dist_dir / "research_experiments.json")
+    exp_inline = {}
+    if exp_full:
+        # Embed compact summary + key overview presets inline for instant render; full 450-grid loaded via fetch()
+        key_ids = set()
+        for pk in ("all", "aa_minus", "aa", "aa_plus", "aaa"):
+            for rm in ("raw", "filtered"):
+                key_ids.add(f"{pk}|{rm}|100/0|5D|none")
+                key_ids.add(f"{pk}|{rm}|50/50|5D|buf_20_30")
+                key_ids.add(f"{pk}|{rm}|50/50|5D|none")
+                key_ids.add(f"{pk}|{rm}|0/100|5D|none")
+        exp_inline = {
+            "meta": exp_full.get("meta", {}),
+            "benchmarks": exp_full.get("benchmarks", {}),
+            "stepwise": exp_full.get("stepwise", {}),
+            "walk_forward": exp_full.get("walk_forward", {}),
+            "overfitting": exp_full.get("overfitting", {}),
+            "grid": [r for r in exp_full.get("grid", []) if r.get("id") in key_ids],
+        }
 
     live_ledger = update_live_history(dist_dir, date_str, lsm_sorted)
 
@@ -514,9 +549,9 @@ def generate_page_and_data():
         "paper_url": "https://arxiv.org/abs/2409.06496",
         "frozen_params": FROZEN_PARAMS,
         "pool_size": len(lsm_sorted),
-        "research": research,
-        "research_aa_plus": research_aa,
-        "research_aaa": research_aaa,
+        "research": research_pools["all"],
+        "research_pools": research_pools,
+        "exp_summary": exp_inline,
         "live_ledger": live_ledger,
         "lsm_top10": lsm_sorted[:10],
         "double_low_top10": dl_sorted[:10],
@@ -525,7 +560,7 @@ def generate_page_and_data():
 
     (dist_dir / "data.json").write_text(json.dumps(data_payload, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
     (dist_dir / "index.html").write_text(build_clean_html(data_payload), encoding="utf-8")
-    print(f"Generated 4-tab CB Quant Workbench at {dist_dir / 'index.html'} (live_pool={len(lsm_sorted)}, full={research.get('universe',{}).get('total_bonds', 0)}, aa+={research_aa.get('universe',{}).get('total_bonds', 0)}, aaa={research_aaa.get('universe',{}).get('total_bonds', 0)})")
+    print(f"Generated 5-pool CB Quant Workbench at {dist_dir / 'index.html'} (live_pool={len(lsm_sorted)}, exp_grid={exp_full.get('meta',{}).get('total_configs',0)})")
 
 
 def build_clean_html(data: dict) -> str:
@@ -537,7 +572,7 @@ def build_clean_html(data: dict) -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Convertible Bonds · 可转债量化研究 · Four-Region LSM</title>
-  <meta name="description" content="中国可转债 Four-Region LSM 量化研究平台：总览、实时选券、七年历史回测与因子统计检验（全市场 / AA+及以上 / 仅AAA）">
+  <meta name="description" content="中国可转债 Four-Region LSM 量化研究平台：五档点时信用池、风险过滤、因子混合与缓冲回测及样本外防过拟合检验">
   <style>
     :root {
       --bg: #f6f8fa;
@@ -569,139 +604,123 @@ def build_clean_html(data: dict) -> str:
     a { color: var(--blue); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* Top App Header (GitHub / LeetCode Workbench Shell) */
+    /* Header Shell */
     .app-header { background: var(--surface); border-bottom: 1px solid var(--border); }
-    .header-inner { max-width: 1180px; margin: 0 auto; padding: 14px 24px 0; }
-    .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 14px 22px 0; }
+    .header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
     .brand-block { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
     .brand-title { font-size: 18px; font-weight: 700; letter-spacing: -0.2px; color: var(--ink); }
     .brand-sub { font-size: 13px; color: var(--muted); }
-    .status-chip {
-      font-size: 11px; color: var(--muted); background: var(--subtle);
-      border: 1px solid var(--border-soft); border-radius: 999px; padding: 2px 9px;
-    }
+    .status-chip { font-size: 11px; color: var(--muted); background: var(--subtle); border: 1px solid var(--border-soft); border-radius: 999px; padding: 2px 9px; }
     .nav-ext { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; }
     .nav-ext a { color: var(--muted); }
     .nav-ext a:hover { color: var(--blue); }
 
-    /* Unified Tab Bar + Global Investment Scope */
-    .control-bar {
-      display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;
-    }
-    .tabs { display: flex; gap: 4px; overflow-x: auto; }
+    /* Tabs + Global Controls */
+    .control-bar { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
+    .tabs { display: flex; gap: 2px; overflow-x: auto; }
     .tab-btn {
       appearance: none; background: none; border: none; border-bottom: 2px solid transparent;
-      padding: 10px 14px; font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer;
-      display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+      padding: 10px 13px; font-size: 14px; font-weight: 500; color: var(--muted); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
     }
     .tab-btn:hover { color: var(--ink); }
     .tab-btn.active { color: var(--ink); font-weight: 600; border-bottom-color: #fd8c73; }
     .tab-num { font-size: 11px; color: var(--light); font-weight: 600; }
 
-    .scope-wrap { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; flex-wrap: wrap; }
-    .scope-label { font-size: 12px; color: var(--muted); font-weight: 500; }
-    .seg { display: inline-flex; background: var(--subtle); border: 1px solid var(--border); border-radius: 6px; padding: 2px; }
+    .global-filters { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; flex-wrap: wrap; }
+    .seg { display: inline-flex; background: var(--subtle); border: 1px solid var(--border); border-radius: 6px; padding: 2px; flex-wrap: wrap; }
     .seg-btn {
-      border: none; background: transparent; padding: 4px 11px; font-size: 12px; font-weight: 500;
+      border: none; background: transparent; padding: 4px 10px; font-size: 12px; font-weight: 500;
       color: var(--muted); border-radius: 4px; cursor: pointer; white-space: nowrap;
     }
     .seg-btn.active { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(31,35,40,0.08); }
 
-    /* Main Container */
-    .shell { max-width: 1180px; margin: 0 auto; padding: 20px 24px 56px; }
+    /* Shell */
+    .shell { max-width: 1200px; margin: 0 auto; padding: 18px 22px 56px; }
     .status-banner {
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
-      padding: 9px 14px; margin-bottom: 16px; border-radius: 6px; font-size: 12px;
+      padding: 8px 14px; margin-bottom: 14px; border-radius: 6px; font-size: 12px;
       background: var(--surface); border: 1px solid var(--border-soft); color: var(--muted);
     }
     .status-banner strong { color: var(--ink); }
     .warn-banner {
-      padding: 9px 14px; margin-bottom: 16px; border-radius: 6px; font-size: 12px;
+      padding: 9px 14px; margin-bottom: 14px; border-radius: 6px; font-size: 12px;
       background: var(--amber-soft); border: 1px solid #ead18a; color: #6b4500; display: none;
     }
     .view-pane { display: none; }
     .view-pane.active { display: block; }
 
-    /* KPI Row */
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 16px; }
-    .kpi-card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px;
-    }
-    .kpi-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block; }
-    .kpi-val { font-size: 24px; font-weight: 700; line-height: 1.2; letter-spacing: -0.3px; }
-    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+    /* KPIs & Cards */
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 13px 15px; }
+    .kpi-label { font-size: 12px; color: var(--muted); margin-bottom: 3px; display: block; }
+    .kpi-val { font-size: 23px; font-weight: 700; line-height: 1.2; letter-spacing: -0.3px; }
+    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-    /* Valuation Temperature Bar */
     .temp-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
-      padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between;
-      align-items: center; flex-wrap: wrap; gap: 14px;
+      padding: 11px 15px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
     }
-    .temp-metrics { display: flex; gap: 22px; flex-wrap: wrap; font-size: 12px; }
+    .temp-metrics { display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; }
     .temp-metrics span { color: var(--muted); }
     .temp-metrics strong { color: var(--ink); font-weight: 600; margin-left: 4px; }
-    .reg-bar-wrap { display: flex; align-items: center; gap: 8px; min-width: 240px; }
-    .reg-bar { flex: 1; height: 8px; border-radius: 4px; overflow: hidden; display: flex; background: var(--subtle); min-width: 140px; }
+    .reg-bar-wrap { display: flex; align-items: center; gap: 8px; min-width: 220px; }
+    .reg-bar { flex: 1; height: 8px; border-radius: 4px; overflow: hidden; display: flex; background: var(--subtle); min-width: 120px; }
     .reg-legend { display: flex; gap: 8px; font-size: 11px; color: var(--muted); }
 
-    /* Cards & Grids */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .grid-overview { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
-      overflow: hidden; margin-bottom: 16px;
-    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .grid-overview { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 14px; }
     .grid-2 > .card, .grid-overview > .card { margin-bottom: 0; }
     .card-head {
-      padding: 12px 16px; background: #fbfcfd; border-bottom: 1px solid var(--border-soft);
+      padding: 11px 16px; background: #fbfcfd; border-bottom: 1px solid var(--border-soft);
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
     .card-title { font-size: 14px; font-weight: 600; margin: 0; color: var(--ink); }
     .card-sub { font-size: 12px; color: var(--muted); }
-    .card-body { padding: 14px 16px; }
+    .card-body { padding: 13px 16px; }
 
-    /* Pills & Inputs */
+    /* Filters & Param Bar */
     .pills { display: flex; gap: 5px; flex-wrap: wrap; }
     .pill {
       padding: 4px 10px; border-radius: 5px; font-size: 12px; border: 1px solid var(--border);
-      background: var(--surface); color: var(--muted); cursor: pointer;
+      background: var(--surface); color: var(--muted); cursor: pointer; white-space: nowrap;
     }
     .pill.active { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); font-weight: 600; }
+    .param-strip {
+      display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 11px 16px;
+      background: #fbfcfd; border-bottom: 1px solid var(--border-soft);
+    }
+    .param-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .param-lbl { font-size: 12px; font-weight: 600; color: var(--muted); }
     .toolbar {
       padding: 10px 16px; background: #fbfcfd; border-bottom: 1px solid var(--border-soft);
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
     .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .inp, .sel {
-      border: 1px solid var(--border); background: var(--surface); border-radius: 5px;
-      padding: 5px 10px; font-size: 12px; color: var(--ink);
-    }
-    .inp { min-width: 190px; }
+    .inp, .sel { border: 1px solid var(--border); background: var(--surface); border-radius: 5px; padding: 5px 9px; font-size: 12px; color: var(--ink); }
+    .inp { min-width: 180px; }
 
     /* Tables */
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
-    th {
-      background: #fbfcfd; color: var(--muted); font-weight: 600; font-size: 12px;
-      padding: 9px 14px; border-bottom: 1px solid var(--border-soft); white-space: nowrap;
-    }
-    td { padding: 9px 14px; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
+    th { background: #fbfcfd; color: var(--muted); font-weight: 600; font-size: 12px; padding: 8px 13px; border-bottom: 1px solid var(--border-soft); white-space: nowrap; }
+    td { padding: 8px 13px; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: #f8fafc; }
     .hl-row td { background: #f0f7ff; }
     td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .sub { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; }
 
-    /* Semantic Colors & Badges */
+    /* Badges & Text */
     .pos { color: var(--red); font-weight: 600; }
     .neg { color: var(--green); font-weight: 600; }
-    .badge {
-      display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
-      font-weight: 500; white-space: nowrap; border: 1px solid transparent;
-    }
+    .badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; font-weight: 500; white-space: nowrap; border: 1px solid transparent; }
     .b-aaa { background: #ddf4ff; color: #0969da; border-color: #b6e3ff; }
     .b-aap { background: #dafbe1; color: #1a7f37; border-color: #aceebb; }
-    .b-aa  { background: #f3f4f6; color: #57606a; border-color: #d0d7de; }
+    .b-aa  { background: #f3f4f6; color: #3b444f; border-color: #d0d7de; }
+    .b-aam { background: #f6f8fa; color: #656d76; border-color: #d0d7de; }
     .b-low { background: #ffebe9; color: #cf222e; border-color: #ffcecb; }
     .b-warn { background: #fff8c5; color: #9a6700; border-color: #f2cc60; margin-right: 4px; }
     .b-sig-y { background: var(--green-soft); color: var(--green); border-color: #aceebb; }
@@ -710,25 +729,29 @@ def build_clean_html(data: dict) -> str:
     .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11px; color: var(--muted); margin-bottom: 8px; }
     .legend span { display: inline-flex; align-items: center; gap: 5px; }
     .ldot { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
-    .note-box {
-      padding: 10px 16px; background: #fbfcfd; border-top: 1px solid var(--border-soft);
-      font-size: 12px; color: var(--muted); line-height: 1.6;
-    }
-    .btn-link {
-      font-size: 12px; font-weight: 500; color: var(--blue); background: none; border: none;
-      cursor: pointer; padding: 0;
-    }
+    .note-box { padding: 10px 16px; background: #fbfcfd; border-top: 1px solid var(--border-soft); font-size: 12px; color: var(--muted); line-height: 1.65; }
+    .takeaway-list { margin: 0; padding-left: 18px; font-size: 12px; color: var(--muted); line-height: 1.75; }
+    .takeaway-list strong { color: var(--ink); }
+    .btn-link { font-size: 12px; font-weight: 500; color: var(--blue); background: none; border: none; cursor: pointer; padding: 0; }
     .btn-link:hover { text-decoration: underline; }
 
+    details.fold-card > summary {
+      padding: 12px 16px; background: #fbfcfd; cursor: pointer; font-weight: 600; font-size: 13px;
+      display: flex; justify-content: space-between; align-items: center; list-style: none;
+    }
+    details.fold-card[open] > summary { border-bottom: 1px solid var(--border-soft); }
+    details.fold-card > summary::after { content: "展开明细 ▾"; font-size: 12px; color: var(--blue); font-weight: 500; }
+    details.fold-card[open] > summary::after { content: "收起 ▴"; }
+
     footer {
-      margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--border);
+      margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--border);
       font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .kpi-grid { grid-template-columns: 1fr 1fr; }
       .grid-2, .grid-overview { grid-template-columns: 1fr; }
-      .shell, .header-inner { padding-left: 14px; padding-right: 14px; }
+      .shell, .header-inner { padding-left: 12px; padding-right: 12px; }
     }
   </style>
 </head>
@@ -739,7 +762,7 @@ def build_clean_html(data: dict) -> str:
       <div class="brand-block">
         <span class="brand-title">Convertible Bonds</span>
         <span class="brand-sub">可转债量化研究 · Four-Region LSM</span>
-        <span class="status-chip mono">arXiv:2409.06496v7</span>
+        <span class="status-chip mono">参数已冻结 · arXiv:2409.06496v7</span>
       </div>
       <nav class="nav-ext">
         <a href="/">个人主页</a>
@@ -756,12 +779,17 @@ def build_clean_html(data: dict) -> str:
         <button class="tab-btn" data-tab="backtest"><span class="tab-num mono">03</span>历史回测</button>
         <button class="tab-btn" data-tab="research"><span class="tab-num mono">04</span>因子研究</button>
       </nav>
-      <div class="scope-wrap">
-        <span class="scope-label">投资范围</span>
-        <div class="seg" id="poolSeg">
-          <button class="seg-btn active" data-pool="full">全市场</button>
+      <div class="global-filters">
+        <div class="seg" id="poolSeg" title="点时信用评级过滤（严格公告次日生效）">
+          <button class="seg-btn active" data-pool="all">全市场</button>
+          <button class="seg-btn" data-pool="aa_minus">AA-及以上</button>
+          <button class="seg-btn" data-pool="aa">AA及以上</button>
           <button class="seg-btn" data-pool="aa_plus">AA+及以上</button>
           <button class="seg-btn" data-pool="aaa">仅AAA</button>
+        </div>
+        <div class="seg" id="riskSeg" title="因果剔除：历史ST正股 + 违约预警/<=BBB+ + 20日中位成交<500万">
+          <button class="seg-btn active" data-risk="raw">不剔除</button>
+          <button class="seg-btn" data-risk="filtered">剔除 ST·违约·低流</button>
         </div>
       </div>
     </div>
@@ -770,8 +798,8 @@ def build_clean_html(data: dict) -> str:
 
 <main class="shell">
   <div class="status-banner">
-    <div id="researchStatusText">研究状态加载中...</div>
-    <div class="mono" style="font-size:11px;">冻结参数 p_reset=0.80 · B=¥108 · r=2.5% · 实盘更新 __UPDATED_AT__</div>
+    <div id="researchStatusText">研究数据加载中...</div>
+    <div class="mono" style="font-size:11px;">p_reset=0.80 · B=¥108 · r=2.5% · 实盘更新 __UPDATED_AT__</div>
   </div>
   <div class="warn-banner" id="poolWarnBanner"></div>
 
@@ -779,24 +807,24 @@ def build_clean_html(data: dict) -> str:
   <section class="view-pane active" id="view-overview">
     <div class="kpi-grid">
       <div class="kpi-card">
-        <span class="kpi-label">费后年化收益 (周频 0.10%)</span>
-        <div class="kpi-val mono" id="kpiAnnRet">—</div>
-        <div class="kpi-sub" id="kpiAnnSub">—</div>
+        <span class="kpi-label" id="ovKpi1Lbl">费后年化收益 (原始 LSM)</span>
+        <div class="kpi-val mono" id="ovAnnRet">—</div>
+        <div class="kpi-sub" id="ovAnnSub">—</div>
       </div>
       <div class="kpi-card">
-        <span class="kpi-label">年化超额收益 (vs 同池基准)</span>
-        <div class="kpi-val mono" id="kpiExcess">—</div>
-        <div class="kpi-sub" id="kpiExcessSub">—</div>
+        <span class="kpi-label">风险调整指标 (Calmar / Sharpe)</span>
+        <div class="kpi-val mono" id="ovCalmar">—</div>
+        <div class="kpi-sub" id="ovCalmarSub">—</div>
       </div>
       <div class="kpi-card">
         <span class="kpi-label">最大回撤</span>
-        <div class="kpi-val mono neg" id="kpiMdd">—</div>
-        <div class="kpi-sub" id="kpiMddSub">—</div>
+        <div class="kpi-val mono neg" id="ovMdd">—</div>
+        <div class="kpi-sub" id="ovMddSub">—</div>
       </div>
       <div class="kpi-card">
         <span class="kpi-label">20 日 Rank IC</span>
-        <div class="kpi-val mono" id="kpiIc">—</div>
-        <div class="kpi-sub" id="kpiIcSub">—</div>
+        <div class="kpi-val mono" id="ovIc">—</div>
+        <div class="kpi-sub" id="ovIcSub">—</div>
       </div>
     </div>
 
@@ -812,18 +840,29 @@ def build_clean_html(data: dict) -> str:
       <div class="card">
         <div class="card-head">
           <div>
-            <h2 class="card-title">策略累计净值（2020–2026 历史回测）</h2>
-            <span class="card-sub">T+1 开盘调仓 · 单边 0.10% 成本 · 历史回测不等同于实盘未来收益</span>
+            <h2 class="card-title">主要策略净值对比（2020–2026 历史回测 · 0.10% 成本）</h2>
+            <span class="card-sub">随顶部「评级池」与「风险过滤」联动，详细 450 组参数实验见历史回测/因子研究</span>
           </div>
-          <button class="btn-link" data-jump="backtest">详细回测 →</button>
+          <div class="pills" id="ovPresetPills">
+            <button class="pill active" data-ovp="lsm">原始 LSM</button>
+            <button class="pill" data-ovp="blend">50/50 + 20/30缓冲</button>
+            <button class="pill" data-ovp="dl">纯双低</button>
+          </div>
         </div>
         <div class="card-body">
           <div class="legend">
-            <span><i class="ldot" style="background:#0969da;"></i>原始模型 Four-Region LSM</span>
-            <span><i class="ldot" style="background:#9a6700;"></i>传统双低策略</span>
+            <span><i class="ldot" style="background:#0969da;"></i>原始 LSM (100/0·5D·无缓冲)</span>
+            <span><i class="ldot" style="background:#1a7f37;"></i>均衡增强 (50/50·5D·20/30缓冲)</span>
+            <span><i class="ldot" style="background:#9a6700;"></i>纯双低 (0/100·5D·无缓冲)</span>
             <span><i class="ldot" style="background:#8c959f;"></i>同池等权基准</span>
           </div>
           <div id="ovNavSvg"></div>
+          <div class="table-wrap" style="margin-top:10px;border-top:1px solid var(--border-soft);">
+            <table>
+              <thead><tr><th>主要对照 (5D · 0.10% 成本)</th><th class="num">年化</th><th class="num">最大回撤</th><th class="num">Sharpe</th><th class="num">Calmar</th><th class="num">换手</th></tr></thead>
+              <tbody id="ovMiniBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -831,18 +870,30 @@ def build_clean_html(data: dict) -> str:
         <div class="card-head">
           <div>
             <h2 class="card-title" id="ovTopTitle">当前低估转债 Top 10</h2>
-            <span class="card-sub">按当前筛选投资范围内 LSM 理论低估率排序</span>
+            <span class="card-sub">严格匹配当前评级池与风险过滤，按 LSM 低估率排序</span>
           </div>
-          <button class="btn-link" data-jump="screener">全部转债 →</button>
+          <button class="btn-link" data-jump="screener">全部转债与模拟持仓 →</button>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr><th>转债</th><th>评级</th><th class="num">现价</th><th class="num">估值</th><th class="num">低估率</th></tr>
-            </thead>
+            <thead><tr><th>转债</th><th>评级</th><th class="num">现价</th><th class="num">估值</th><th class="num">低估率</th></tr></thead>
             <tbody id="ovTopBody"></tbody>
           </table>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2 class="card-title">实战增强关键研究结论（禁止直接按七年最高收益挑选参数）</h2>
+        <button class="btn-link" data-jump="research">查看完整消融、OOS 与过拟合检验 →</button>
+      </div>
+      <div class="card-body">
+        <ul class="takeaway-list">
+          <li><strong>独立归因有效但各司其职：</strong>在全市场内，因果剔除 ST/违约/低流动性（8.34% 样本日）使纯 LSM 年化由 +15.54% 提升至 +17.33%（Sharpe 1.01→1.10）；LSM 与双低 50/50 截面百分位混合将全市场回撤降至 -15.23%（Calmar 1.27）；<strong>20/30 缓冲机制</strong>将换手率砍半（759%→366%）并降低回撤 2.6%。</li>
+          <li><strong>信用池权衡：</strong><code>AA-及以上</code>（+13.27% → 剔除后 +14.68%）与 <code>AA及以上</code>（+11.90% → +13.45%）兼顾高收益与控回撤；<code>AA+及以上</code> 绝对收益降至 +7.65% 但仍领先双低（+3.79%）；<strong>仅AAA</strong>（日均 29 只）样本过薄且 2025–2026 失效（Sharpe 0.06）。</li>
+          <li><strong>过拟合防线提示：</strong>450 组参数实验的 CSCV 过拟合概率 <code>PBO = 11.4%</code>，样本外夏普平均衰减 <code>38.8%</code>，且短窗（滚动 2 年）追逐冠军参数的样本外夏普跌至 <code>0.03</code>。任何实盘选择必须基于机制稳健性而非 7 年样本内峰值。</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -853,7 +904,7 @@ def build_clean_html(data: dict) -> str:
       <div class="card-head">
         <div>
           <h2 class="card-title" id="scrTitle">实时转债估值选券池</h2>
-          <span class="card-sub">基于 Python Four-Region LSM 冻结参数引擎实时计算，严格匹配当前投资范围</span>
+          <span class="card-sub">随顶部「评级池」与「风险过滤」联动，实时标识正股 ST / 违约低评级 / 低成交警示</span>
         </div>
         <span class="mono" style="font-size:12px;color:var(--muted);" id="scrCountNote">—</span>
       </div>
@@ -882,15 +933,9 @@ def build_clean_html(data: dict) -> str:
         <table>
           <thead>
             <tr>
-              <th style="text-align:center;">#</th>
-              <th>转债标的</th>
-              <th>评级</th>
-              <th class="num">现价</th>
-              <th class="num">LSM估值</th>
-              <th class="num">低估率</th>
-              <th class="num">溢价 / 双低</th>
-              <th>条款区</th>
-              <th>风险提示</th>
+              <th style="text-align:center;">#</th><th>转债标的</th><th>评级</th><th class="num">现价</th>
+              <th class="num">LSM估值</th><th class="num">低估率</th><th class="num">溢价 / 双低</th>
+              <th>条款区</th><th>风险与流动性提示</th>
             </tr>
           </thead>
           <tbody id="scrTableBody"></tbody>
@@ -902,7 +947,7 @@ def build_clean_html(data: dict) -> str:
       <div class="card-head">
         <div>
           <h2 class="card-title" id="portTitle">前瞻模拟持仓组合（Top 20% 等权）</h2>
-          <span class="card-sub" id="portSub">独立于 2020–2026 历史回测的前瞻冻结账本 · 自动匹配当前投资范围</span>
+          <span class="card-sub" id="portSub">独立于 2020–2026 历史回测的前瞻冻结账本 · 随评级池与风险过滤联动</span>
         </div>
         <span class="badge b-warn">实盘前瞻组合 ≠ 历史回测</span>
       </div>
@@ -918,71 +963,66 @@ def build_clean_html(data: dict) -> str:
     </div>
   </section>
 
-  <!-- 03 BACKTEST -->
+  <!-- 03 BACKTEST (450-COMBO PARAMETER WORKBENCH) -->
   <section class="view-pane" id="view-backtest">
     <div class="card">
       <div class="card-head">
         <div>
-          <h2 class="card-title">三档投资范围核心对照（2020-01-02 → 2026-11-24）</h2>
-          <span class="card-sub">统一周频 5D · T+1 开盘成交 · 单边 0.10% 成本 · 点时信用评级公告次日生效</span>
+          <h2 class="card-title">实战增强参数实验台（统一 T+1 开盘成交口径）</h2>
+          <span class="card-sub">结合顶部「评级池」与「风险过滤」，即时切换因子权重、调仓频率、缓冲机制与单边交易成本</span>
         </div>
+        <span class="mono" style="font-size:12px;color:var(--muted);" id="btComboId">—</span>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>投资范围</th>
-              <th>样本规模 (转债 / 日均)</th>
-              <th class="num">原始模型年化</th>
-              <th class="num">双低策略年化</th>
-              <th class="num">同池基准年化</th>
-              <th class="num">20日 Rank IC</th>
-              <th class="num">最大回撤</th>
-              <th class="num">夏普比率</th>
-            </tr>
-          </thead>
-          <tbody id="bt3PoolBody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="card-title">策略累计净值与多策略对照（当前投资范围）</h2>
-          <span class="card-sub">净值曲线按 0.10% 标准单边成本绘制，下方明细表支持切换 0.05% / 0.10% / 0.20% 成本与调仓频率</span>
+      <div class="param-strip">
+        <div class="param-group">
+          <span class="param-lbl">LSM/双低权重</span>
+          <div class="pills" id="btWeightPills">
+            <button class="pill" data-w="100/0">100/0 纯LSM</button>
+            <button class="pill" data-w="75/25">75/25</button>
+            <button class="pill active" data-w="50/50">50/50 均衡</button>
+            <button class="pill" data-w="25/75">25/75</button>
+            <button class="pill" data-w="0/100">0/100 纯双低</button>
+          </div>
         </div>
-        <div class="pills" id="btCostPills">
-          <button class="pill" data-cost="0.05%">0.05% 低佣</button>
-          <button class="pill active" data-cost="0.10%">0.10% 标准成本</button>
-          <button class="pill" data-cost="0.20%">0.20% 高滑点</button>
+        <div class="param-group">
+          <span class="param-lbl">调仓</span>
+          <div class="pills" id="btFreqPills">
+            <button class="pill active" data-f="5">5D</button>
+            <button class="pill" data-f="10">10D</button>
+            <button class="pill" data-f="20">20D</button>
+          </div>
+        </div>
+        <div class="param-group">
+          <span class="param-lbl">缓冲</span>
+          <div class="pills" id="btBufPills">
+            <button class="pill" data-b="none">无缓冲</button>
+            <button class="pill active" data-b="buf_20_30">20/30 缓冲</button>
+            <button class="pill" data-b="buf_20_40">20/40 缓冲</button>
+          </div>
+        </div>
+        <div class="param-group">
+          <span class="param-lbl">单边成本</span>
+          <div class="pills" id="btCostPills">
+            <button class="pill" data-c="0.05%">0.05%</button>
+            <button class="pill active" data-c="0.10%">0.10%</button>
+            <button class="pill" data-c="0.20%">0.20%</button>
+          </div>
         </div>
       </div>
       <div class="card-body">
+        <div class="kpi-grid" style="margin-bottom:14px;">
+          <div class="kpi-card"><span class="kpi-label">年化净收益 / 7年累计</span><div class="kpi-val mono" id="btAnnRet">—</div><div class="kpi-sub" id="btTotRet">—</div></div>
+          <div class="kpi-card"><span class="kpi-label">最大回撤</span><div class="kpi-val mono neg" id="btMdd">—</div><div class="kpi-sub" id="btCostNote">单边成本 0.10%</div></div>
+          <div class="kpi-card"><span class="kpi-label">夏普比率 / Calmar</span><div class="kpi-val mono" id="btSharpe">—</div><div class="kpi-sub" id="btCalmar">—</div></div>
+          <div class="kpi-card"><span class="kpi-label">年化单边换手率</span><div class="kpi-val mono" id="btTo">—</div><div class="kpi-sub" id="btPoolStats">—</div></div>
+        </div>
         <div class="legend">
-          <span><i class="ldot" style="background:#0969da;"></i>Four-Region LSM</span>
-          <span><i class="ldot" style="background:#9a6700;"></i>传统双低</span>
-          <span><i class="ldot" style="background:#1a7f37;"></i>无下修 LSM (p=0)</span>
-          <span><i class="ldot" style="background:#8250df;"></i>单一区域 LSM</span>
+          <span><i class="ldot" style="background:#0969da;"></i>当前所选参数组合</span>
+          <span><i class="ldot" style="background:#8250df;"></i>同池原始 LSM (100/0·5D·无缓冲)</span>
+          <span><i class="ldot" style="background:#9a6700;"></i>同池纯双低 (0/100·5D·无缓冲)</span>
           <span><i class="ldot" style="background:#8c959f;"></i>同池等权基准</span>
         </div>
         <div id="btNavSvg"></div>
-      </div>
-      <div class="table-wrap" style="border-top:1px solid var(--border-soft);">
-        <table>
-          <thead>
-            <tr>
-              <th>策略 / 对照组 (周频 5D)</th>
-              <th>测试目的</th>
-              <th class="num">累计净收益</th>
-              <th class="num">年化净收益</th>
-              <th class="num">最大回撤</th>
-              <th class="num">夏普比率</th>
-              <th class="num">年化单边换手</th>
-            </tr>
-          </thead>
-          <tbody id="btStratBody"></tbody>
-        </table>
       </div>
     </div>
 
@@ -990,15 +1030,13 @@ def build_clean_html(data: dict) -> str:
       <div class="card">
         <div class="card-head">
           <div>
-            <h2 class="card-title">分年度净收益对照（2020–2026 YTD）</h2>
-            <span class="card-sub">按周频 0.10% 成本净值序列切分自然年度</span>
+            <h2 class="card-title">分年度表现对照（2020–2026 YTD）</h2>
+            <span class="card-sub">当前参数 vs 原始 LSM vs 纯双低（所选交易成本口径）</span>
           </div>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr><th>年份</th><th class="num">Four-Region LSM</th><th class="num">传统双低</th><th class="num">同池基准</th><th class="num">LSM 年内最大回撤</th></tr>
-            </thead>
+            <thead><tr><th>年份</th><th class="num">所选参数收益 (MDD)</th><th class="num">原始 LSM</th><th class="num">纯双低</th></tr></thead>
             <tbody id="btAnnualBody"></tbody>
           </table>
         </div>
@@ -1007,167 +1045,206 @@ def build_clean_html(data: dict) -> str:
       <div class="card">
         <div class="card-head">
           <div>
-            <h2 class="card-title">调仓频率与市场阶段稳健性</h2>
-            <span class="card-sub">检验 1D / 5D / 10D / 20D 频率与 2020–2026 阶段表现</span>
+            <h2 class="card-title">五档评级池 × 风险剔除核心对比（所选权重/频率/缓冲）</h2>
+            <span class="card-sub">同一参数跨 5 档点时评级池横向对照，检验策略跨池稳定性</span>
           </div>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>调仓频率</th><th class="num">0.05% 成本</th><th class="num">0.10% 成本</th><th class="num">0.20% 成本</th></tr>
+              <tr><th>评级池 (不剔除 vs 剔除)</th><th class="num">年化</th><th class="num">最大回撤</th><th class="num">Sharpe</th><th class="num">Calmar</th><th class="num">换手</th></tr>
             </thead>
-            <tbody id="btFreqBody"></tbody>
-          </table>
-        </div>
-        <div class="table-wrap" style="border-top:1px solid var(--border-soft);">
-          <table>
-            <thead>
-              <tr><th>市场时段</th><th class="num">LSM 收益 (Sharpe)</th><th class="num">双低收益</th><th class="num">基准收益</th></tr>
-            </thead>
-            <tbody id="btSubBody"></tbody>
+            <tbody id="bt5PoolBody"></tbody>
           </table>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 04 RESEARCH -->
+  <!-- 04 RESEARCH (FACTORS, STEPWISE ATTRIBUTION, OOS & OVERFITTING CONTROL) -->
   <section class="view-pane" id="view-research">
+    <!-- 4A. Stepwise Attribution -->
     <div class="card">
       <div class="card-head">
         <div>
-          <h2 class="card-title">跨期预测能力检验（Rank IC · ICIR · 显著性与衰减）</h2>
-          <span class="card-sub">严格对齐全局交易日历，越界收益窗口不截断、不填充</span>
+          <h2 class="card-title">独立边际贡献分解（逐项消融检验 · 0.10% 单边成本）</h2>
+          <span class="card-sub">先单独检验信用筛选、风险剔除、混合权重、调仓频率与缓冲机制各自贡献，再考察组合效果</span>
+        </div>
+        <div class="pills" id="resStepPills">
+          <button class="pill active" data-st="credit">1. 信用评级池</button>
+          <button class="pill" data-st="risk">2. 风险/流动性剔除</button>
+          <button class="pill" data-st="weight">3. 混合权重</button>
+          <button class="pill" data-st="freq">4. 调仓频率</button>
+          <button class="pill" data-st="buf">5. 缓冲机制</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead id="resStepHead"></thead>
+          <tbody id="resStepBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 4B. Walk-Forward OOS & Overfitting Controls -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2 class="card-title">滚动样本外检验（2021–2026 OOS）与多重检验过拟合控制</h2>
+          <span class="card-sub" id="resPboSub">检验样本外衰减、Deflated Sharpe Ratio (DSR) 与 CSCV 过拟合概率 (PBO)</span>
+        </div>
+        <div class="pills" id="resOosPills">
+          <button class="pill active" data-oos="expanding">扩展窗口 Walk-Forward</button>
+          <button class="pill" data-oos="rolling2y">滚动 2 年 Walk-Forward</button>
+        </div>
+      </div>
+      <div class="grid-2" style="padding:14px 16px;margin-bottom:0;">
+        <div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:6px;" id="resOosChartTitle">Walk-Forward 样本外累计净值 vs 固定先验配置 (2021–2026)</div>
+          <div class="legend">
+            <span><i class="ldot" style="background:#0969da;"></i>Walk-Forward 动态样本外</span>
+            <span><i class="ldot" style="background:#1a7f37;"></i>AA+ 50/50 均衡固定先验</span>
+            <span><i class="ldot" style="background:#8c959f;"></i>全市场原始 LSM 基准</span>
+          </div>
+          <div id="resOosSvg"></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:6px;">逐年样本外选参结果（严格使用该年之前历史最优 Sharpe）</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>测试年</th><th>训练窗</th><th>选中配置</th><th class="num">OOS收益</th><th class="num">OOS夏普</th></tr></thead>
+              <tbody id="resOosYrBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap" style="border-top:1px solid var(--border-soft);">
+        <table>
+          <thead><tr><th>先验策略 / 对照组 (2021–2026 同口径)</th><th class="num">OOS年化</th><th class="num">OOS回撤</th><th class="num">OOS夏普</th><th class="num">OOS Calmar</th><th class="num">全样本夏普</th><th class="num">DSR (N=450)</th></tr></thead>
+          <tbody id="resDsrBody"></tbody>
+        </table>
+      </div>
+      <div class="note-box" id="resPboNote">—</div>
+    </div>
+
+    <!-- 4C. Factor IC / Quintiles / Fama-MacBeth (Active Rating Pool) -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2 class="card-title" id="resFactorTitle">冻结 LSM 因子统计预测检验（Rank IC · 五分组 · Fama-MacBeth）</h2>
+          <span class="card-sub">随顶部 5 档「评级池」实时切换，原始 LSM 因子在纯因子截面上的预测能力检验</span>
         </div>
         <div class="pills" id="resIcPills">
-          <button class="pill" data-rich="5">滚动60日 (h=5)</button>
-          <button class="pill" data-rich="10">滚动60日 (h=10)</button>
-          <button class="pill active" data-rich="20">滚动60日 (h=20)</button>
+          <button class="pill" data-rich="5">h=5</button>
+          <button class="pill" data-rich="10">h=10</button>
+          <button class="pill active" data-rich="20">h=20</button>
         </div>
       </div>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr>
-              <th>持有期</th><th class="num">有效天数</th><th class="num">日均样本</th><th class="num">Mean Rank IC</th>
-              <th class="num">IC标准差</th><th class="num">ICIR</th><th class="num">IC&gt;0比例</th><th class="num">Newey-West t</th><th class="num">95% CI</th>
-            </tr>
+            <tr><th>持有期</th><th class="num">有效天数</th><th class="num">日均样本</th><th class="num">Mean Rank IC</th><th class="num">ICIR</th><th class="num">IC&gt;0比例</th><th class="num">Newey-West t</th><th class="num">G5−G1 多空价差</th></tr>
           </thead>
           <tbody id="resIcBody"></tbody>
         </table>
       </div>
       <div class="grid-2" style="padding:14px 16px;border-top:1px solid var(--border-soft);margin-bottom:0;">
-        <div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:6px;">滚动 60 日 Rank IC 走势</div>
-          <div id="resRollSvg"></div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:6px;">IC 持有期衰减曲线 (1D → 20D)</div>
-          <div id="resDecaySvg"></div>
-        </div>
+        <div><div style="font-size:12px;font-weight:600;margin-bottom:6px;">滚动 60 日 Rank IC 走势</div><div id="resRollSvg"></div></div>
+        <div><div style="font-size:12px;font-weight:600;margin-bottom:6px;">五分组未来 20 日超额收益 (G1 高估 → G5 低估)</div><div id="resQBarSvg"></div></div>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="card-title">五分组单调性检验（G1 高估 → G5 低估）</h2>
-          <span class="card-sub" id="resQStat">—</span>
-        </div>
-        <div class="pills" id="resQPills">
-          <button class="pill" data-rqh="1">未来 1 日</button>
-          <button class="pill" data-rqh="5">未来 5 日</button>
-          <button class="pill" data-rqh="10">未来 10 日</button>
-          <button class="pill active" data-rqh="20">未来 20 日</button>
-        </div>
-      </div>
-      <div class="grid-2" style="padding:14px 16px;margin-bottom:0;">
-        <div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:6px;" id="resQBarTitle">五分组平均超额收益</div>
-          <div id="resQBarSvg"></div>
-        </div>
-        <div>
-          <div style="font-size:12px;font-weight:600;margin-bottom:6px;">2020–2026 五分组周频累计净值 (0.10% 成本)</div>
-          <div class="legend">
-            <span><i class="ldot" style="background:#cf222e;"></i>G5 最被低估</span>
-            <span><i class="ldot" style="background:#0969da;"></i>G4</span>
-            <span><i class="ldot" style="background:#656d76;"></i>G3</span>
-            <span><i class="ldot" style="background:#9a6700;"></i>G2</span>
-            <span><i class="ldot" style="background:#1a7f37;"></i>G1 最被高估</span>
-          </div>
-          <div id="resQNavSvg"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="card-title">Fama-MacBeth 每日横截面回归（纯因果 6 因子对照）</h2>
-          <span class="card-sub" id="resFmbNote">剔除含事后下调信息的评级变量，检验控制价格、溢价率、波动率、剩余期限与正股动量后的增量定价 β</span>
-        </div>
-        <div class="pills" id="resFmbPills">
-          <button class="pill" data-rfh="5">h = 5 交易日</button>
-          <button class="pill" data-rfh="10">h = 10 交易日</button>
-          <button class="pill active" data-rfh="20">h = 20 交易日</button>
-        </div>
-      </div>
-      <div class="table-wrap">
+      <div class="table-wrap" style="border-top:1px solid var(--border-soft);">
         <table>
-          <thead>
-            <tr>
-              <th>标准化因子 (1 SD)</th><th class="num">均值斜率 (%)</th><th class="num">NW 标准误</th>
-              <th class="num">Newey-West t</th><th class="num">双侧 p 值</th><th class="num">95% CI</th><th>显著性</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Fama-MacBeth 因果截面回归 (6因子控制)</th><th class="num">均值斜率 (%)</th><th class="num">Newey-West t</th><th class="num">p 值</th><th>统计结论</th></tr></thead>
           <tbody id="resFmbBody"></tbody>
         </table>
       </div>
     </div>
 
+    <!-- 4D. Collapsible Full 450-Config Grid & Audit -->
     <div class="card">
-      <div class="card-head">
-        <div>
-          <h2 class="card-title">工程审计记录、点时评级校验与文献说明</h2>
-          <span class="card-sub" id="resAuditSub">代码审计修正对比与可复现说明（注：已移除原单券 BS 近似试算器，所有实盘与回测估值均由 Python LSM 蒙特卡洛引擎计算）</span>
+      <details class="fold-card" id="gridDetails">
+        <summary>全部 450 组参数实验完整明细（保留所有正负结果，支持排序）</summary>
+        <div class="toolbar">
+          <div class="filter-row">
+            <select class="sel" id="gridFilterPool">
+              <option value="ALL">全部评级池</option>
+              <option value="all">全市场</option><option value="aa_minus">AA-及以上</option><option value="aa">AA及以上</option><option value="aa_plus">AA+及以上</option><option value="aaa">仅AAA</option>
+            </select>
+            <select class="sel" id="gridSortBy">
+              <option value="sharpe_desc">按夏普比率降序</option>
+              <option value="sharpe_asc">按夏普比率升序 (看最差负面结果)</option>
+              <option value="calmar_desc">按 Calmar 比率降序</option>
+              <option value="ann_desc">按年化收益降序</option>
+            </select>
+          </div>
+          <span class="mono" style="font-size:11px;color:var(--muted);" id="gridCountLbl">—</span>
         </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead id="resAuditHead"></thead>
-          <tbody id="resAuditBody"></tbody>
-        </table>
-      </div>
-      <div class="note-box">
-        <strong>学术参考与复现脚本：</strong>
-        Liu, Yu. (2026). <em>Valuation Model of Chinese Convertible Bonds Based on Monte Carlo Simulation: A Regression-Based Approximation and Error Analysis</em> (<a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">arXiv:2409.06496v7</a>).
-        全市场拉取 <code>tools/fetch_all_cbs.py</code> · 免费点时评级构建 <code>tools/fetch_free_ratings.py</code> · 回测引擎 <code>tools/run_full_validation.py</code> · 高评级过滤 <code>tools/run_high_grade_validation.py</code>。
-      </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>实验组合</th><th class="num">年化净收益</th><th class="num">最大回撤</th><th class="num">Sharpe</th><th class="num">Calmar</th><th class="num">年化换手</th></tr></thead>
+            <tbody id="gridAllBody"></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details class="fold-card">
+        <summary>独立代码审计、因果防泄漏校验与文献引用</summary>
+        <div class="table-wrap">
+          <table>
+            <thead id="resAuditHead"></thead>
+            <tbody id="resAuditBody"></tbody>
+          </table>
+        </div>
+        <div class="note-box">
+          <strong>数据防泄漏与实验说明：</strong>
+          (1) 信用评级采用东方财富首次发行债项评级 + 巨潮网 127 只变动转债历史跟踪评级 PDF 公告（<code>allow_exact_matches=False</code> 严格次日生效，99.93% 覆盖率）；
+          (2) 风险过滤严格使用当时已知信息：深交所历史简称变更 / 巨潮网风险警示公告建构 ST 区间（次日生效）、<code>&lt;=BBB+</code> 降级及 11 只问题券首次公告违约风险提示、以及滚动 20 日中位成交额 <code>&lt; ¥500 万</code>（6.87% 样本日）；
+          (3) 文献参考：<a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">Liu, Yu (2026), arXiv:2409.06496v7</a>，脚本公开于 <code>tools/</code>。
+        </div>
+      </details>
     </div>
   </section>
 
   <footer>
-    <span>Yu Liu (刘宇) · CUHK-Shenzhen · Four-Region LSM 冻结参数实证工作台</span>
-    <span>仅作学术研究验证，历史回测不构成投资建议</span>
+    <span>Yu Liu (刘宇) · CUHK-Shenzhen · Four-Region LSM 冻结参数可转债实证工作台</span>
+    <span>全部正负实验结果如实披露，仅供学术研究，不构成投资建议</span>
   </footer>
 </main>
 
 <script>
 const DATA = __PAYLOAD_JSON__;
+let EXP = DATA.exp_summary || {};
+let EXP_MAP = {};
+function indexExp(e) {
+  EXP = e || {};
+  EXP_MAP = {};
+  (EXP.grid || []).forEach(r => { EXP_MAP[r.id] = r; });
+}
+indexExp(EXP);
+
 const POOLS = {
-  full: { label: "全市场", grades: null, r: () => DATA.research || {} },
-  aa_plus: { label: "AA+及以上", grades: new Set(["AA+", "AAA"]), r: () => DATA.research_aa_plus || {} },
-  aaa: { label: "仅AAA", grades: new Set(["AAA"]), r: () => DATA.research_aaa || {} },
+  all: { label: "全市场", grades: null },
+  aa_minus: { label: "AA-及以上", grades: new Set(["AA-", "AA", "AA+", "AAA"]) },
+  aa: { label: "AA及以上", grades: new Set(["AA", "AA+", "AAA"]) },
+  aa_plus: { label: "AA+及以上", grades: new Set(["AA+", "AAA"]) },
+  aaa: { label: "仅AAA", grades: new Set(["AAA"]) },
 };
 
 let curTab = "overview";
-let curPool = "full";
-let curCost = "0.10%";
+let curPool = "all";
+let curRisk = "raw";
+let curOvPreset = "lsm";
+let btWeight = "50/50";
+let btFreq = 5;
+let btBuf = "buf_20_30";
+let btCost = "0.10%";
 let curResIcH = "20";
-let curResQH = "20";
-let curResFmbH = "20";
+let curStepTab = "credit";
+let curOosMode = "expanding";
 
-const R = () => POOLS[curPool].r();
+const R = () => (DATA.research_pools || {})[curPool] || DATA.research || {};
 const fmt = (v, n = 2) => typeof v === "number" && Number.isFinite(v) ? v.toFixed(n) : "—";
 const signed = (v, n = 2, suf = "%") => typeof v === "number" && Number.isFinite(v) ? (v > 0 ? "+" : "") + v.toFixed(n) + suf : "—";
 const cls = v => typeof v === "number" ? (v > 0 ? "pos" : v < 0 ? "neg" : "") : "";
@@ -1175,51 +1252,58 @@ const fmtP = p => (typeof p !== "number" || !Number.isFinite(p)) ? "—" : (p < 
 
 function livePool() {
   const gs = POOLS[curPool].grades;
-  const all = DATA.all_bonds || [];
-  return gs ? all.filter(b => gs.has((b.rating || "").toUpperCase())) : all;
+  return (DATA.all_bonds || []).filter(b => {
+    if (gs && !gs.has((b.rating || "").toUpperCase())) return false;
+    if (curRisk === "filtered" && b.is_risk_excluded) return false;
+    return true;
+  });
+}
+
+function getExpRow(pool, risk, weight, freq, buf) {
+  return EXP_MAP[`${pool}|${risk}|${weight}|${freq}D|${buf}`] || null;
 }
 
 function ratingBadge(rt) {
   const g = (rt || "").toUpperCase();
   if (!g) return `<span class="badge b-sig-n">未披露</span>`;
-  const c = g === "AAA" ? "b-aaa" : g === "AA+" ? "b-aap" : g.startsWith("AA") ? "b-aa" : "b-low";
+  const c = g === "AAA" ? "b-aaa" : g === "AA+" ? "b-aap" : g === "AA" ? "b-aa" : g === "AA-" ? "b-aam" : "b-low";
   return `<span class="badge ${c} mono">${g}</span>`;
 }
 
 function riskTags(b) {
   const tags = [];
+  if (b.is_st) tags.push(`<span class="badge b-low">ST正股</span>`);
+  if (b.has_spec_rat) tags.push(`<span class="badge b-low">低信用${b.rating}</span>`);
+  if (b.is_low_liq) tags.push(`<span class="badge b-warn">低成交&lt;500万</span>`);
   if (b.region_code === "R1") tags.push(`<span class="badge b-warn">强赎R1</span>`);
-  if (b.bond_price > 150) tags.push(`<span class="badge b-low">高价&gt;150</span>`);
+  if (b.bond_price > 150) tags.push(`<span class="badge b-warn">高价&gt;150</span>`);
   if (b.premium_rate > 80) tags.push(`<span class="badge b-warn">高溢价</span>`);
-  const g = (b.rating || "").toUpperCase();
-  if (g && !g.startsWith("AA") && g !== "AAA") tags.push(`<span class="badge b-low">低信用 ${g}</span>`);
   return tags.length ? tags.join("") : `<span style="font-size:11px;color:var(--light);">常规</span>`;
 }
 
-function drawLinesSvg(dates, seriesList, W = 560, H = 220, rightPad = 78) {
-  if (!dates || !dates.length) return `<div style="padding:32px;text-align:center;color:var(--muted);">暂无净值序列数据</div>`;
+function drawLinesSvg(dates, seriesList, W = 540, H = 220, rightPad = 82) {
+  if (!dates || !dates.length) return `<div style="padding:28px;text-align:center;color:var(--muted);">正在载入净值序列...</div>`;
   const pL = 42, pR = rightPad, pT = 16, pB = 26;
-  const allV = seriesList.flatMap(s => s.vals || []);
+  const validS = seriesList.filter(s => s.vals && s.vals.length);
+  if (!validS.length) return `<div style="padding:28px;text-align:center;color:var(--muted);">暂无数据</div>`;
+  const allV = validS.flatMap(s => s.vals);
   const mn = Math.min(0.95, ...allV) * 0.96, mx = Math.max(1.25, ...allV) * 1.04;
   const px = i => pL + (i / Math.max(1, dates.length - 1)) * (W - pL - pR);
   const py = v => H - pB - ((v - mn) / Math.max(1e-6, mx - mn)) * (H - pT - pB);
   let grid = "";
-  const ticks = [];
-  const step = mx - mn > 1.2 ? 0.5 : 0.2;
+  const step = mx - mn > 1.5 ? 0.5 : mx - mn > 0.6 ? 0.25 : 0.1;
   for (let lv = Math.floor(mn / step) * step; lv <= mx + 1e-6; lv += step) {
     const val = Math.round(lv * 100) / 100;
-    if (val >= mn && val <= mx) ticks.push(val);
+    if (val >= mn && val <= mx) {
+      const y = py(val).toFixed(1);
+      grid += `<line x1="${pL}" y1="${y}" x2="${W - pR}" y2="${y}" stroke="${Math.abs(val - 1.0) < 0.01 ? "#8c959f" : "#eaeef2"}" stroke-dasharray="${Math.abs(val - 1.0) < 0.01 ? "" : "3 3"}"/>
+        <text x="${pL - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="10" fill="#656d76">${val.toFixed(1)}</text>`;
+    }
   }
-  ticks.forEach(lv => {
-    const y = py(lv).toFixed(1);
-    grid += `<line x1="${pL}" y1="${y}" x2="${W - pR}" y2="${y}" stroke="${Math.abs(lv - 1.0) < 0.01 ? "#8c959f" : "#eaeef2"}" stroke-dasharray="${Math.abs(lv - 1.0) < 0.01 ? "" : "3 3"}"/>
-      <text x="${pL - 6}" y="${Number(y) + 3}" text-anchor="end" font-size="10" fill="#656d76">${lv.toFixed(1)}</text>`;
-  });
   [0, Math.floor(dates.length / 2), dates.length - 1].forEach(idx => {
     grid += `<text x="${px(idx).toFixed(1)}" y="${H - 7}" text-anchor="middle" font-size="10" fill="#656d76">${dates[idx]}</text>`;
   });
-  seriesList.forEach(s => {
-    if (!s.vals || !s.vals.length) return;
+  validS.forEach(s => {
     const poly = s.vals.map((v, i) => `${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(" ");
     const endV = s.vals[s.vals.length - 1];
     grid += `<polyline fill="none" stroke="${s.col}" stroke-width="${s.w || 2}" ${s.dash ? `stroke-dasharray="${s.dash}"` : ""} points="${poly}"/>
@@ -1229,52 +1313,47 @@ function drawLinesSvg(dates, seriesList, W = 560, H = 220, rightPad = 78) {
 }
 
 function renderStatus() {
-  const r = R();
-  const u = r.universe || {};
-  const rf = r.rating_filter;
+  const cov = ((EXP.meta || {}).pool_coverage || {})[`${curPool}_${curRisk}`] || {};
   const lp = livePool();
-  const statusEl = document.getElementById("researchStatusText");
-  const warnEl = document.getElementById("poolWarnBanner");
-  if (rf) {
-    statusEl.innerHTML = `当前范围：<strong>${POOLS[curPool].label}</strong>（历史 ${u.total_bonds || 0} 只 · 日均 ${fmt(u.avg_daily_bonds, 1)} 只 · 点时评级覆盖率 ${((rf.rating_coverage_all_bond_days || 0) * 100).toFixed(2)}%）· 实盘可筛 <strong>${lp.length}</strong> 只`;
-  } else {
-    statusEl.innerHTML = `当前范围：<strong>全市场</strong>（历史 ${u.total_bonds || 0} 只 · ${Number(u.total_bond_days || 0).toLocaleString()} 样本日 · 无幸存者偏差）· 实盘可筛 <strong>${lp.length}</strong> 只`;
-  }
+  const rTxt = curRisk === "filtered" ? "已剔除 ST·违约·低流动性" : "不剔除";
+  document.getElementById("researchStatusText").innerHTML =
+    `当前筛选：<strong>${POOLS[curPool].label} · ${rTxt}</strong>（历史 ${cov.unique_bonds || (R().universe||{}).total_bonds || 0} 只 · 日均 ${fmt(cov.avg_daily || (R().universe||{}).avg_daily_bonds, 1)} 只）· 实盘符合条件 <strong>${lp.length}</strong> 只`;
+  const w = document.getElementById("poolWarnBanner");
   if (curPool === "aaa") {
-    warnEl.style.display = "block";
-    warnEl.innerHTML = `<strong>样本量提示（仅AAA）：</strong>点时 AAA 池日均仅 ${fmt(u.avg_daily_bonds, 1)} 只转债（2020 年 15–21 只，2026 年 22–25 只），高度集中于银行与大型国企；周频组合每次仅持 5–8 只，2025–2026 年 20 日 IC 转弱，截面回归受限于每日至少 35 只门槛仅覆盖 ${((r.fama_macbeth || {})["20"] || {}).days || 0} 个交易日。`;
+    w.style.display = "block";
+    w.innerHTML = `<strong>样本量警示（仅AAA）：</strong>点时 AAA 池日均仅 29 只（2020 年 15–21 只），高度集中于银行及大型国企，2025–2026 年 IC 转弱且夏普跌至 0.06，以下数据完整保留供对照。`;
   } else {
-    warnEl.style.display = "none";
+    w.style.display = "none";
   }
 }
 
 function renderOverview() {
-  const r = R();
-  const st = r.strategies || {};
-  const lsm = (st.four_region_lsm?.costs || {})["0.10%"] || {};
-  const mkt = (st.mkt_ew?.costs || {})["0.10%"] || {};
-  const ic20 = (r.ic_summary || {})["20"] || {};
-  const exAnn = (typeof lsm.ann_ret === "number" && typeof mkt.ann_ret === "number") ? (lsm.ann_ret - mkt.ann_ret) : null;
+  const rLsm = getExpRow(curPool, curRisk, "100/0", 5, "none");
+  const rBlend = getExpRow(curPool, curRisk, "50/50", 5, "buf_20_30");
+  const rDl = getExpRow(curPool, curRisk, "0/100", 5, "none");
+  const rEq = ((EXP.benchmarks || {})[`${curPool}_${curRisk}`]) || {};
+  const activeRow = curOvPreset === "blend" ? rBlend : curOvPreset === "dl" ? rDl : rLsm;
+  const c = (activeRow && activeRow.costs ? activeRow.costs["0.10%"] : null) || {};
+  const ic20 = (R().ic_summary || {})["20"] || {};
 
-  const annEl = document.getElementById("kpiAnnRet");
-  annEl.textContent = signed(lsm.ann_ret);
-  annEl.className = `kpi-val mono ${cls(lsm.ann_ret)}`;
-  document.getElementById("kpiAnnSub").textContent = `7年累计 ${signed(lsm.total_ret)} · Sharpe ${fmt(lsm.sharpe, 2)}`;
+  document.getElementById("ovKpi1Lbl").textContent = `费后年化收益 (${curOvPreset === "blend" ? "50/50+缓冲" : curOvPreset === "dl" ? "纯双低" : "原始 LSM"})`;
+  const aEl = document.getElementById("ovAnnRet");
+  aEl.textContent = signed(c.ann_ret);
+  aEl.className = `kpi-val mono ${cls(c.ann_ret)}`;
+  document.getElementById("ovAnnSub").textContent = `7年累计 ${signed(c.total_ret)} · 同池基准 ${signed((rEq.costs?.["0.10%"] || {}).ann_ret)}`;
 
-  const exEl = document.getElementById("kpiExcess");
-  exEl.textContent = signed(exAnn);
-  exEl.className = `kpi-val mono ${cls(exAnn)}`;
-  document.getElementById("kpiExcessSub").textContent = `同池等权基准年化 ${signed(mkt.ann_ret)}`;
+  document.getElementById("ovCalmar").textContent = `${fmt(c.calmar, 2)} / ${fmt(c.sharpe, 2)}`;
+  document.getElementById("ovCalmarSub").textContent = `Calmar = ${fmt(c.calmar, 2)} · Sharpe = ${fmt(c.sharpe, 2)}`;
 
-  document.getElementById("kpiMdd").textContent = `${fmt(lsm.mdd)}%`;
-  document.getElementById("kpiMddSub").textContent = `日均 ${(r.universe || {}).avg_daily_bonds || "—"} 只 · 年化换手 ${fmt(st.four_region_lsm?.ann_to, 1)}%`;
+  document.getElementById("ovMdd").textContent = `${fmt(c.mdd)}%`;
+  document.getElementById("ovMddSub").textContent = `年化单边换手 ${fmt(activeRow?.ann_to, 1)}% · 0.10% 成本`;
 
-  const icEl = document.getElementById("kpiIc");
+  const icEl = document.getElementById("ovIc");
   icEl.textContent = typeof ic20.mean_ic === "number" ? (ic20.mean_ic > 0 ? "+" : "") + ic20.mean_ic.toFixed(4) : "—";
   icEl.className = `kpi-val mono ${cls(ic20.mean_ic)}`;
-  document.getElementById("kpiIcSub").textContent = `ICIR ${fmt(ic20.icir, 3)} · 正比例 ${fmt(ic20.pos_pct, 1)}% · t=${fmt(ic20.t_nw, 2)}`;
+  document.getElementById("ovIcSub").textContent = `ICIR ${fmt(ic20.icir, 3)} · 正比例 ${fmt(ic20.pos_pct, 1)}% · t=${fmt(ic20.t_nw, 2)}`;
 
-  // Market Valuation Temperature (filtered by active pool)
+  // Valuation temperature
   const lp = livePool();
   const prices = lp.map(b => b.bond_price).filter(Number.isFinite).sort((a, b) => a - b);
   const prems = lp.map(b => b.premium_rate).filter(Number.isFinite).sort((a, b) => a - b);
@@ -1284,28 +1363,33 @@ function renderOverview() {
     <div><span>实盘在市</span><strong class="mono">${lp.length} 只</strong></div>
     <div><span>中位现价</span><strong class="mono">¥${fmt(med(prices))}</strong></div>
     <div><span>中位溢价率</span><strong class="mono">${fmt(med(prems), 1)}%</strong></div>
-    <div><span>模型低估占比</span><strong class="mono">${fmt(underPct, 1)}%</strong></div>
+    <div><span>LSM 低估占比</span><strong class="mono">${fmt(underPct, 1)}%</strong></div>
   `;
   const rc = { R1: 0, R2: 0, R3: 0, R4: 0 };
   lp.forEach(b => { if (rc[b.region_code] !== undefined) rc[b.region_code] += 1; });
   const cols = { R1: "#cf222e", R2: "#0969da", R3: "#1a7f37", R4: "#9a6700" };
   const tot = Math.max(1, lp.length);
-  document.getElementById("tempRegBar").innerHTML = ["R1", "R2", "R3", "R4"].map(k =>
-    `<div style="width:${(rc[k] / tot * 100).toFixed(1)}%;background:${cols[k]};" title="${k}: ${rc[k]}只"></div>`
-  ).join("");
-  document.getElementById("tempRegLegend").innerHTML = ["R1", "R2", "R3", "R4"].map(k =>
-    `<span><i style="display:inline-block;width:7px;height:7px;border-radius:2px;background:${cols[k]};margin-right:3px;"></i>${k}:${rc[k]}</span>`
-  ).join("");
+  document.getElementById("tempRegBar").innerHTML = ["R1", "R2", "R3", "R4"].map(k => `<div style="width:${(rc[k]/tot*100).toFixed(1)}%;background:${cols[k]};"></div>`).join("");
+  document.getElementById("tempRegLegend").innerHTML = ["R1", "R2", "R3", "R4"].map(k => `<span><i style="display:inline-block;width:7px;height:7px;border-radius:2px;background:${cols[k]};margin-right:3px;"></i>${k}:${rc[k]}</span>`).join("");
 
-  // Overview Equity Curve
-  const first = st.four_region_lsm || {};
-  document.getElementById("ovNavSvg").innerHTML = drawLinesSvg(first.nav_dates, [
-    { vals: first.nav_010, col: "#0969da", w: 2.2 },
-    { vals: (st.double_low || {}).nav_010, col: "#9a6700", w: 1.8 },
-    { vals: (st.mkt_ew || {}).nav_010, col: "#8c959f", w: 1.5, dash: "5 4" },
-  ], 540, 230, 78);
+  const dates = (EXP.meta || {}).nav_dates || [];
+  document.getElementById("ovNavSvg").innerHTML = drawLinesSvg(dates, [
+    { vals: rLsm?.nav_010, col: "#0969da", w: 2.1 },
+    { vals: rBlend?.nav_010, col: "#1a7f37", w: 2.1 },
+    { vals: rDl?.nav_010, col: "#9a6700", w: 1.7 },
+    { vals: rEq?.nav_010, col: "#8c959f", w: 1.4, dash: "5 4" },
+  ], 540, 215, 76);
 
-  // Overview Top 10 Undervalued Bonds (within active pool!)
+  document.getElementById("ovMiniBody").innerHTML = [
+    ["原始 LSM (100/0 · 无缓冲)", rLsm],
+    ["均衡增强 (50/50 · 20/30 缓冲)", rBlend],
+    ["纯双低 (0/100 · 无缓冲)", rDl],
+    ["同池等权基准", rEq],
+  ].map(([nm, obj]) => {
+    const oc = (obj && obj.costs ? obj.costs["0.10%"] : null) || {};
+    return `<tr><td><strong>${nm}</strong></td><td class="num mono ${cls(oc.ann_ret)}">${signed(oc.ann_ret)}</td><td class="num mono neg">${fmt(oc.mdd)}%</td><td class="num mono">${fmt(oc.sharpe, 2)}</td><td class="num mono">${fmt(oc.calmar, 2)}</td><td class="num mono">${fmt(obj?.ann_to, 1)}%</td></tr>`;
+  }).join("");
+
   document.getElementById("ovTopTitle").textContent = `当前低估转债 Top 10（${POOLS[curPool].label}）`;
   const top10 = [...lp].sort((a, b) => b.undervaluation - a.undervaluation).slice(0, 10);
   document.getElementById("ovTopBody").innerHTML = top10.map(b => `
@@ -1324,28 +1408,24 @@ function renderScreener() {
   const reg = document.getElementById("scrReg").value;
   const sortBy = document.getElementById("scrSort").value;
   const safeOnly = document.getElementById("scrSafeOnly").checked;
-
-  let items = livePool().filter(b => {
+  const lpAll = livePool();
+  let items = lpAll.filter(b => {
     if (reg !== "ALL" && b.region_code !== reg) return false;
     if (safeOnly && (b.bond_price > 150 || b.premium_rate > 80)) return false;
-    if (q) {
-      const hay = `${b.ticker} ${b.name} ${b.stock_code} ${b.stock_name}`.toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
+    if (q && !`${b.ticker} ${b.name} ${b.stock_code} ${b.stock_name}`.toLowerCase().includes(q)) return false;
     return true;
   });
-
   if (sortBy === "underval") items.sort((a, b) => b.undervaluation - a.undervaluation);
   else if (sortBy === "price") items.sort((a, b) => a.bond_price - b.bond_price);
   else if (sortBy === "dl") items.sort((a, b) => a.double_low - b.double_low);
   else if (sortBy === "prem") items.sort((a, b) => a.premium_rate - b.premium_rate);
 
-  document.getElementById("scrTitle").textContent = `实时转债估值选券池（${POOLS[curPool].label}）`;
-  document.getElementById("scrCountNote").textContent = `筛选命中 ${items.length} / ${livePool().length} 只`;
+  document.getElementById("scrTitle").textContent = `实时转债估值选券池（${POOLS[curPool].label} · ${curRisk === "filtered" ? "已剔除风险" : "不剔除"}）`;
+  document.getElementById("scrCountNote").textContent = `命中 ${items.length} / ${lpAll.length} 只`;
   document.getElementById("scrTableBody").innerHTML = items.slice(0, 150).map((b, i) => `
     <tr>
       <td class="mono" style="text-align:center;color:var(--muted);">${i + 1}</td>
-      <td><strong>${b.name}</strong><span class="sub mono">${b.ticker} · ${b.stock_name} (正股 ¥${fmt(b.stock_price)} / 转股 ¥${fmt(b.conv_price)})</span></td>
+      <td><strong>${b.name}</strong><span class="sub mono">${b.ticker} · ${b.stock_name} (正股 ¥${fmt(b.stock_price)} / 成交 ${b.amt_wan !== null ? fmt(b.amt_wan, 0) + "万" : "—"})</span></td>
       <td>${ratingBadge(b.rating)}</td>
       <td class="num mono">¥${fmt(b.bond_price)}</td>
       <td class="num mono"><strong>¥${fmt(b.model_price)}</strong></td>
@@ -1356,292 +1436,198 @@ function renderScreener() {
     </tr>
   `).join("") || `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--muted);">无匹配转债</td></tr>`;
 
-  // Forward Simulated Portfolio for the ACTIVE pool!
   const ll = DATA.live_ledger || {};
-  const portMap = ll.portfolio_by_pool || { full: ll.portfolio };
-  const port = portMap[curPool] || { holdings: [], nav_net: 1.0, last_rebal_date: DATA.date, frozen_since: DATA.date };
-  const cmpMap = ll.comparisons_by_pool || { full: ll.comparisons };
-  const cmps = cmpMap[curPool] || [];
-
+  const port = (ll.portfolio_by_pool || {})[curPool] || ll.portfolio || { holdings: [], nav_net: 1.0 };
+  const cmps = (ll.comparisons_by_pool || {})[curPool] || [];
   document.getElementById("portTitle").textContent = `前瞻模拟持仓组合 · ${POOLS[curPool].label}（Top 20% 周频等权）`;
-  document.getElementById("portSub").textContent = `启动冻结日 ${port.frozen_since || DATA.date} · 当前组合净值 ${fmt(port.nav_net, 4)} · 共 ${(port.holdings || []).length} 只持仓 · 上次调仓 ${port.last_rebal_date || DATA.date}`;
+  document.getElementById("portSub").textContent = `冻结起点 ${port.frozen_since || DATA.date} · 当前净值 ${fmt(port.nav_net, 4)} · 共 ${(port.holdings||[]).length} 只持仓`;
   document.getElementById("portTableBody").innerHTML = (port.holdings || []).map((h, i) => {
     const ret = h.entry_price > 0 ? ((h.last_price - h.entry_price) / h.entry_price) * 100 : 0;
-    return `
-      <tr>
-        <td class="mono" style="color:var(--muted);">${i + 1}</td>
-        <td><strong>${h.name}</strong> <span class="sub mono">${h.ticker}</span></td>
-        <td>${ratingBadge(h.rating)}</td>
-        <td class="num mono">${((h.weight || 0) * 100).toFixed(2)}%</td>
-        <td class="mono">${h.entry_date}</td>
-        <td class="num mono">¥${fmt(h.entry_price)}</td>
-        <td class="num mono">¥${fmt(h.last_price)}</td>
-        <td class="num mono ${cls(ret)}">${signed(ret)}</td>
-      </tr>
-    `;
-  }).join("") || `<tr><td colspan="8" style="text-align:center;color:var(--muted);">暂无模拟持仓</td></tr>`;
-
-  document.getElementById("ledgerHistBox").innerHTML = cmps.length ? `
-    <div class="table-wrap" style="border-top:1px solid var(--border-soft);">
-      <table>
-        <thead><tr><th>前瞻区间</th><th class="num">匹配数</th><th class="num">低估 Top20%</th><th class="num">高估 Bot20%</th><th class="num">传统双低</th><th class="num">同池均值</th><th class="num">多空超额</th><th class="num">Rank IC</th></tr></thead>
-        <tbody>${cmps.map(c => `<tr><td class="mono">${c.from_date} → ${c.to_date}</td><td class="num mono">${c.count}</td><td class="num mono ${cls(c.top_ret)}">${signed(c.top_ret)}</td><td class="num mono ${cls(c.bot_ret)}">${signed(c.bot_ret)}</td><td class="num mono ${cls(c.dl_ret)}">${signed(c.dl_ret)}</td><td class="num mono ${cls(c.mkt_ret)}">${signed(c.mkt_ret)}</td><td class="num mono ${cls(c.spread)}">${signed(c.spread)}</td><td class="num mono">${c.rank_ic > 0 ? "+" : ""}${fmt(c.rank_ic, 3)}</td></tr>`).join("")}</tbody>
-      </table>
-    </div>` : `<div class="note-box">当前范围已冻结记录今日信号与初始模拟持仓（net NAV = ${fmt(port.nav_net, 4)}），后续交易日收市后将在下方累积实盘前瞻兑现记录。</div>`;
-}
-
-function calcYearlyPerf(dates, navs) {
-  const byYr = {};
-  if (!dates || !navs) return byYr;
-  dates.forEach((d, i) => {
-    const yr = String(d).slice(0, 4);
-    if (!byYr[yr]) byYr[yr] = { vals: [], startPrev: i > 0 ? navs[i - 1] : 1.0 };
-    byYr[yr].vals.push(navs[i]);
-  });
-  const out = {};
-  Object.keys(byYr).sort().forEach(yr => {
-    const { vals, startPrev } = byYr[yr];
-    const ret = ((vals[vals.length - 1] / Math.max(1e-9, startPrev)) - 1.0) * 100.0;
-    let peak = startPrev, mdd = 0;
-    vals.forEach(v => {
-      if (v > peak) peak = v;
-      const dd = (v / peak - 1.0) * 100.0;
-      if (dd < mdd) mdd = dd;
-    });
-    out[yr] = { ret, mdd };
-  });
-  return out;
+    return `<tr><td class="mono" style="color:var(--muted);">${i + 1}</td><td><strong>${h.name}</strong> <span class="sub mono">${h.ticker}</span></td><td>${ratingBadge(h.rating)}</td><td class="num mono">${((h.weight||0)*100).toFixed(2)}%</td><td class="mono">${h.entry_date}</td><td class="num mono">¥${fmt(h.entry_price)}</td><td class="num mono">¥${fmt(h.last_price)}</td><td class="num mono ${cls(ret)}">${signed(ret)}</td></tr>`;
+  }).join("") || `<tr><td colspan="8" style="text-align:center;color:var(--muted);">暂无持仓</td></tr>`;
+  document.getElementById("ledgerHistBox").innerHTML = cmps.length ? `<div class="table-wrap" style="border-top:1px solid var(--border-soft);"><table><thead><tr><th>区间</th><th class="num">样本数</th><th class="num">Top20%</th><th class="num">Bot20%</th><th class="num">双低</th><th class="num">均值</th><th class="num">超额</th><th class="num">IC</th></tr></thead><tbody>${cmps.map(c=>`<tr><td class="mono">${c.from_date}→${c.to_date}</td><td class="num mono">${c.count}</td><td class="num mono ${cls(c.top_ret)}">${signed(c.top_ret)}</td><td class="num mono">${signed(c.bot_ret)}</td><td class="num mono">${signed(c.dl_ret)}</td><td class="num mono">${signed(c.mkt_ret)}</td><td class="num mono ${cls(c.spread)}">${signed(c.spread)}</td><td class="num mono">${fmt(c.rank_ic,3)}</td></tr>`).join("")}</tbody></table></div>` : `<div class="note-box">已归档当前范围初始冻结信号与模拟持仓（net NAV = ${fmt(port.nav_net, 4)}），后续交易日收市后累计真实前瞻对比记录。</div>`;
 }
 
 function renderBacktest() {
-  // 3-Pool Comparison Table
-  document.getElementById("bt3PoolBody").innerHTML = ["full", "aa_plus", "aaa"].map(pk => {
-    const pr = POOLS[pk].r();
-    const u = pr.universe || {};
-    const st = pr.strategies || {};
-    const lsm = (st.four_region_lsm?.costs || {})["0.10%"] || {};
-    const dl = (st.double_low?.costs || {})["0.10%"] || {};
-    const mk = (st.mkt_ew?.costs || {})["0.10%"] || {};
-    const ic20 = (pr.ic_summary || {})["20"] || {};
-    return `
-      <tr class="${pk === curPool ? "hl-row" : ""}">
-        <td><strong>${POOLS[pk].label}</strong></td>
-        <td class="mono">${u.total_bonds || 0} 只 / 日均 ${fmt(u.avg_daily_bonds, 1)} 只</td>
-        <td class="num mono ${cls(lsm.ann_ret)}">${signed(lsm.ann_ret)}</td>
-        <td class="num mono ${cls(dl.ann_ret)}">${signed(dl.ann_ret)}</td>
-        <td class="num mono ${cls(mk.ann_ret)}">${signed(mk.ann_ret)}</td>
-        <td class="num mono">${typeof ic20.mean_ic === "number" ? (ic20.mean_ic > 0 ? "+" : "") + ic20.mean_ic.toFixed(4) : "—"}</td>
-        <td class="num mono neg">${fmt(lsm.mdd)}%</td>
-        <td class="num mono"><strong>${fmt(lsm.sharpe, 2)}</strong></td>
-      </tr>
-    `;
-  }).join("");
+  const row = getExpRow(curPool, curRisk, btWeight, btFreq, btBuf);
+  const rLsm = getExpRow(curPool, curRisk, "100/0", 5, "none");
+  const rDl = getExpRow(curPool, curRisk, "0/100", 5, "none");
+  const rEq = ((EXP.benchmarks || {})[`${curPool}_${curRisk}`]) || {};
+  const c = (row && row.costs ? row.costs[btCost] : null) || {};
+  const cov = ((EXP.meta || {}).pool_coverage || {})[`${curPool}_${curRisk}`] || {};
 
-  const r = R();
-  const st = r.strategies || {};
-  const first = st.four_region_lsm || {};
-  document.getElementById("btNavSvg").innerHTML = drawLinesSvg(first.nav_dates, [
-    { vals: first.nav_010, col: "#0969da", w: 2.2 },
-    { vals: (st.double_low || {}).nav_010, col: "#9a6700", w: 1.8 },
-    { vals: (st.no_reset_lsm || {}).nav_010, col: "#1a7f37", w: 1.5 },
-    { vals: (st.single_region_lsm || {}).nav_010, col: "#8250df", w: 1.5 },
-    { vals: (st.mkt_ew || {}).nav_010, col: "#8c959f", w: 1.4, dash: "5 4" },
-  ], 920, 240, 86);
+  document.getElementById("btComboId").textContent = `${POOLS[curPool].label} · ${curRisk==="filtered"?"剔除风险":"不剔除"} · ${btWeight} · ${btFreq}D · ${btBuf==="none"?"无缓冲":btBuf==="buf_20_30"?"20/30缓冲":"20/40缓冲"}`;
+  document.getElementById("btAnnRet").textContent = signed(c.ann_ret);
+  document.getElementById("btAnnRet").className = `kpi-val mono ${cls(c.ann_ret)}`;
+  document.getElementById("btTotRet").textContent = `7年累计 ${signed(c.total_ret)}`;
+  document.getElementById("btMdd").textContent = `${fmt(c.mdd)}%`;
+  document.getElementById("btCostNote").textContent = `单边交易成本 ${btCost}`;
+  document.getElementById("btSharpe").textContent = `${fmt(c.sharpe, 2)} / ${fmt(c.calmar, 2)}`;
+  document.getElementById("btCalmar").textContent = `Calmar = ${fmt(c.calmar, 2)} · Sharpe = ${fmt(c.sharpe, 2)}`;
+  document.getElementById("btTo").textContent = `${fmt(row?.ann_to, 1)}%`;
+  document.getElementById("btPoolStats").textContent = `样本 ${cov.unique_bonds || "—"} 只 · 日均 ${fmt(cov.avg_daily, 1)} 只`;
 
-  const goals = {
-    four_region_lsm: "主策略（冻结原论文参数）",
-    mkt_ew: "同范围基准：等权持有",
-    double_low: "经典双低对照组",
-    low_price: "低价因子对照",
-    low_prem: "低转股溢价率对照",
-    stock_mom: "正股 20 日动量对照",
-    single_region_lsm: "消融对照：去四区域分段",
-    no_reset_lsm: "消融对照：关闭下修博弈 (p=0)",
-  };
-  let rows = Object.keys(goals).map(sk => {
-    const o = st[sk];
-    if (!o) return "";
-    const c = (o.costs || {})[curCost] || {};
-    return `
-      <tr class="${sk === "four_region_lsm" ? "hl-row" : ""}">
-        <td><strong>${o.name}</strong></td>
-        <td style="font-size:12px;color:var(--muted);">${goals[sk]}</td>
-        <td class="num mono ${cls(c.total_ret)}">${signed(c.total_ret)}</td>
-        <td class="num mono ${cls(c.ann_ret)}">${signed(c.ann_ret)}</td>
-        <td class="num mono neg">${fmt(c.mdd)}%</td>
-        <td class="num mono"><strong>${fmt(c.sharpe, 2)}</strong></td>
-        <td class="num mono">${fmt(o.ann_to, 1)}%</td>
-      </tr>
-    `;
-  }).join("");
-
-  if (r.stress_default_50pct) {
-    const sd = r.stress_default_50pct;
-    rows += `<tr><td><strong>违约退市 50% 折价压力测试</strong></td><td style="font-size:12px;color:var(--muted);">末日收盘 &lt;¥90 退市券按 50% 清算 (0.10% 成本)</td><td class="num mono ${cls(sd.total_ret)}">${signed(sd.total_ret)}</td><td class="num mono ${cls(sd.ann_ret)}">${signed(sd.ann_ret)}</td><td class="num mono neg">${fmt(sd.mdd)}%</td><td class="num mono">${fmt(sd.sharpe, 2)}</td><td class="num mono">—</td></tr>`;
-  }
-  if (r.random_mc) {
-    const mc = r.random_mc;
-    rows += `<tr><td><strong>随机选券蒙特卡洛 (${mc.runs} 次)</strong></td><td style="font-size:12px;color:var(--muted);">同换手随机抽样 95% 区间 [${fmt(mc.total_ret_ci95[0])}%, ${fmt(mc.total_ret_ci95[1])}%]</td><td class="num mono">${signed(mc.total_ret_mean)}</td><td class="num mono">${signed(mc.ann_ret_mean)}</td><td class="num mono">—</td><td class="num mono">${fmt(mc.sharpe_mean, 2)}</td><td class="num mono">~750%</td></tr>`;
-  }
-  document.getElementById("btStratBody").innerHTML = rows;
+  const dates = (EXP.meta || {}).nav_dates || [];
+  document.getElementById("btNavSvg").innerHTML = drawLinesSvg(dates, [
+    { vals: row?.nav_010, col: "#0969da", w: 2.3 },
+    { vals: rLsm?.nav_010, col: "#8250df", w: 1.6 },
+    { vals: rDl?.nav_010, col: "#9a6700", w: 1.6 },
+    { vals: rEq?.nav_010, col: "#8c959f", w: 1.4, dash: "5 4" },
+  ], 920, 235, 86);
 
   // Annual Returns
-  const yLsm = calcYearlyPerf(first.nav_dates, first.nav_010);
-  const yDl = calcYearlyPerf((st.double_low || {}).nav_dates, (st.double_low || {}).nav_010);
-  const yMk = calcYearlyPerf((st.mkt_ew || {}).nav_dates, (st.mkt_ew || {}).nav_010);
-  const yrs = Object.keys(yLsm).sort();
+  const aSel = c.annual || {};
+  const aLsm = (rLsm?.costs?.[btCost] || {}).annual || {};
+  const aDl = (rDl?.costs?.[btCost] || {}).annual || {};
+  const yrs = Object.keys(aSel).sort();
   document.getElementById("btAnnualBody").innerHTML = yrs.map(yr => `
     <tr>
-      <td class="mono"><strong>${yr}${yr === yrs[yrs.length - 1] ? " YTD" : ""}</strong></td>
-      <td class="num mono ${cls(yLsm[yr]?.ret)}">${signed(yLsm[yr]?.ret)}</td>
-      <td class="num mono ${cls(yDl[yr]?.ret)}">${signed(yDl[yr]?.ret)}</td>
-      <td class="num mono ${cls(yMk[yr]?.ret)}">${signed(yMk[yr]?.ret)}</td>
-      <td class="num mono neg">${fmt(yLsm[yr]?.mdd)}%</td>
+      <td class="mono"><strong>${yr}${yr===yrs[yrs.length-1]?" YTD":""}</strong></td>
+      <td class="num mono ${cls(aSel[yr]?.ret)}"><strong>${signed(aSel[yr]?.ret)}</strong> <span class="sub">MDD ${fmt(aSel[yr]?.mdd)}%</span></td>
+      <td class="num mono ${cls(aLsm[yr]?.ret)}">${signed(aLsm[yr]?.ret)}</td>
+      <td class="num mono ${cls(aDl[yr]?.ret)}">${signed(aDl[yr]?.ret)}</td>
     </tr>
-  `).join("");
+  `).join("") || `<tr><td colspan="4" style="text-align:center;color:var(--muted);">加载完整实验网格后显示</td></tr>`;
 
-  // Frequency & Subperiods
-  const fr = r.freq_robust || {};
-  document.getElementById("btFreqBody").innerHTML = ["1D", "5D", "10D", "20D"].map(fk => {
-    const f = fr[fk] || {};
-    return `<tr><td class="mono"><strong>${fk}</strong></td>
-      <td class="num mono">${signed((f["0.05%"] || {}).total_ret)} <span class="sub">SR ${fmt((f["0.05%"] || {}).sharpe)}</span></td>
-      <td class="num mono">${signed((f["0.10%"] || {}).total_ret)} <span class="sub">SR ${fmt((f["0.10%"] || {}).sharpe)}</span></td>
-      <td class="num mono">${signed((f["0.20%"] || {}).total_ret)} <span class="sub">SR ${fmt((f["0.20%"] || {}).sharpe)}</span></td></tr>`;
-  }).join("");
-
-  const sp = r.subperiod_strats || {};
-  document.getElementById("btSubBody").innerHTML = Object.keys(sp).map(p => {
-    const s = sp[p];
-    return `<tr><td><strong>${p}</strong></td>
-      <td class="num mono ${cls(s.four_region_lsm?.total_ret)}">${signed(s.four_region_lsm?.total_ret)} (${fmt(s.four_region_lsm?.sharpe)})</td>
-      <td class="num mono ${cls(s.double_low?.total_ret)}">${signed(s.double_low?.total_ret)}</td>
-      <td class="num mono ${cls(s.mkt_ew?.total_ret)}">${signed(s.mkt_ew?.total_ret)}</td></tr>`;
-  }).join("");
+  // 5 Pools x 2 Risk Modes matrix under selected weight/freq/buffer
+  const pOrder = ["all", "aa_minus", "aa", "aa_plus", "aaa"];
+  let pRows = "";
+  pOrder.forEach(pk => {
+    ["raw", "filtered"].forEach(rm => {
+      const pr = getExpRow(pk, rm, btWeight, btFreq, btBuf);
+      if (!pr) return;
+      const pc = (pr.costs || {})[btCost] || {};
+      const active = pk === curPool && rm === curRisk;
+      pRows += `<tr class="${active ? "hl-row" : ""}">
+        <td><strong>${POOLS[pk].label}</strong> <span class="badge ${rm==="filtered"?"b-sig-y":"b-sig-n"}">${rm==="filtered"?"剔除":"不剔除"}</span></td>
+        <td class="num mono ${cls(pc.ann_ret)}">${signed(pc.ann_ret)}</td>
+        <td class="num mono neg">${fmt(pc.mdd)}%</td>
+        <td class="num mono"><strong>${fmt(pc.sharpe, 2)}</strong></td>
+        <td class="num mono">${fmt(pc.calmar, 2)}</td>
+        <td class="num mono">${fmt(pr.ann_to, 1)}%</td>
+      </tr>`;
+    });
+  });
+  document.getElementById("bt5PoolBody").innerHTML = pRows;
 }
 
 function renderResearch() {
+  // 4A. Stepwise Attribution
+  const sw = EXP.stepwise || {};
+  const stHead = document.getElementById("resStepHead");
+  const stBody = document.getElementById("resStepBody");
+  if (curStepTab === "risk") {
+    stHead.innerHTML = `<tr><th>信用评级池 (100/0·5D·无缓冲)</th><th class="num">不剔除 年化 (Sharpe / Calmar)</th><th class="num">剔除风险 年化 (Sharpe / Calmar)</th><th class="num">夏普增量</th></tr>`;
+    stBody.innerHTML = (sw.risk_filter_by_pool || []).map(x => {
+      const dSr = x.filtered.sharpe - x.raw.sharpe;
+      return `<tr><td><strong>${x.pool}</strong></td><td class="num mono">${signed(x.raw.ann_ret)} (${fmt(x.raw.sharpe)} / ${fmt(x.raw.calmar)})</td><td class="num mono"><strong>${signed(x.filtered.ann_ret)}</strong> (${fmt(x.filtered.sharpe)} / ${fmt(x.filtered.calmar)})</td><td class="num mono ${cls(dSr)}">${signed(dSr, 2, "")}</td></tr>`;
+    }).join("");
+  } else {
+    const arr = curStepTab === "credit" ? sw.credit_filter : curStepTab === "weight" ? sw.blend_weights : curStepTab === "freq" ? sw.rebal_freq : sw.buffers;
+    stHead.innerHTML = `<tr><th>独立因子测试项 (0.10% 成本)</th><th class="num">7年累计</th><th class="num">年化净收益</th><th class="num">最大回撤</th><th class="num">Sharpe</th><th class="num">Calmar</th><th class="num">年化换手</th></tr>`;
+    stBody.innerHTML = (arr || []).map(x => `
+      <tr><td><strong>${x.step}</strong></td><td class="num mono ${cls(x.total_ret)}">${signed(x.total_ret)}</td><td class="num mono ${cls(x.ann_ret)}">${signed(x.ann_ret)}</td><td class="num mono neg">${fmt(x.mdd)}%</td><td class="num mono"><strong>${fmt(x.sharpe, 2)}</strong></td><td class="num mono">${fmt(x.calmar, 2)}</td><td class="num mono">${fmt(x.ann_to, 1)}%</td></tr>
+    `).join("");
+  }
+
+  // 4B. Walk-Forward OOS & Overfitting Controls
+  const wf = (EXP.walk_forward || {})[curOosMode] || {};
+  const priors = (EXP.walk_forward || {}).priors_2021_2026 || [];
+  const pbo = EXP.overfitting || {};
+  document.getElementById("resOosChartTitle").textContent = `${curOosMode === "expanding" ? "扩展窗口" : "滚动 2 年"} Walk-Forward 样本外净值 (${wf.period || ""})`;
+  document.getElementById("resOosSvg").innerHTML = drawLinesSvg(wf.nav_dates, [
+    { vals: wf.nav_010, col: "#0969da", w: 2.2 },
+    { vals: (priors[2] || {}).nav_010, col: "#1a7f37", w: 1.8 },
+    { vals: (priors[0] || {}).nav_010, col: "#8c959f", w: 1.5, dash: "5 4" },
+  ], 520, 210, 74);
+  document.getElementById("resOosYrBody").innerHTML = (wf.yearly_picks || []).map(y => `
+    <tr><td class="mono"><strong>${y.test_year}</strong></td><td class="mono" style="font-size:11px;color:var(--muted);">${y.train_window}</td><td style="font-size:11px;">${y.picked_desc}</td><td class="num mono ${cls(y.oos_ret)}">${signed(y.oos_ret)}</td><td class="num mono">${fmt(y.oos_sharpe, 2)}</td></tr>
+  `).join("");
+  document.getElementById("resDsrBody").innerHTML = [
+    { label: `Walk-Forward 扩展窗口动态样本外 (${wf.period || ""})`, oos_ann_ret: wf.ann_ret, oos_mdd: wf.mdd, oos_sharpe: wf.sharpe, oos_calmar: wf.calmar, full_sharpe: null, dsr_prob: null },
+    ...priors,
+  ].map(p => `
+    <tr><td><strong>${p.label}</strong></td><td class="num mono ${cls(p.oos_ann_ret)}">${signed(p.oos_ann_ret)}</td><td class="num mono neg">${fmt(p.oos_mdd)}%</td><td class="num mono">${fmt(p.oos_sharpe, 2)}</td><td class="num mono">${fmt(p.oos_calmar, 2)}</td><td class="num mono">${fmt(p.full_sharpe, 2)}</td><td class="num mono">${p.dsr_prob !== null && p.dsr_prob !== undefined ? fmt(p.dsr_prob, 4) : "样本外直连"}</td></tr>
+  `).join("");
+  document.getElementById("resPboNote").innerHTML =
+    `<strong>多重检验防过拟合校验 (N=${pbo.n_configs || 450} 组实验)：</strong>CSCV 8 区块对称交叉验证 (${pbo.n_splits || 70} 次切分) 测得 <code>PBO 过拟合概率 = ${fmt(pbo.pbo_pct, 1)}%</code>，样本内最优夏普中位数 <code>${fmt(pbo.median_is_best_sharpe, 2)}</code> 样本外降至 <code>${fmt(pbo.median_oos_sharpe, 2)}</code>（衰减 <code>${fmt(pbo.sharpe_degradation_pct, 1)}%</code>）；450 组相关试验预期随机最高夏普基准 <code>SR* = 0.934</code>，哪怕 7 年样本内最高夏普配置 (1.19) 的 DSR 置信概率也仅 <code>0.7474</code> (&lt; 0.95)，短窗（滚动 2 年）选参样本外夏普更跌至 <code>0.03</code>。`;
+
+  // 4C. Factor IC / Quintiles / Fama-MacBeth
   const r = R();
   const ic = r.ic_summary || {};
+  const qMap = r.quintiles || {};
+  document.getElementById("resFactorTitle").textContent = `冻结 LSM 因子统计预测检验（${POOLS[curPool].label}）`;
   document.getElementById("resIcBody").innerHTML = ["1", "5", "10", "20"].map(h => {
-    const x = ic[h];
+    const x = ic[h], q = qMap[h];
     if (!x) return "";
-    const sig = x.p_val < 0.05;
-    return `<tr>
-      <td class="mono"><strong>${h} 日</strong></td><td class="num mono">${x.days}</td><td class="num mono">${fmt(x.avg_n, 1)}</td>
-      <td class="num mono ${cls(x.mean_ic)}">${x.mean_ic > 0 ? "+" : ""}${fmt(x.mean_ic, 4)}</td>
-      <td class="num mono">${fmt(x.std_ic, 4)}</td><td class="num mono">${fmt(x.icir, 3)}</td>
-      <td class="num mono">${fmt(x.pos_pct, 1)}%</td>
-      <td class="num mono"><strong>${fmt(x.t_nw, 2)}</strong> <span class="badge ${sig ? "b-sig-y" : "b-sig-n"}">p=${fmtP(x.p_val)}</span></td>
-      <td class="num mono">[${fmt(x.ci95[0], 4)}, ${fmt(x.ci95[1], 4)}]</td>
-    </tr>`;
+    return `<tr><td class="mono"><strong>${h}D</strong></td><td class="num mono">${x.days}</td><td class="num mono">${fmt(x.avg_n,1)}</td><td class="num mono ${cls(x.mean_ic)}">${x.mean_ic>0?"+":""}${fmt(x.mean_ic,4)}</td><td class="num mono">${fmt(x.icir,3)}</td><td class="num mono">${fmt(x.pos_pct,1)}%</td><td class="num mono"><strong>${fmt(x.t_nw,2)}</strong> <span class="badge ${x.p_val<0.05?"b-sig-y":"b-sig-n"}">p=${fmtP(x.p_val)}</span></td><td class="num mono ${cls(q?.g5_minus_g1)}">${signed(q?.g5_minus_g1,3)} (t=${fmt(q?.t_nw,2)})</td></tr>`;
   }).join("");
 
-  // Rolling 60D IC SVG
   const pts = (r.rolling_ic || {})[curResIcH] || [];
   if (pts.length) {
-    const W = 500, H = 200, pL = 40, pR = 14, pT = 16, pB = 26;
+    const W = 500, H = 190, pL = 40, pR = 14, pT = 14, pB = 24;
     const ys = pts.map(p => p[1]);
     const minY = Math.min(-0.08, ...ys) - 0.02, maxY = Math.max(0.18, ...ys) + 0.02;
     const px = i => pL + (i / Math.max(1, pts.length - 1)) * (W - pL - pR);
     const py = v => H - pB - ((v - minY) / (maxY - minY)) * (H - pT - pB);
     let g = "";
-    [-0.05, 0, 0.05, 0.10].forEach(lv => {
-      if (lv >= minY && lv <= maxY) {
-        const y = py(lv).toFixed(1);
-        g += `<line x1="${pL}" y1="${y}" x2="${W - pR}" y2="${y}" stroke="${lv === 0 ? "#8c959f" : "#eaeef2"}" stroke-dasharray="${lv === 0 ? "" : "3 3"}"/>
-          <text x="${pL - 5}" y="${Number(y) + 3}" text-anchor="end" font-size="10" fill="#656d76">${lv.toFixed(2)}</text>`;
-      }
-    });
-    [0, Math.floor(pts.length / 2), pts.length - 1].forEach(i => { g += `<text x="${px(i).toFixed(1)}" y="${H - 7}" text-anchor="middle" font-size="10" fill="#656d76">${pts[i][0]}</text>`; });
+    [-0.05, 0, 0.05, 0.10].forEach(lv => { if (lv >= minY && lv <= maxY) { const y = py(lv).toFixed(1); g += `<line x1="${pL}" y1="${y}" x2="${W-pR}" y2="${y}" stroke="${lv===0?"#8c959f":"#eaeef2"}" stroke-dasharray="${lv===0?"":"3 3"}"/><text x="${pL-5}" y="${Number(y)+3}" text-anchor="end" font-size="10" fill="#656d76">${lv.toFixed(2)}</text>`; } });
+    [0, Math.floor(pts.length / 2), pts.length - 1].forEach(i => { g += `<text x="${px(i).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="10" fill="#656d76">${pts[i][0]}</text>`; });
     const poly = pts.map((p, i) => `${px(i).toFixed(1)},${py(p[1]).toFixed(1)}`).join(" ");
-    document.getElementById("resRollSvg").innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">${g}<polyline fill="none" stroke="#0969da" stroke-width="1.9" points="${poly}"/></svg>`;
-  } else {
-    document.getElementById("resRollSvg").innerHTML = `<div style="padding:28px;text-align:center;color:var(--muted);">暂无滚动 IC 数据</div>`;
+    document.getElementById("resRollSvg").innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">${g}<polyline fill="none" stroke="#0969da" stroke-width="1.8" points="${poly}"/></svg>`;
   }
 
-  // IC Decay SVG
-  const dec = r.ic_decay || [];
-  if (dec.length) {
-    const W = 500, H = 200, pL = 40, pR = 16, pT = 20, pB = 26;
-    const maxV = Math.max(0.10, ...dec.map(d => d.mean_ic)) * 1.18;
-    const bw = (W - pL - pR) / dec.length;
-    let bars = `<line x1="${pL}" y1="${H - pB}" x2="${W - pR}" y2="${H - pB}" stroke="#d0d7de"/>`;
-    dec.forEach((d, i) => {
-      const v = Math.max(0, d.mean_ic);
-      const h = (v / maxV) * (H - pT - pB), x = pL + i * bw + bw * 0.22, w = bw * 0.56, y = H - pB - h;
-      bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${Math.max(2, h).toFixed(1)}" fill="#0969da" opacity="0.86" rx="2"/>
-        <text x="${(x + w / 2).toFixed(1)}" y="${(y - 5).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="600" fill="#0969da">${d.mean_ic >= 0 ? "+" : ""}${d.mean_ic.toFixed(3)}</text>
-        <text x="${(x + w / 2).toFixed(1)}" y="${H - 8}" text-anchor="middle" font-size="10" fill="#656d76">${d.h}D</text>`;
-    });
-    document.getElementById("resDecaySvg").innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">${bars}</svg>`;
-  }
-
-  // Quintiles
-  const q = (r.quintiles || {})[curResQH];
-  if (q) {
-    document.getElementById("resQBarTitle").textContent = `五分组未来 ${curResQH} 日平均超额收益 (${q.days} 天)`;
-    document.getElementById("resQStat").textContent = `G5 − G1 = ${signed(q.g5_minus_g1, 3)} (t_NW = ${fmt(q.t_nw, 2)}, p = ${fmtP(q.p_val)})`;
-    const W = 500, H = 210, pL = 44, pR = 14, pT = 22, pB = 30;
-    const vals = q.groups.map(g => g.excess_ret);
+  const q20 = qMap["20"];
+  if (q20) {
+    const W = 500, H = 190, pL = 44, pR = 14, pT = 20, pB = 26;
+    const vals = q20.groups.map(g => g.excess_ret);
     const minY = Math.min(-0.1, ...vals) * 1.24, maxY = Math.max(0.1, ...vals) * 1.25;
     const zeroY = pT + (maxY / (maxY - minY)) * (H - pT - pB);
     const py = v => pT + ((maxY - v) / (maxY - minY)) * (H - pT - pB);
     const bw = (W - pL - pR) / 5;
-    let bars = `<line x1="${pL}" y1="${zeroY.toFixed(1)}" x2="${W - pR}" y2="${zeroY.toFixed(1)}" stroke="#8c959f"/>`;
-    q.groups.forEach((g, i) => {
+    let bars = `<line x1="${pL}" y1="${zeroY.toFixed(1)}" x2="${W-pR}" y2="${zeroY.toFixed(1)}" stroke="#8c959f"/>`;
+    q20.groups.forEach((g, i) => {
       const v = g.excess_ret, x = pL + i * bw + bw * 0.2, w = bw * 0.6, vy = py(v), top = Math.min(vy, zeroY), bh = Math.max(2, Math.abs(vy - zeroY));
-      const col = v >= 0 ? "#cf222e" : "#1a7f37", lblY = v >= 0 ? top - 5 : top + bh + 12;
-      bars += `<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" fill="${col}" opacity="0.85" rx="2"/>
-        <text x="${(x + w / 2).toFixed(1)}" y="${lblY.toFixed(1)}" text-anchor="middle" font-size="10" font-weight="600" fill="${col}">${signed(v, 3)}</text>
-        <text x="${(x + w / 2).toFixed(1)}" y="${H - 7}" text-anchor="middle" font-size="11" fill="#1f2328">${g.label}</text>`;
+      const col = v >= 0 ? "#cf222e" : "#1a7f37", lblY = v >= 0 ? top - 5 : top + bh + 11;
+      bars += `<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" fill="${col}" opacity="0.85" rx="2"/><text x="${(x+w/2).toFixed(1)}" y="${lblY.toFixed(1)}" text-anchor="middle" font-size="10" font-weight="600" fill="${col}">${signed(v,3)}</text><text x="${(x+w/2).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="11" fill="#1f2328">${g.label}</text>`;
     });
     document.getElementById("resQBarSvg").innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;">${bars}</svg>`;
   }
 
-  const qc = r.quintile_curves;
-  if (qc && qc.dates) {
-    const qCols = { G5: "#cf222e", G4: "#0969da", G3: "#656d76", G2: "#9a6700", G1: "#1a7f37" };
-    document.getElementById("resQNavSvg").innerHTML = drawLinesSvg(
-      qc.dates,
-      ["G1", "G2", "G3", "G4", "G5"].map(gk => ({ vals: qc.navs[gk], col: qCols[gk], w: (gk === "G5" || gk === "G1") ? 2.1 : 1.4 })),
-      500, 210, 74
-    );
-  }
+  const fmb = (r.fama_macbeth || {})["20"];
+  document.getElementById("resFmbBody").innerHTML = fmb ? fmb.factors.map(f => `
+    <tr class="${f.key==="f_four"?"hl-row":""}"><td><strong>${f.label}</strong></td><td class="num mono ${cls(f.mean)}">${signed(f.mean,4,"")}</td><td class="num mono">${fmt(f.t_stat,2)}</td><td class="num mono">${fmtP(f.p_val)}</td><td><span class="badge ${f.p_val<0.05?"b-sig-y":"b-sig-n"}">${f.p_val<0.05?"显著 p<0.05":"不显著"}</span></td></tr>
+  `).join("") : "";
 
-  // Fama-MacBeth
-  const fmb = (r.fama_macbeth || {})[curResFmbH];
-  if (fmb) {
-    document.getElementById("resFmbNote").textContent = `有效回归日 ${fmb.days} 天 · 日均 R² ${fmt(fmb.avg_r2, 2)}% · 已剔除含事后下调信息的评级控制变量`;
-    document.getElementById("resFmbBody").innerHTML = fmb.factors.map(f => {
-      const sig = f.p_val < 0.05;
-      return `<tr class="${f.key === "f_four" ? "hl-row" : ""}">
-        <td><strong>${f.label}</strong></td>
-        <td class="num mono ${cls(f.mean)}">${signed(f.mean, 4, "")}</td>
-        <td class="num mono">${fmt(f.se, 4)}</td>
-        <td class="num mono"><strong>${f.t_stat > 0 ? "+" : ""}${fmt(f.t_stat, 2)}</strong></td>
-        <td class="num mono">${fmtP(f.p_val)}</td>
-        <td class="num mono">[${fmt(f.ci_low, 4)}, ${fmt(f.ci_high, 4)}]</td>
-        <td><span class="badge ${sig ? "b-sig-y" : "b-sig-n"}">${sig ? "显著 p<0.05" : "不显著"}</span></td>
-      </tr>`;
-    }).join("");
-  }
+  // Collapsible Full Grid Table
+  const fp = document.getElementById("gridFilterPool").value;
+  const sb = document.getElementById("gridSortBy").value;
+  let gRows = (EXP.grid || []).filter(x => fp === "ALL" || x.pool === fp);
+  gRows = [...gRows].sort((a, b) => {
+    const ca = a.costs["0.10%"], cb = b.costs["0.10%"];
+    if (sb === "sharpe_asc") return ca.sharpe - cb.sharpe;
+    if (sb === "calmar_desc") return cb.calmar - ca.calmar;
+    if (sb === "ann_desc") return cb.ann_ret - ca.ann_ret;
+    return cb.sharpe - ca.sharpe;
+  });
+  document.getElementById("gridCountLbl").textContent = `显示 ${gRows.length} 组`;
+  document.getElementById("gridAllBody").innerHTML = gRows.map(x => {
+    const c = x.costs["0.10%"];
+    return `<tr><td><strong>${x.pool_label}</strong> · ${x.risk_mode==="filtered"?"剔除":"不剔除"} · ${x.weight_label} · ${x.freq}D · ${x.buffer_label}</td><td class="num mono ${cls(c.ann_ret)}">${signed(c.ann_ret)}</td><td class="num mono neg">${fmt(c.mdd)}%</td><td class="num mono ${c.sharpe<0?"neg":""}"><strong>${fmt(c.sharpe,2)}</strong></td><td class="num mono">${fmt(c.calmar,2)}</td><td class="num mono">${fmt(x.ann_to,1)}%</td></tr>`;
+  }).join("");
 
-  // Audit & Point-in-Time Rating Coverage
-  if (curPool === "full") {
-    document.getElementById("resAuditHead").innerHTML = `<tr><th>审计指标</th><th>审计修正前</th><th>审计修正后</th><th>说明</th></tr>`;
-    document.getElementById("resAuditBody").innerHTML = (r.audit_comparison || []).map(x => `
-      <tr><td><strong>${x.metric}</strong></td><td class="mono" style="color:var(--muted);">${x.before}</td><td class="mono"><strong>${x.after}</strong></td><td style="font-size:12px;color:var(--muted);">${x.reason}</td></tr>
-    `).join("");
+  // Audit
+  if (curPool === "all") {
+    document.getElementById("resAuditHead").innerHTML = `<tr><th>审计指标</th><th>修正前</th><th>独立审计修正后</th><th>说明</th></tr>`;
+    document.getElementById("resAuditBody").innerHTML = (r.audit_comparison || []).map(x => `<tr><td><strong>${x.metric}</strong></td><td class="mono" style="color:var(--muted);">${x.before}</td><td class="mono"><strong>${x.after}</strong></td><td style="font-size:12px;color:var(--muted);">${x.reason}</td></tr>`).join("");
   } else {
     const rf = r.rating_filter || {};
     const cov = rf.coverage_by_year || {};
-    document.getElementById("resAuditHead").innerHTML = `<tr><th>点时评级校验项目</th><th>设定 / 口径</th><th>实测结果</th><th>防泄漏机制说明</th></tr>`;
+    document.getElementById("resAuditHead").innerHTML = `<tr><th>点时校验项</th><th>口径</th><th>结果</th><th>说明</th></tr>`;
     document.getElementById("resAuditBody").innerHTML = [
-      ["纳入评级范围", (rf.eligible_grades || []).join(" / "), `${r.universe?.total_bonds || 0} 只 (${Number(r.universe?.total_bond_days || 0).toLocaleString()} 样本日)`, "严格按 T 日已公告最新债项评级筛选"],
-      ["全样本评级覆盖率", "总体 & 分年度 ≥ 90%", `${((rf.rating_coverage_all_bond_days || 0) * 100).toFixed(2)}%`, Object.keys(cov).sort().map(y => `${y}:${(cov[y] * 100).toFixed(1)}%`).join(" · ")],
-      ["时点滞后约束", "allow_exact_matches=False", "严格公告次日生效", "公告当日不可使用新评级买入，防止盘中/盘后公告泄漏"],
-      ["数据源与脚本", "东方财富发行评级 + 巨潮公告PDF", "全部公开可复现", "tools/fetch_free_ratings.py + tools/run_high_grade_validation.py"],
+      ["信用范围", (rf.eligible_grades || []).join(" / "), `${r.universe?.total_bonds || 0} 只 (${Number(r.universe?.total_bond_days || 0).toLocaleString()} 日)`, "严格按 T 日已公告债项评级"],
+      ["点时覆盖率", "总体 & 分年 ≥ 90%", `${((rf.rating_coverage_all_bond_days || 0) * 100).toFixed(2)}%`, Object.keys(cov).sort().map(y => `${y}:${(cov[y]*100).toFixed(1)}%`).join(" · ")],
+      ["防泄漏机制", "allow_exact_matches=False", "公告次日生效", "排除盘中/盘后公告泄漏"],
     ].map(rw => `<tr><td><strong>${rw[0]}</strong></td><td class="mono">${rw[1]}</td><td class="mono"><strong>${rw[2]}</strong></td><td style="font-size:12px;color:var(--muted);">${rw[3]}</td></tr>`).join("");
   }
 }
@@ -1662,37 +1648,24 @@ function switchTab(tab) {
 
 document.querySelectorAll("#mainTabs .tab-btn").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.tab)));
 document.querySelectorAll("[data-jump]").forEach(b => b.addEventListener("click", () => { switchTab(b.dataset.jump); window.scrollTo({ top: 0, behavior: "smooth" }); }));
-document.querySelectorAll("#poolSeg .seg-btn").forEach(b => b.addEventListener("click", () => {
-  curPool = b.dataset.pool;
-  document.querySelectorAll("#poolSeg .seg-btn").forEach(x => x.classList.toggle("active", x === b));
-  renderAll();
-}));
-document.querySelectorAll("#btCostPills .pill").forEach(b => b.addEventListener("click", () => {
-  curCost = b.dataset.cost;
-  document.querySelectorAll("#btCostPills .pill").forEach(x => x.classList.toggle("active", x === b));
-  renderBacktest();
-}));
-document.querySelectorAll("#resIcPills .pill").forEach(b => b.addEventListener("click", () => {
-  curResIcH = b.dataset.rich;
-  document.querySelectorAll("#resIcPills .pill").forEach(x => x.classList.toggle("active", x === b));
-  renderResearch();
-}));
-document.querySelectorAll("#resQPills .pill").forEach(b => b.addEventListener("click", () => {
-  curResQH = b.dataset.rqh;
-  document.querySelectorAll("#resQPills .pill").forEach(x => x.classList.toggle("active", x === b));
-  renderResearch();
-}));
-document.querySelectorAll("#resFmbPills .pill").forEach(b => b.addEventListener("click", () => {
-  curResFmbH = b.dataset.rfh;
-  document.querySelectorAll("#resFmbPills .pill").forEach(x => x.classList.toggle("active", x === b));
-  renderResearch();
-}));
-["scrSearch", "scrReg", "scrSort", "scrSafeOnly"].forEach(id => {
-  const el = document.getElementById(id);
-  el.addEventListener(id === "scrSearch" ? "input" : "change", renderScreener);
-});
+document.querySelectorAll("#poolSeg .seg-btn").forEach(b => b.addEventListener("click", () => { curPool = b.dataset.pool; document.querySelectorAll("#poolSeg .seg-btn").forEach(x => x.classList.toggle("active", x === b)); renderAll(); }));
+document.querySelectorAll("#riskSeg .seg-btn").forEach(b => b.addEventListener("click", () => { curRisk = b.dataset.risk; document.querySelectorAll("#riskSeg .seg-btn").forEach(x => x.classList.toggle("active", x === b)); renderAll(); }));
+document.querySelectorAll("#ovPresetPills .pill").forEach(b => b.addEventListener("click", () => { curOvPreset = b.dataset.ovp; document.querySelectorAll("#ovPresetPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderOverview(); }));
+document.querySelectorAll("#btWeightPills .pill").forEach(b => b.addEventListener("click", () => { btWeight = b.dataset.w; document.querySelectorAll("#btWeightPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
+document.querySelectorAll("#btFreqPills .pill").forEach(b => b.addEventListener("click", () => { btFreq = Number(b.dataset.f); document.querySelectorAll("#btFreqPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
+document.querySelectorAll("#btBufPills .pill").forEach(b => b.addEventListener("click", () => { btBuf = b.dataset.b; document.querySelectorAll("#btBufPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
+document.querySelectorAll("#btCostPills .pill").forEach(b => b.addEventListener("click", () => { btCost = b.dataset.c; document.querySelectorAll("#btCostPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
+document.querySelectorAll("#resStepPills .pill").forEach(b => b.addEventListener("click", () => { curStepTab = b.dataset.st; document.querySelectorAll("#resStepPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderResearch(); }));
+document.querySelectorAll("#resOosPills .pill").forEach(b => b.addEventListener("click", () => { curOosMode = b.dataset.oos; document.querySelectorAll("#resOosPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderResearch(); }));
+document.querySelectorAll("#resIcPills .pill").forEach(b => b.addEventListener("click", () => { curResIcH = b.dataset.rich; document.querySelectorAll("#resIcPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderResearch(); }));
+["scrSearch", "scrReg", "scrSort", "scrSafeOnly"].forEach(id => document.getElementById(id).addEventListener(id === "scrSearch" ? "input" : "change", renderScreener));
+["gridFilterPool", "gridSortBy"].forEach(id => document.getElementById(id).addEventListener("change", renderResearch));
 
 renderAll();
+// Load full 450-combo matrix asynchronously for Backtest & collapsible 450-grid
+fetch("research_experiments.json").then(r => r.ok ? r.json() : null).then(fullExp => {
+  if (fullExp && fullExp.grid) { indexExp(fullExp); renderAll(); }
+}).catch(() => {});
 </script>
 </body>
 </html>
