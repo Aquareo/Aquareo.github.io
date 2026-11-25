@@ -77,8 +77,10 @@ def main():
     source.add_argument("--fetch-tushare", action="store_true")
     ap.add_argument("--rating-cache", default=".cache_bonds/rating_events.csv")
     ap.add_argument("--out", default="dist/bonds/research_validation_aa_plus.json")
+    ap.add_argument("--grades", default="AA+,AAA", help="Comma-separated bond grades to keep, e.g. AA+,AAA or AAA")
     ap.add_argument("--min-coverage", type=float, default=0.90)
     args = ap.parse_args()
+    target_grades = [g.strip().upper() for g in args.grades.split(",") if g.strip()]
     # Only open a trusted locally generated pickle.
     with open(args.panel, "rb") as f:
         bundle = pickle.load(f)
@@ -93,7 +95,7 @@ def main():
         ev = pd.read_csv(args.ratings_csv, dtype=str)
     joined = attach_ratings(panel, ev)
     known = joined["rank"].fillna(0) > 0
-    high = joined[joined["rating"].isin(["AA+", "AAA"])].copy()
+    high = joined[joined["rating"].isin(target_grades)].copy()
     daily = high.groupby("gt").size()
     coverage = float(known.mean())
     coverage_by_year = known.groupby(joined["signal_date"].dt.year).mean()
@@ -110,7 +112,7 @@ def main():
     analyze_panel(filtered, out)
     result = json.loads(out.read_text(encoding="utf-8"))
     result["rating_filter"] = {
-        "eligible_grades": ["AA+", "AAA"],
+        "eligible_grades": target_grades,
         "availability": "strictly after announcement date",
         "rating_coverage_all_bond_days": round(coverage, 6),
         "coverage_by_year": {str(k): round(float(v), 6) for k, v in coverage_by_year.items()},

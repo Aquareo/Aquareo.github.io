@@ -42,30 +42,34 @@ _GRADE_RE = r"(?<![A-Za-z])(AAA|AA\+|AA-|AA|A\+|A-|A|BBB\+|BBB-|BBB|BB\+|BB-|BB|
 
 def fetch_cninfo_bond_events(code: str, name: str, stock_code: str, iss_dt: str) -> list:
     events = []
-    df = None
-    for attempt in range(4):
-        try:
-            df = ak.stock_zh_a_disclosure_report_cninfo(
-                symbol=stock_code, market="沪深京", keyword="评级", category="",
-                start_date=iss_dt or "20170101", end_date="20261201"
-            )
-            break
-        except Exception:
-            if attempt == 3:
-                raise
-            time.sleep(2.0 * (attempt + 1))
+    frames = []
+    for kw in ("评级", "信用"):
+        for attempt in range(4):
+            try:
+                part = ak.stock_zh_a_disclosure_report_cninfo(
+                    symbol=stock_code, market="沪深京", keyword=kw, category="",
+                    start_date=iss_dt or "20170101", end_date="20261201"
+                )
+                if part is not None and not part.empty:
+                    frames.append(part)
+                break
+            except Exception:
+                if attempt == 3:
+                    raise
+                time.sleep(2.0 * (attempt + 1))
+    df = pd.concat(frames, ignore_index=True).drop_duplicates(subset=["公告链接"]) if frames else pd.DataFrame()
     try:
         if df is None or df.empty:
             return events
+        df["公告标题"] = df["公告标题"].astype(str).str.replace(r"<[^>]+>", "", regex=True)
         rat = df[
             df["公告标题"].str.contains("评级|信用等级", na=False)
-            & ~df["公告标题"].str.contains("延迟|提示性|预计|修订|制度|发行结果|上市|募集说明书|担保", na=False)
+            & ~df["公告标题"].str.contains("延迟|提示性|预计|修订|制度|发行结果|上市|募集说明书|担保|授信|变更.*机构", na=False)
         ].copy()
         rat["ann_ymd"] = rat["公告时间"].astype(str).str[:10].str.replace("-", "")
         if iss_dt:
             rat = rat[rat["ann_ymd"] > iss_dt]
-        # Prefer concise issuer notices ("结果"/"调整") before long rating-agency PDFs on same date
-        rat["prio"] = rat["公告标题"].apply(lambda t: 0 if any(k in str(t) for k in ("结果", "调整", "下调", "上调")) else 1)
+        rat["prio"] = rat["公告标题"].apply(lambda t: 0 if any(k in str(t) for k in ("结果", "调整", "下调", "上调", "调升", "调降")) else 1)
         rat = rat.sort_values(["ann_ymd", "prio"])
         seen_dates = set()
         for _, r in rat.iterrows():
@@ -74,7 +78,7 @@ def fetch_cninfo_bond_events(code: str, name: str, stock_code: str, iss_dt: str)
             if ymd in seen_dates:
                 continue
             title = str(r["公告标题"])
-            if not any(k in title for k in ("结果", "调整", "跟踪评级", "下调", "上调")):
+            if not any(k in title for k in ("结果", "调整", "跟踪评级", "下调", "上调", "调升", "调降", "信用评级")):
                 continue
             m_id = re.search(r"announcementId=(\d+)", str(r.get("公告链接", "")))
             if not m_id:
