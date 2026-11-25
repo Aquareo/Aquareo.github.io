@@ -2,13 +2,10 @@
 "use strict";
 (function(root){
   const C=root.TradingCore,VERSION="signal-lab-2",HORIZONS=[1,3,5];
-  const STRATEGY_IDS=Object.keys(C.STRATEGIES);
+  const STRATEGY_IDS=["donchian","rsi"];
   const VARIANTS=[
-    {id:"donchian-standard",strategy:"donchian",name:"唐奇安 20/10",params:{entryPeriod:20,exitPeriod:10}},
-    {id:"donchian-slow",strategy:"donchian",name:"唐奇安 40/20",params:{entryPeriod:40,exitPeriod:20}},
-    {id:"sma-standard",strategy:"sma",name:"均线 20/60",params:{fastPeriod:20,slowPeriod:60}},
-    {id:"sma-fast",strategy:"sma",name:"均线 10/30",params:{fastPeriod:10,slowPeriod:30}},
-    ...["macd","rsi","bollinger"].map(strategy=>({id:strategy+"-standard",strategy,name:C.STRATEGIES[strategy].name,params:{}}))
+    {id:"donchian-standard",strategy:"donchian",name:"趋势突破 · 唐奇安 20/10",params:{entryPeriod:20,exitPeriod:10}},
+    {id:"rsi-standard",strategy:"rsi",name:"超卖低吸 · RSI 14",params:{}}
   ];
   const exceeds=(value,threshold)=>value-threshold>1e-9;
   const mean=a=>a.length?a.reduce((s,x)=>s+x,0)/a.length:null;

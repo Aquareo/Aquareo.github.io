@@ -19,10 +19,10 @@
     return rows;
   }
   const STRATEGIES={
-    donchian:{name:"唐奇安突破 20/10",family:"趋势突破",buy:"收盘突破前 20 根最高价",sell:"收盘跌破前 10 根最低价",risk:"震荡行情容易反复止损"},
+    donchian:{name:"趋势突破 · 唐奇安",family:"右侧趋势",buy:"收盘突破前 20 根高点",sell:"收盘跌破前 10 根低点",risk:"震荡行情易反复小幅止损"},
     sma:{name:"均线趋势 20/60",family:"趋势跟随",buy:"MA20 高于 MA60",sell:"MA20 低于 MA60",risk:"反应较慢，横盘时容易来回交易"},
     macd:{name:"MACD 动量 12/26/9",family:"动量转强",buy:"DIF 从下向上穿越 DEA",sell:"DIF 低于 DEA",risk:"震荡区间可能频繁假交叉"},
-    rsi:{name:"RSI 超卖修复 14",family:"均值回归",buy:"RSI14 从不高于 30 回升到 30 以上",sell:"RSI14 达到 55 或再次跌破 20",risk:"强下跌中超卖可能延续"},
+    rsi:{name:"超卖低吸 · RSI",family:"左侧波段",buy:"RSI14 从 ≤30 回升突破 30",sell:"RSI14 反弹至 ≥55 或跌破 20 止损",risk:"强下跌中超卖可能延续"},
     bollinger:{name:"布林带回归 20/2",family:"区间修复",buy:"前收盘在下轨外，当前回到下轨内且低于中轨",sell:"收盘回到中轨，或跌至下轨的 98% 以下",risk:"单边下跌可能沿下轨继续走弱"}
   };
   const strategySources={donchian:"https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-overlays/price-channels",sma:"https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/sma",macd:"https://www.tradingview.com/support/solutions/43000644943-macd-strategy/",rsi:"https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/RSI",bollinger:"https://www.tradingview.com/support/solutions/43000501840-bollinger-bands-bb/"};
