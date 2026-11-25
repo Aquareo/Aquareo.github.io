@@ -423,6 +423,11 @@ def generate_page_and_data():
     if rv_path.exists():
         research = json.loads(rv_path.read_text(encoding="utf-8"))
 
+    research_aa = {}
+    rv_aa_path = dist_dir / "research_validation_aa_plus.json"
+    if rv_aa_path.exists():
+        research_aa = json.loads(rv_aa_path.read_text(encoding="utf-8"))
+
     live_ledger = update_live_history(dist_dir, date_str, lsm_sorted)
 
     data_payload = sanitize_json({
@@ -434,6 +439,7 @@ def generate_page_and_data():
         "frozen_params": FROZEN_PARAMS,
         "pool_size": len(lsm_sorted),
         "research": research,
+        "research_aa_plus": research_aa,
         "live_ledger": live_ledger,
         "lsm_top10": lsm_sorted[:10],
         "double_low_top10": dl_sorted[:10],
@@ -602,29 +608,40 @@ def build_clean_html(data: dict) -> str:
 
   <h1>中国可转债 Four-Region LSM 模型五阶段实证验证系统</h1>
   <p class="lead">
-    严格冻结原始论文参数（<code>p_reset=0.80, B=¥108, r=2.5%</code>），基于 <strong>2020-01-02 → 2026-11-25 全市场 __TOTAL_BONDS__ 只可转债</strong>（含已强赎、到期及违约退市标的，共 <strong>__TOTAL_OBS__ 条完全因果样本</strong>）进行全局日历对齐、无幸存者偏差与停牌锁定校验。
+    严格冻结原始论文参数（<code>p_reset=0.80, B=¥108, r=2.5%</code>），基于 <strong>2020-01-02 → 2026-11-25 全市场 __TOTAL_BONDS__ 只可转债</strong>（含已强赎、到期及违约退市标的，共 <strong>__TOTAL_OBS__ 条完全因果样本</strong>）进行全局日历对齐、无幸存者偏差与停牌锁定校验；支持切换检验 <strong>AA+ 及以上高评级点时池</strong>。
   </p>
+
+  <div class="subtoolbar" style="border-radius:8px;border:1px solid var(--line);margin-bottom:18px;background:#fafbfe;">
+    <div>
+      <strong>实证样本范围切换：</strong>
+      <span class="subtext" id="poolSubNote" style="display:inline;margin:0 0 0 6px;">当前展示全市场样本（939 只转债）</span>
+    </div>
+    <div class="pills" id="poolPills">
+      <button class="pill active" data-pool="full">全市场 (939 只 · 含高收益与退市标的)</button>
+      <button class="pill" data-pool="aa_plus">AA+/AAA 点时高评级池 (165 只 · 无未来评级泄漏)</button>
+    </div>
+  </div>
 
   <div class="stats-row">
     <div class="stat-card">
-      <span class="label">全市场回测样本 (2020–2026)</span>
-      <div class="val mono">__TOTAL_BONDS__ 只</div>
-      <div class="desc">__TRADING_DAYS__ 个交易日 · 日均 __AVG_DAILY__ 只在市 · 含退市强赎违约</div>
+      <span class="label" id="kpiPoolLabel">全市场回测样本 (2020–2026)</span>
+      <div class="val mono" id="kpiPoolVal">__TOTAL_BONDS__ 只</div>
+      <div class="desc" id="kpiPoolDesc">__TRADING_DAYS__ 个交易日 · 日均 __AVG_DAILY__ 只在市 · 含退市强赎违约</div>
     </div>
     <div class="stat-card">
       <span class="label">20 日长期均值 Rank IC</span>
-      <div class="val mono pos">__IC20_VAL__</div>
-      <div class="desc">ICIR __IC20_ICIR__ · 正 IC 比例 __IC20_POS__% · Newey-West t = __IC20_T__</div>
+      <div class="val mono pos" id="kpiIcVal">__IC20_VAL__</div>
+      <div class="desc" id="kpiIcDesc">ICIR __IC20_ICIR__ · 正 IC 比例 __IC20_POS__% · Newey-West t = __IC20_T__</div>
     </div>
     <div class="stat-card">
       <span class="label">五分组 G5-G1 20 日多空超额</span>
-      <div class="val mono pos">__Q20_SPREAD__</div>
-      <div class="desc">Newey-West t = __Q20_T__ (p = __Q20_P__) · 严格 G1→G5 单调递增</div>
+      <div class="val mono pos" id="kpiQVal">__Q20_SPREAD__</div>
+      <div class="desc" id="kpiQDesc">Newey-West t = __Q20_T__ (p = __Q20_P__) · 严格 G1→G5 单调递增</div>
     </div>
     <div class="stat-card">
       <span class="label">Fama-MacBeth 控制后 β (20日)</span>
-      <div class="val mono pos">__FMB20_BETA__</div>
-      <div class="desc">Newey-West t = __FMB20_T__ (p = __FMB20_P__) · 纯因果 6 因子对照</div>
+      <div class="val mono pos" id="kpiFmbVal">__FMB20_BETA__</div>
+      <div class="desc" id="kpiFmbDesc">Newey-West t = __FMB20_T__ (p = __FMB20_P__) · 纯因果 6 因子对照</div>
     </div>
   </div>
 
@@ -632,12 +649,12 @@ def build_clean_html(data: dict) -> str:
   <div class="card">
     <div class="card-header">
       <div>
-        <h2 class="card-title"><span class="stage-tag">第一阶段</span>独立代码审计发现与修复前后指标对照（无隐藏美化）</h2>
-        <div class="card-subtitle">已修复右端收益截断（1670天异常）、停牌错位、退市成本与 Fama-MacBeth 事后评级泄漏，源码公开于 GitHub</div>
+        <h2 class="card-title" id="s1Title"><span class="stage-tag">第一阶段</span>独立代码审计发现与修复前后指标对照（无隐藏美化）</h2>
+        <div class="card-subtitle" id="s1Sub">已修复右端收益截断（1670天异常）、停牌错位、退市成本与 Fama-MacBeth 事后评级泄漏，源码公开于 GitHub</div>
       </div>
     </div>
     <div class="audit-strip" style="margin:0;border-radius:0;border-left:0;border-right:0;border-top:0;">
-      <div class="audit-grid">
+      <div class="audit-grid" id="s1StripGrid">
         <div><b>✓</b>全局交易日历对齐：越界 <code>T+1+h >= T_end</code> 严格置 <code>null</code></div>
         <div><b>✓</b>停牌约束：停牌期间锁定旧仓位，禁止虚构成交与漂移</div>
         <div><b>✓</b>剔除事后评级：FMB 回归移除包含事后降级泄漏的 <code>RATING</code></div>
@@ -646,7 +663,7 @@ def build_clean_html(data: dict) -> str:
     </div>
     <div class="table-wrap">
       <table>
-        <thead>
+        <thead id="s1Head">
           <tr><th>审计指标</th><th>审计修复前</th><th>独立审计修复后</th><th>修复说明</th></tr>
         </thead>
         <tbody id="auditTableBody"></tbody>
@@ -877,18 +894,91 @@ def build_clean_html(data: dict) -> str:
 
 <script>
 const DATA = __PAYLOAD_JSON__;
-const R = DATA.research || {};
+let curPool = "full";
 let curIcH = "20";
 let curQH = "20";
 let curSC = "0.10%";
 let curFmbH = "20";
 let curS5 = "subperiod";
 
+const activeR = () => (curPool === "aa_plus" && DATA.research_aa_plus && DATA.research_aa_plus.universe) ? DATA.research_aa_plus : (DATA.research || {});
+
 const fmt = (v, n = 2) => typeof v === "number" && Number.isFinite(v) ? v.toFixed(n) : "—";
 const signed = (v, n = 2, suffix = "%") => typeof v === "number" && Number.isFinite(v) ? (v > 0 ? "+" : "") + v.toFixed(n) + suffix : "—";
 const cls = v => v > 0 ? "pos" : v < 0 ? "neg" : "";
 
+function renderTopStats() {
+  const R = activeR();
+  const u = R.universe || {};
+  const ic20 = (R.ic_summary || {})["20"] || {};
+  const q20 = (R.quintiles || {})["20"] || {};
+  const fmb20 = ((R.fama_macbeth || {})["20"] || {}).factors?.[0] || {};
+  const isAA = curPool === "aa_plus";
+  document.getElementById("poolSubNote").textContent = isAA
+    ? `当前展示 AA+/AAA 点时高评级子池（${u.total_bonds || 165} 只转债 · ${Number(u.total_bond_days || 0).toLocaleString()} 样本日 · 无未来评级泄漏）`
+    : `当前展示全市场样本（${u.total_bonds || 939} 只转债）`;
+  document.getElementById("kpiPoolLabel").textContent = isAA ? "AA+/AAA 点时样本 (2020–2026)" : "全市场回测样本 (2020–2026)";
+  document.getElementById("kpiPoolVal").textContent = `${u.total_bonds || 0} 只`;
+  document.getElementById("kpiPoolDesc").textContent = isAA
+    ? `${u.trading_days || 0} 个交易日 · 日均 ${fmt(u.avg_daily_bonds, 1)} 只在市 · 公告次日生效`
+    : `${u.trading_days || 0} 个交易日 · 日均 ${fmt(u.avg_daily_bonds, 1)} 只在市 · 含退市强赎违约`;
+  document.getElementById("kpiIcVal").textContent = `${ic20.mean_ic > 0 ? "+" : ""}${fmt(ic20.mean_ic, 4)}`;
+  document.getElementById("kpiIcDesc").textContent = `ICIR ${fmt(ic20.icir, 3)} · 正 IC 比例 ${fmt(ic20.pos_pct, 1)}% · Newey-West t = ${fmt(ic20.t_nw, 2)}`;
+  document.getElementById("kpiQVal").textContent = `${signed(q20.g5_minus_g1, 3)}`;
+  document.getElementById("kpiQDesc").textContent = `Newey-West t = ${fmt(q20.t_nw, 2)} (p = ${q20.p_val < 0.0001 ? "<0.0001" : fmt(q20.p_val, 4)}) · G1→G5 五分组`;
+  const fEl = document.getElementById("kpiFmbVal");
+  fEl.textContent = `${signed(fmb20.mean, 4)}`;
+  document.getElementById("kpiFmbDesc").textContent = `Newey-West t = ${fmt(fmb20.t_stat, 2)} (p = ${fmb20.p_val < 0.0001 ? "<0.0001" : fmt(fmb20.p_val, 4)}) · 纯因果 6 因子对照`;
+}
+
 function renderAudit() {
+  const R = activeR();
+  const isAA = curPool === "aa_plus";
+  if (isAA) {
+    const full = DATA.research || {};
+    const rf = R.rating_filter || {};
+    const f_lsm = (full.strategies?.four_region_lsm?.costs || {})["0.10%"] || {};
+    const f_dl = (full.strategies?.double_low?.costs || {})["0.10%"] || {};
+    const f_mkt = (full.strategies?.mkt_ew?.costs || {})["0.10%"] || {};
+    const a_lsm = (R.strategies?.four_region_lsm?.costs || {})["0.10%"] || {};
+    const a_dl = (R.strategies?.double_low?.costs || {})["0.10%"] || {};
+    const a_mkt = (R.strategies?.mkt_ew?.costs || {})["0.10%"] || {};
+    const f_ic20 = (full.ic_summary || {})["20"] || {};
+    const a_ic20 = (R.ic_summary || {})["20"] || {};
+    const f_q20 = (full.quintiles || {})["20"] || {};
+    const a_q20 = (R.quintiles || {})["20"] || {};
+    const f_fm20 = ((full.fama_macbeth || {})["20"] || {}).factors?.[0] || {};
+    const a_fm20 = ((R.fama_macbeth || {})["20"] || {}).factors?.[0] || {};
+    document.getElementById("s1Title").innerHTML = `<span class="stage-tag">第一阶段</span>AA+/AAA 点时信用评级构造校验与全市场客观对照`;
+    document.getElementById("s1Sub").textContent = `东方财富首次发行债项评级 + 巨潮网边界券历史跟踪评级 PDF（公告严格次日生效，无事后回填泄漏，覆盖率 ${((rf.rating_coverage_all_bond_days||0)*100).toFixed(2)}%）`;
+    document.getElementById("s1StripGrid").innerHTML = `
+      <div><b>✓</b>点时覆盖率：全样本 <code>${((rf.rating_coverage_all_bond_days||0)*100).toFixed(2)}%</code>（2020–2026 各年均 &gt; 99.6%）</div>
+      <div><b>✓</b>严格防泄漏：<code>allow_exact_matches=False</code>，下调/上调公告次日调仓</div>
+      <div><b>✓</b>高评级池样本：<code>${R.universe?.total_bonds || 165}</code> 只转债 / 日均 <code>${fmt(R.universe?.avg_daily_bonds, 1)}</code> 只</div>
+      <div><b>✓</b>免费公开可复现：<code>tools/fetch_free_ratings.py</code> + <code>tools/run_high_grade_validation.py</code></div>
+    `;
+    document.getElementById("s1Head").innerHTML = `<tr><th>核心研究维度</th><th>全市场 (939 只)</th><th>AA+/AAA 点时池 (${R.universe?.total_bonds || 165} 只)</th><th>客观变化与解释</th></tr>`;
+    const cmpRows = [
+      ["20 日均值 Rank IC / ICIR", `+${fmt(f_ic20.mean_ic, 4)} / ${fmt(f_ic20.icir, 3)}`, `+${fmt(a_ic20.mean_ic, 4)} / ${fmt(a_ic20.icir, 3)}`, "高评级截面排序分化略窄，但 20 日 IC 仍维持 0.0816（t=4.91 显著）"],
+      ["五分组 G5-G1 20 日多空超额", `${signed(f_q20.g5_minus_g1, 3)} (p=${fmt(f_q20.p_val, 4)})`, `${signed(a_q20.g5_minus_g1, 3)} (p=${fmt(a_q20.p_val, 4)})`, "20 日多空价差反微升至 +1.072%，且统计显著性由 t=2.53 提升至 t=3.84"],
+      ["Four-Region LSM 周频 (0.10%)", `${signed(f_lsm.total_ret)} · Sharpe ${fmt(f_lsm.sharpe)} · MDD ${fmt(f_lsm.mdd)}%`, `${signed(a_lsm.total_ret)} · Sharpe ${fmt(a_lsm.sharpe)} · MDD ${fmt(a_lsm.mdd)}%`, "绝对收益随高评级基准同步下行，回撤由 -21.0% 收窄至 -16.8%"],
+      ["vs 传统双低 / 等权基准 (5D)", `双低 ${signed(f_dl.total_ret)} · 基准 ${signed(f_mkt.total_ret)}`, `双低 ${signed(a_dl.total_ret)} · 基准 ${signed(a_mkt.total_ret)}`, "高评级池内传统双低失灵（仅 +27.9%），Four-Region LSM 居 8 策略第 1 名"],
+      ["Fama-MacBeth β (20日)", `${signed(f_fm20.mean, 4)} (t=${fmt(f_fm20.t_stat, 2)}, p=${fmt(f_fm20.p_val, 4)})`, `${signed(a_fm20.mean, 4)} (t=${fmt(a_fm20.t_stat, 2)}, p=${fmt(a_fm20.p_val, 4)})`, "高评级内日均仅 74 只，5 日仍显著（p=0.012），20 日增量显著性减弱"]
+    ];
+    document.getElementById("auditTableBody").innerHTML = cmpRows.map(r => `
+      <tr><td><strong>${r[0]}</strong></td><td class="mono">${r[1]}</td><td class="mono"><strong>${r[2]}</strong></td><td style="font-size:12px;color:var(--muted);">${r[3]}</td></tr>
+    `).join("");
+    return;
+  }
+  document.getElementById("s1Title").innerHTML = `<span class="stage-tag">第一阶段</span>独立代码审计发现与修复前后指标对照（无隐藏美化）`;
+  document.getElementById("s1Sub").textContent = "已修复右端收益截断（1670天异常）、停牌错位、退市成本与 Fama-MacBeth 事后评级泄漏，源码公开于 GitHub";
+  document.getElementById("s1StripGrid").innerHTML = `
+    <div><b>✓</b>全局交易日历对齐：越界 <code>T+1+h &gt;= T_end</code> 严格置 <code>null</code></div>
+    <div><b>✓</b>停牌约束：停牌期间锁定旧仓位，禁止虚构成交与漂移</div>
+    <div><b>✓</b>剔除事后评级：FMB 回归移除包含事后降级泄漏的 <code>RATING</code></div>
+    <div><b>✓</b>全市场前瞻池：由 36 只扩大至全部在市 ${DATA.pool_size || 0} 只转债及持仓跟踪</div>
+  `;
+  document.getElementById("s1Head").innerHTML = `<tr><th>审计指标</th><th>审计修复前</th><th>独立审计修复后</th><th>修复说明</th></tr>`;
   const rows = (R.audit_comparison || []).map(x => `
     <tr>
       <td><strong>${x.metric}</strong></td>
@@ -901,6 +991,7 @@ function renderAudit() {
 }
 
 function renderIC() {
+  const R = activeR();
   const ic = R.ic_summary || {};
   const rows = ["1", "5", "10", "20"].map(h => {
     const x = ic[h];
@@ -963,6 +1054,7 @@ function renderIC() {
 }
 
 function renderQuintiles() {
+  const R = activeR();
   const q = (R.quintiles || {})[curQH];
   if (!q) return;
   document.getElementById("qBarTitle").textContent = `五分组未来 ${curQH} 日平均超额收益 (有效天数 ${q.days} 天)`;
@@ -1021,6 +1113,7 @@ function renderQuintiles() {
 }
 
 function renderStage4() {
+  const R = activeR();
   document.getElementById("stratCostNote").textContent = `当前单边成本口径：${curSC} (A股转债免印花税)`;
   const S = R.strategies || {};
   const specs = [
@@ -1137,12 +1230,15 @@ function renderStage4() {
   }
 
   const fr = (S.four_region_lsm || {}).costs?.["0.10%"] || {};
+  const dl = (S.double_low || {}).costs?.["0.10%"] || {};
   const fm20 = ((R.fama_macbeth || {})["20"] || {}).factors?.[0] || {};
+  const poolLabel = curPool === "aa_plus" ? "AA+/AAA 点时高评级子池（公告次日生效，覆盖率 99.93%）" : "全市场样本（剔除含事后下调信息的评级变量后）";
   document.getElementById("ablationNote").innerHTML =
-    `<strong>经独立代码审计后的实测结论：</strong>(1) 剔除含事后下调信息的评级变量后，<code>F_LSM</code> 对未来 20 日收益的 Fama-MacBeth 均值斜率仍为 <code>${signed(fm20.mean, 4)}</code>（<code>t_NW=${fmt(fm20.t_stat, 2)}, p=${fm20.p_val < 0.0001 ? "<0.0001" : fmt(fm20.p_val, 4)}</code>），增量定价信息稳健显著；(2) Four-Region LSM 在停牌锁定及退市扣费清算下的周频累计净收益为 <code>${signed(fr.total_ret)}</code>（Sharpe <code>${fmt(fr.sharpe, 2)}</code>），即便叠加违约退市券 50% 额外清算折价仍录得 <code>${signed((R.stress_default_50pct||{}).total_ret)}</code>，大幅超越全市场基准与随机抽样 95% 区间。`;
+    `<strong>实测结论（${poolLabel}）：</strong>(1) <code>F_LSM</code> 对未来 20 日收益的 Fama-MacBeth 均值斜率为 <code>${signed(fm20.mean, 4)}</code>（<code>t_NW=${fmt(fm20.t_stat, 2)}, p=${fm20.p_val < 0.0001 ? "<0.0001" : fmt(fm20.p_val, 4)}</code>）；(2) Four-Region LSM 在停牌锁定及退市扣费清算下的周频累计净收益为 <code>${signed(fr.total_ret)}</code>（年化 <code>${signed(fr.ann_ret)}</code>，Sharpe <code>${fmt(fr.sharpe, 2)}</code>，MDD <code>${fmt(fr.mdd)}%</code>），同期传统双低为 <code>${signed(dl.total_ret)}</code>，叠加退市折价压力测试仍录得 <code>${signed((R.stress_default_50pct||{}).total_ret)}</code>。`;
 }
 
 function renderStage5() {
+  const R = activeR();
   const box = document.getElementById("s5Content");
   if (curS5 === "subperiod") {
     const spIc = R.subperiod_ic || {};
@@ -1298,6 +1394,16 @@ function doCalc() {
   document.getElementById("res-mdl").textContent = "¥" + Math.max(convVal, Math.max(108.0 * Math.exp(-r * T) + opt + resetBoost, 108.0 * 0.96)).toFixed(2);
 }
 
+document.querySelectorAll("#poolPills .pill").forEach(b => b.addEventListener("click", () => {
+  curPool = b.dataset.pool;
+  document.querySelectorAll("#poolPills .pill").forEach(x => x.classList.toggle("active", x === b));
+  renderTopStats();
+  renderAudit();
+  renderIC();
+  renderQuintiles();
+  renderStage4();
+  renderStage5();
+}));
 document.querySelectorAll("#icRollPills .pill").forEach(b => b.addEventListener("click", () => {
   curIcH = b.dataset.ich;
   document.querySelectorAll("#icRollPills .pill").forEach(x => x.classList.toggle("active", x === b));
@@ -1325,6 +1431,7 @@ document.querySelectorAll("#s5Pills .pill").forEach(b => b.addEventListener("cli
 }));
 ["slider-s0", "slider-c0", "slider-p", "slider-sig"].forEach(id => document.getElementById(id).addEventListener("input", doCalc));
 
+renderTopStats();
 renderAudit();
 renderIC();
 renderQuintiles();
