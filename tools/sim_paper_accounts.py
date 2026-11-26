@@ -35,14 +35,25 @@ def resolve_market_session(now_cst: datetime, trade_dates: list = None) -> dict:
     hhmm = now_cst.hour * 100 + now_cst.minute
 
     if not trade_dates:
-        # Try fetching SSE Composite daily dates as authoritative exchange calendar
+        # Try fetching SSE Composite daily dates + live Sina RT date as authoritative exchange calendar
+        td_set = set()
         try:
             import akshare as ak
             cal = ak.stock_zh_a_hist_sina(symbol="sh000001")
             if cal is not None and not cal.empty:
-                trade_dates = sorted(pd.to_datetime(cal["date"]).dt.strftime("%Y-%m-%d").unique().tolist())[-20:]
+                td_set.update(pd.to_datetime(cal["date"]).dt.strftime("%Y-%m-%d").unique().tolist())
         except Exception:
-            trade_dates = []
+            pass
+        try:
+            import urllib.request
+            req = urllib.request.Request("http://hq.sinajs.cn/list=sh000001", headers={"Referer": "https://finance.sina.com.cn"})
+            raw = urllib.request.urlopen(req, timeout=8).read().decode("gbk", errors="ignore")
+            parts = raw.split('"')[1].split(",") if '"' in raw else []
+            if len(parts) > 30 and len(parts[30]) == 10 and parts[30][4] == "-":
+                td_set.add(parts[30].strip())
+        except Exception:
+            pass
+        trade_dates = sorted(td_set)[-20:] if td_set else []
 
     if trade_dates:
         latest_cal = trade_dates[-1]

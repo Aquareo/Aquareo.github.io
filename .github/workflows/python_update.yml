@@ -2,11 +2,16 @@ name: Update convertible bonds project
 
 on:
   schedule:
-    - cron: '43 0-15/1 * * *'
+    # Mon-Fri (UTC+8): 10:11 (T+1开盘撮合), 15:23 (收盘日终结算), 16:17 & 18:37 (幂等补跑防GitHub跳期)
+    - cron: '11 2 * * 1-5'
+    - cron: '23 7 * * 1-5'
+    - cron: '17 8 * * 1-5'
+    - cron: '37 10 * * 1-5'
   push:
     branches: [main]
     paths:
       - 'update_website.py'
+      - 'tools/sim_paper_accounts.py'
       - 'requirements.txt'
       - '.github/workflows/python_update.yml'
   workflow_dispatch:
@@ -44,6 +49,7 @@ jobs:
           git add dist/bonds/ cb_pricing_model.py update_website.py
           if ! git diff --cached --quiet; then
             git commit -m "Update convertible bond rankings"
+            git pull --rebase --autostash origin main
             git push origin HEAD:main
           fi
       - name: Configure GitHub Pages
