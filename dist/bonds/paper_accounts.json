@@ -4,7 +4,7 @@
   "session": {
     "market_date": "2026-11-26",
     "today_cst": "2026-11-26",
-    "updated_at": "2026-11-26 12:19:35 CST",
+    "updated_at": "2026-11-26 13:06:16 CST",
     "phase": "INTRADAY",
     "trade_dates_tail": [
       "2026-11-20",
@@ -15,10 +15,10 @@
     ]
   },
   "valuation_signal_diag": {
-    "med_price": 118.48,
-    "med_prem": 68.63,
-    "comp_pct": 65.8,
-    "under_pct": 66.7
+    "med_price": 118.63,
+    "med_prem": 68.39,
+    "comp_pct": 66.1,
+    "under_pct": 65.3
   },
   "execution_rules": {
     "initial_capital": 100000.0,
@@ -51,7 +51,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 31023.76,
-      "total_nav": 99318.56,
+      "total_nav": 99398.26,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 259.31,
@@ -66,9 +66,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 92.796,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 1815.4,
+          "market_val": 1821.2,
           "weight_pct": 1.83
         },
         "110095": {
@@ -77,9 +77,9 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 99.299,
-          "last_price": 97.69,
+          "last_price": 97.88,
           "entry_date": "2026-11-26",
-          "market_val": 1953.8,
+          "market_val": 1957.6,
           "weight_pct": 1.97
         },
         "118031": {
@@ -88,10 +88,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 97.699,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 1941.4,
-          "weight_pct": 1.95
+          "market_val": 1944.0,
+          "weight_pct": 1.96
         },
         "123264": {
           "ticker": "123264",
@@ -99,9 +99,9 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 110.805,
-          "last_price": 109.87,
+          "last_price": 109.77,
           "entry_date": "2026-11-26",
-          "market_val": 2197.4,
+          "market_val": 2195.4,
           "weight_pct": 2.21
         },
         "110100": {
@@ -110,9 +110,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 113.328,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 1130.5,
+          "market_val": 1132.1,
           "weight_pct": 1.14
         },
         "118066": {
@@ -121,9 +121,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 114.557,
-          "last_price": 113.26,
+          "last_price": 113.52,
           "entry_date": "2026-11-26",
-          "market_val": 1132.6,
+          "market_val": 1135.2,
           "weight_pct": 1.14
         },
         "123216": {
@@ -132,10 +132,10 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 106.303,
-          "last_price": 104.99,
+          "last_price": 105.31,
           "entry_date": "2026-11-26",
-          "market_val": 2099.8,
-          "weight_pct": 2.11
+          "market_val": 2106.2,
+          "weight_pct": 2.12
         },
         "118042": {
           "ticker": "118042",
@@ -143,9 +143,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 115.186,
-          "last_price": 114.01,
+          "last_price": 114.26,
           "entry_date": "2026-11-26",
-          "market_val": 1140.1,
+          "market_val": 1142.6,
           "weight_pct": 1.15
         },
         "123262": {
@@ -154,9 +154,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 117.556,
-          "last_price": 115.96,
+          "last_price": 115.92,
           "entry_date": "2026-11-26",
-          "market_val": 1159.6,
+          "market_val": 1159.2,
           "weight_pct": 1.17
         },
         "110085": {
@@ -165,9 +165,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 99.139,
-          "last_price": 97.71,
+          "last_price": 97.84,
           "entry_date": "2026-11-26",
-          "market_val": 1954.2,
+          "market_val": 1956.8,
           "weight_pct": 1.97
         },
         "127103": {
@@ -176,10 +176,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 108.594,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 2149.0,
-          "weight_pct": 2.16
+          "market_val": 2153.4,
+          "weight_pct": 2.17
         },
         "113700": {
           "ticker": "113700",
@@ -187,9 +187,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 113.36,
-          "last_price": 111.89,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 1118.9,
+          "market_val": 1121.0,
           "weight_pct": 1.13
         },
         "113679": {
@@ -198,9 +198,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 116.36,
-          "last_price": 114.98,
+          "last_price": 115.39,
           "entry_date": "2026-11-26",
-          "market_val": 1149.8,
+          "market_val": 1153.9,
           "weight_pct": 1.16
         },
         "113648": {
@@ -209,9 +209,9 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 104.402,
-          "last_price": 103.36,
+          "last_price": 103.49,
           "entry_date": "2026-11-26",
-          "market_val": 2067.2,
+          "market_val": 2069.8,
           "weight_pct": 2.08
         },
         "118065": {
@@ -220,9 +220,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 121.36,
-          "last_price": 120.75,
+          "last_price": 120.94,
           "entry_date": "2026-11-26",
-          "market_val": 1207.5,
+          "market_val": 1209.4,
           "weight_pct": 1.22
         },
         "118068": {
@@ -231,9 +231,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 112.656,
-          "last_price": 111.81,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 1118.1,
+          "market_val": 1121.0,
           "weight_pct": 1.13
         },
         "123193": {
@@ -242,10 +242,10 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 117.559,
-          "last_price": 115.83,
+          "last_price": 115.44,
           "entry_date": "2026-11-26",
-          "market_val": 1158.3,
-          "weight_pct": 1.17
+          "market_val": 1154.4,
+          "weight_pct": 1.16
         },
         "118034": {
           "ticker": "118034",
@@ -253,9 +253,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 104.664,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 2092.2,
+          "market_val": 2094.6,
           "weight_pct": 2.11
         },
         "118060": {
@@ -264,10 +264,10 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 122.116,
-          "last_price": 121.53,
+          "last_price": 121.77,
           "entry_date": "2026-11-26",
-          "market_val": 1215.3,
-          "weight_pct": 1.22
+          "market_val": 1217.7,
+          "weight_pct": 1.23
         },
         "123172": {
           "ticker": "123172",
@@ -275,9 +275,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 115.558,
-          "last_price": 113.89,
+          "last_price": 113.98,
           "entry_date": "2026-11-26",
-          "market_val": 1138.9,
+          "market_val": 1139.8,
           "weight_pct": 1.15
         },
         "123288": {
@@ -286,9 +286,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 118.642,
-          "last_price": 117.54,
+          "last_price": 117.48,
           "entry_date": "2026-11-26",
-          "market_val": 1175.4,
+          "market_val": 1174.8,
           "weight_pct": 1.18
         },
         "113692": {
@@ -297,9 +297,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 118.259,
-          "last_price": 116.98,
+          "last_price": 117.14,
           "entry_date": "2026-11-26",
-          "market_val": 1169.8,
+          "market_val": 1171.4,
           "weight_pct": 1.18
         },
         "118024": {
@@ -308,9 +308,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 114.477,
-          "last_price": 113.59,
+          "last_price": 113.58,
           "entry_date": "2026-11-26",
-          "market_val": 1135.9,
+          "market_val": 1135.8,
           "weight_pct": 1.14
         },
         "127112": {
@@ -319,10 +319,10 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 120.74,
-          "last_price": 118.65,
+          "last_price": 118.81,
           "entry_date": "2026-11-26",
-          "market_val": 1186.5,
-          "weight_pct": 1.19
+          "market_val": 1188.1,
+          "weight_pct": 1.2
         },
         "118073": {
           "ticker": "118073",
@@ -330,9 +330,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 120.41,
-          "last_price": 119.04,
+          "last_price": 119.5,
           "entry_date": "2026-11-26",
-          "market_val": 1190.4,
+          "market_val": 1195.0,
           "weight_pct": 1.2
         },
         "110093": {
@@ -341,9 +341,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 106.736,
-          "last_price": 106.02,
+          "last_price": 106.06,
           "entry_date": "2026-11-26",
-          "market_val": 2120.4,
+          "market_val": 2121.2,
           "weight_pct": 2.13
         },
         "113693": {
@@ -352,10 +352,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 109.909,
-          "last_price": 109.05,
+          "last_price": 108.94,
           "entry_date": "2026-11-26",
-          "market_val": 2181.0,
-          "weight_pct": 2.2
+          "market_val": 2178.8,
+          "weight_pct": 2.19
         },
         "127049": {
           "ticker": "127049",
@@ -363,9 +363,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 102.867,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 2035.0,
+          "market_val": 2038.0,
           "weight_pct": 2.05
         },
         "123271": {
@@ -374,9 +374,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 125.061,
-          "last_price": 125.02,
+          "last_price": 124.79,
           "entry_date": "2026-11-26",
-          "market_val": 1250.2,
+          "market_val": 1247.9,
           "weight_pct": 1.26
         },
         "111018": {
@@ -385,9 +385,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 116.558,
-          "last_price": 115.13,
+          "last_price": 115.42,
           "entry_date": "2026-11-26",
-          "market_val": 1151.3,
+          "market_val": 1154.2,
           "weight_pct": 1.16
         },
         "123252": {
@@ -396,9 +396,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 115.9,
-          "last_price": 114.03,
+          "last_price": 114.25,
           "entry_date": "2026-11-26",
-          "market_val": 1140.3,
+          "market_val": 1142.5,
           "weight_pct": 1.15
         },
         "111025": {
@@ -407,9 +407,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 124.062,
-          "last_price": 122.97,
+          "last_price": 123.15,
           "entry_date": "2026-11-26",
-          "market_val": 1229.7,
+          "market_val": 1231.5,
           "weight_pct": 1.24
         },
         "127068": {
@@ -418,10 +418,10 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 103.291,
-          "last_price": 102.02,
+          "last_price": 102.18,
           "entry_date": "2026-11-26",
-          "market_val": 2040.4,
-          "weight_pct": 2.05
+          "market_val": 2043.6,
+          "weight_pct": 2.06
         },
         "110087": {
           "ticker": "110087",
@@ -429,9 +429,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 107.986,
-          "last_price": 107.27,
+          "last_price": 107.5,
           "entry_date": "2026-11-26",
-          "market_val": 2145.4,
+          "market_val": 2150.0,
           "weight_pct": 2.16
         },
         "111009": {
@@ -440,9 +440,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 108.293,
-          "last_price": 107.55,
+          "last_price": 107.81,
           "entry_date": "2026-11-26",
-          "market_val": 2151.0,
+          "market_val": 2156.2,
           "weight_pct": 2.17
         },
         "118022": {
@@ -451,10 +451,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 109.109,
-          "last_price": 108.52,
+          "last_price": 108.56,
           "entry_date": "2026-11-26",
-          "market_val": 2170.4,
-          "weight_pct": 2.19
+          "market_val": 2171.2,
+          "weight_pct": 2.18
         },
         "113703": {
           "ticker": "113703",
@@ -462,9 +462,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 125.262,
-          "last_price": 124.8,
+          "last_price": 125.19,
           "entry_date": "2026-11-26",
-          "market_val": 1248.0,
+          "market_val": 1251.9,
           "weight_pct": 1.26
         },
         "118063": {
@@ -473,10 +473,10 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 126.563,
-          "last_price": 123.32,
+          "last_price": 123.93,
           "entry_date": "2026-11-26",
-          "market_val": 1233.2,
-          "weight_pct": 1.24
+          "market_val": 1239.3,
+          "weight_pct": 1.25
         },
         "127044": {
           "ticker": "127044",
@@ -484,9 +484,9 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 110.463,
-          "last_price": 109.96,
+          "last_price": 110.0,
           "entry_date": "2026-11-26",
-          "market_val": 2199.2,
+          "market_val": 2200.0,
           "weight_pct": 2.21
         },
         "127114": {
@@ -495,9 +495,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 116.958,
-          "last_price": 115.47,
+          "last_price": 115.57,
           "entry_date": "2026-11-26",
-          "market_val": 1154.7,
+          "market_val": 1155.7,
           "weight_pct": 1.16
         },
         "113666": {
@@ -506,9 +506,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 114.147,
-          "last_price": 113.59,
+          "last_price": 113.54,
           "entry_date": "2026-11-26",
-          "market_val": 1135.9,
+          "market_val": 1135.4,
           "weight_pct": 1.14
         },
         "123194": {
@@ -517,9 +517,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 124.334,
-          "last_price": 123.02,
+          "last_price": 122.97,
           "entry_date": "2026-11-26",
-          "market_val": 1230.2,
+          "market_val": 1229.7,
           "weight_pct": 1.24
         },
         "113709": {
@@ -528,9 +528,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 129.364,
-          "last_price": 127.2,
+          "last_price": 127.22,
           "entry_date": "2026-11-26",
-          "market_val": 1272.0,
+          "market_val": 1272.2,
           "weight_pct": 1.28
         },
         "127105": {
@@ -539,9 +539,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 117.014,
-          "last_price": 115.41,
+          "last_price": 115.58,
           "entry_date": "2026-11-26",
-          "market_val": 1154.1,
+          "market_val": 1155.8,
           "weight_pct": 1.16
         },
         "118070": {
@@ -550,9 +550,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 125.562,
-          "last_price": 125.44,
+          "last_price": 124.9,
           "entry_date": "2026-11-26",
-          "market_val": 1254.4,
+          "market_val": 1249.0,
           "weight_pct": 1.26
         }
       },
@@ -1744,7 +1744,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 9358.33,
-      "total_nav": 99350.33,
+      "total_nav": 99492.33,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 145.26,
@@ -1759,9 +1759,9 @@
           "rating": "AA-",
           "qty": 50,
           "avg_cost": 99.15,
-          "last_price": 97.69,
+          "last_price": 97.88,
           "entry_date": "2026-11-26",
-          "market_val": 4884.5,
+          "market_val": 4894.0,
           "weight_pct": 4.92
         },
         "118034": {
@@ -1770,9 +1770,9 @@
           "rating": "AA+",
           "qty": 40,
           "avg_cost": 104.539,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 4184.4,
+          "market_val": 4189.2,
           "weight_pct": 4.21
         },
         "127089": {
@@ -1781,10 +1781,10 @@
           "rating": "AA+",
           "qty": 50,
           "avg_cost": 92.646,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 4538.5,
-          "weight_pct": 4.57
+          "market_val": 4553.0,
+          "weight_pct": 4.58
         },
         "127049": {
           "ticker": "127049",
@@ -1792,9 +1792,9 @@
           "rating": "AAA",
           "qty": 40,
           "avg_cost": 102.742,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 4070.0,
+          "market_val": 4076.0,
           "weight_pct": 4.1
         },
         "127103": {
@@ -1803,9 +1803,9 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 108.469,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 4298.0,
+          "market_val": 4306.8,
           "weight_pct": 4.33
         },
         "113691": {
@@ -1814,9 +1814,9 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 114.482,
-          "last_price": 113.76,
+          "last_price": 113.97,
           "entry_date": "2026-11-26",
-          "market_val": 4550.4,
+          "market_val": 4558.8,
           "weight_pct": 4.58
         },
         "110084": {
@@ -1825,9 +1825,9 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 113.181,
-          "last_price": 112.33,
+          "last_price": 112.49,
           "entry_date": "2026-11-26",
-          "market_val": 4493.2,
+          "market_val": 4499.6,
           "weight_pct": 4.52
         },
         "118031": {
@@ -1836,10 +1836,10 @@
           "rating": "AA",
           "qty": 50,
           "avg_cost": 97.549,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 4853.5,
-          "weight_pct": 4.89
+          "market_val": 4860.0,
+          "weight_pct": 4.88
         },
         "110100": {
           "ticker": "110100",
@@ -1847,9 +1847,9 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 112.953,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 4522.0,
+          "market_val": 4528.4,
           "weight_pct": 4.55
         },
         "123194": {
@@ -1858,10 +1858,10 @@
           "rating": "AA-",
           "qty": 40,
           "avg_cost": 123.959,
-          "last_price": 123.02,
+          "last_price": 122.97,
           "entry_date": "2026-11-26",
-          "market_val": 4920.8,
-          "weight_pct": 4.95
+          "market_val": 4918.8,
+          "weight_pct": 4.94
         },
         "113648": {
           "ticker": "113648",
@@ -1869,9 +1869,9 @@
           "rating": "AA-",
           "qty": 40,
           "avg_cost": 104.277,
-          "last_price": 103.36,
+          "last_price": 103.49,
           "entry_date": "2026-11-26",
-          "market_val": 4134.4,
+          "market_val": 4139.6,
           "weight_pct": 4.16
         },
         "123172": {
@@ -1880,10 +1880,10 @@
           "rating": "AA-",
           "qty": 40,
           "avg_cost": 115.183,
-          "last_price": 113.89,
+          "last_price": 113.98,
           "entry_date": "2026-11-26",
-          "market_val": 4555.6,
-          "weight_pct": 4.59
+          "market_val": 4559.2,
+          "weight_pct": 4.58
         },
         "113056": {
           "ticker": "113056",
@@ -1891,10 +1891,10 @@
           "rating": "AAA",
           "qty": 40,
           "avg_cost": 118.934,
-          "last_price": 118.22,
+          "last_price": 118.25,
           "entry_date": "2026-11-26",
-          "market_val": 4728.8,
-          "weight_pct": 4.76
+          "market_val": 4730.0,
+          "weight_pct": 4.75
         },
         "127110": {
           "ticker": "127110",
@@ -1902,10 +1902,10 @@
           "rating": "AAA",
           "qty": 30,
           "avg_cost": 129.726,
-          "last_price": 129.05,
+          "last_price": 129.02,
           "entry_date": "2026-11-26",
-          "market_val": 3871.5,
-          "weight_pct": 3.9
+          "market_val": 3870.6,
+          "weight_pct": 3.89
         },
         "128142": {
           "ticker": "128142",
@@ -1913,10 +1913,10 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 110.2,
-          "last_price": 109.92,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 4396.8,
-          "weight_pct": 4.43
+          "market_val": 4396.4,
+          "weight_pct": 4.42
         },
         "127083": {
           "ticker": "127083",
@@ -1924,10 +1924,10 @@
           "rating": "AAA",
           "qty": 40,
           "avg_cost": 113.824,
-          "last_price": 113.58,
+          "last_price": 113.9,
           "entry_date": "2026-11-26",
-          "market_val": 4543.2,
-          "weight_pct": 4.57
+          "market_val": 4556.0,
+          "weight_pct": 4.58
         },
         "123107": {
           "ticker": "123107",
@@ -1935,10 +1935,10 @@
           "rating": "AAA",
           "qty": 40,
           "avg_cost": 110.18,
-          "last_price": 109.42,
+          "last_price": 109.48,
           "entry_date": "2026-11-26",
-          "market_val": 4376.8,
-          "weight_pct": 4.41
+          "market_val": 4379.2,
+          "weight_pct": 4.4
         },
         "113659": {
           "ticker": "113659",
@@ -1946,10 +1946,10 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 122.686,
-          "last_price": 123.22,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 4928.8,
-          "weight_pct": 4.96
+          "market_val": 4944.0,
+          "weight_pct": 4.97
         },
         "127045": {
           "ticker": "127045",
@@ -1957,10 +1957,10 @@
           "rating": "AAA",
           "qty": 40,
           "avg_cost": 111.068,
-          "last_price": 109.47,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 4378.8,
-          "weight_pct": 4.41
+          "market_val": 4396.4,
+          "weight_pct": 4.42
         },
         "111004": {
           "ticker": "111004",
@@ -1968,10 +1968,10 @@
           "rating": "AA-",
           "qty": 40,
           "avg_cost": 120.387,
-          "last_price": 119.05,
+          "last_price": 119.45,
           "entry_date": "2026-11-26",
-          "market_val": 4762.0,
-          "weight_pct": 4.79
+          "market_val": 4778.0,
+          "weight_pct": 4.8
         }
       },
       "pending_signal": {
@@ -2617,7 +2617,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 48340.86,
-      "total_nav": 99581.46,
+      "total_nav": 99661.56,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 125.77,
@@ -2632,10 +2632,10 @@
           "rating": "AA-",
           "qty": 30,
           "avg_cost": 99.216,
-          "last_price": 97.69,
+          "last_price": 97.88,
           "entry_date": "2026-11-26",
-          "market_val": 2930.7,
-          "weight_pct": 2.94
+          "market_val": 2936.4,
+          "weight_pct": 2.95
         },
         "118034": {
           "ticker": "118034",
@@ -2643,9 +2643,9 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 104.581,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 3138.3,
+          "market_val": 3141.9,
           "weight_pct": 3.15
         },
         "127089": {
@@ -2654,10 +2654,10 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 92.713,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 2723.1,
-          "weight_pct": 2.73
+          "market_val": 2731.8,
+          "weight_pct": 2.74
         },
         "127049": {
           "ticker": "127049",
@@ -2665,9 +2665,9 @@
           "rating": "AAA",
           "qty": 30,
           "avg_cost": 102.784,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 3052.5,
+          "market_val": 3057.0,
           "weight_pct": 3.07
         },
         "127103": {
@@ -2676,9 +2676,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 108.511,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 3223.5,
+          "market_val": 3230.1,
           "weight_pct": 3.24
         },
         "113691": {
@@ -2687,10 +2687,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 114.607,
-          "last_price": 113.76,
+          "last_price": 113.97,
           "entry_date": "2026-11-26",
-          "market_val": 2275.2,
-          "weight_pct": 2.28
+          "market_val": 2279.4,
+          "weight_pct": 2.29
         },
         "110084": {
           "ticker": "110084",
@@ -2698,9 +2698,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 113.306,
-          "last_price": 112.33,
+          "last_price": 112.49,
           "entry_date": "2026-11-26",
-          "market_val": 2246.6,
+          "market_val": 2249.8,
           "weight_pct": 2.26
         },
         "118031": {
@@ -2709,10 +2709,10 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 97.615,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 2912.1,
-          "weight_pct": 2.92
+          "market_val": 2916.0,
+          "weight_pct": 2.93
         },
         "110100": {
           "ticker": "110100",
@@ -2720,9 +2720,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 113.078,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 2261.0,
+          "market_val": 2264.2,
           "weight_pct": 2.27
         },
         "123194": {
@@ -2731,9 +2731,9 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 124.084,
-          "last_price": 123.02,
+          "last_price": 122.97,
           "entry_date": "2026-11-26",
-          "market_val": 2460.4,
+          "market_val": 2459.4,
           "weight_pct": 2.47
         },
         "113648": {
@@ -2742,10 +2742,10 @@
           "rating": "AA-",
           "qty": 30,
           "avg_cost": 104.319,
-          "last_price": 103.36,
+          "last_price": 103.49,
           "entry_date": "2026-11-26",
-          "market_val": 3100.8,
-          "weight_pct": 3.11
+          "market_val": 3104.7,
+          "weight_pct": 3.12
         },
         "123172": {
           "ticker": "123172",
@@ -2753,9 +2753,9 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 115.308,
-          "last_price": 113.89,
+          "last_price": 113.98,
           "entry_date": "2026-11-26",
-          "market_val": 2277.8,
+          "market_val": 2279.6,
           "weight_pct": 2.29
         },
         "113056": {
@@ -2764,9 +2764,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 119.059,
-          "last_price": 118.22,
+          "last_price": 118.25,
           "entry_date": "2026-11-26",
-          "market_val": 2364.4,
+          "market_val": 2365.0,
           "weight_pct": 2.37
         },
         "127110": {
@@ -2775,9 +2775,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 129.81,
-          "last_price": 129.05,
+          "last_price": 129.02,
           "entry_date": "2026-11-26",
-          "market_val": 2581.0,
+          "market_val": 2580.4,
           "weight_pct": 2.59
         },
         "128142": {
@@ -2786,9 +2786,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 110.325,
-          "last_price": 109.92,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 2198.4,
+          "market_val": 2198.2,
           "weight_pct": 2.21
         },
         "127083": {
@@ -2797,10 +2797,10 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 113.949,
-          "last_price": 113.58,
+          "last_price": 113.9,
           "entry_date": "2026-11-26",
-          "market_val": 2271.6,
-          "weight_pct": 2.28
+          "market_val": 2278.0,
+          "weight_pct": 2.29
         },
         "123107": {
           "ticker": "123107",
@@ -2808,9 +2808,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 110.305,
-          "last_price": 109.42,
+          "last_price": 109.48,
           "entry_date": "2026-11-26",
-          "market_val": 2188.4,
+          "market_val": 2189.6,
           "weight_pct": 2.2
         },
         "113659": {
@@ -2819,10 +2819,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 122.811,
-          "last_price": 123.22,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 2464.4,
-          "weight_pct": 2.47
+          "market_val": 2472.0,
+          "weight_pct": 2.48
         },
         "127045": {
           "ticker": "127045",
@@ -2830,10 +2830,10 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 111.193,
-          "last_price": 109.47,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 2189.4,
-          "weight_pct": 2.2
+          "market_val": 2198.2,
+          "weight_pct": 2.21
         },
         "111004": {
           "ticker": "111004",
@@ -2841,10 +2841,10 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 120.512,
-          "last_price": 119.05,
+          "last_price": 119.45,
           "entry_date": "2026-11-26",
-          "market_val": 2381.0,
-          "weight_pct": 2.39
+          "market_val": 2389.0,
+          "weight_pct": 2.4
         }
       },
       "pending_signal": {
@@ -3490,7 +3490,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 34454.29,
-      "total_nav": 99473.69,
+      "total_nav": 99603.19,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 257.65,
@@ -3505,9 +3505,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 110.305,
-          "last_price": 109.42,
+          "last_price": 109.48,
           "entry_date": "2026-11-26",
-          "market_val": 2188.4,
+          "market_val": 2189.6,
           "weight_pct": 2.2
         },
         "128142": {
@@ -3516,9 +3516,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 110.325,
-          "last_price": 109.92,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 2198.4,
+          "market_val": 2198.2,
           "weight_pct": 2.21
         },
         "113042": {
@@ -3527,9 +3527,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 113.106,
-          "last_price": 112.58,
+          "last_price": 112.57,
           "entry_date": "2026-11-26",
-          "market_val": 1125.8,
+          "market_val": 1125.7,
           "weight_pct": 1.13
         },
         "127045": {
@@ -3538,10 +3538,10 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 111.193,
-          "last_price": 109.47,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 2189.4,
-          "weight_pct": 2.2
+          "market_val": 2198.2,
+          "weight_pct": 2.21
         },
         "113056": {
           "ticker": "113056",
@@ -3549,9 +3549,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 119.309,
-          "last_price": 118.22,
+          "last_price": 118.25,
           "entry_date": "2026-11-26",
-          "market_val": 1182.2,
+          "market_val": 1182.5,
           "weight_pct": 1.19
         },
         "113052": {
@@ -3560,10 +3560,10 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 111.706,
-          "last_price": 111.01,
+          "last_price": 111.0,
           "entry_date": "2026-11-26",
-          "market_val": 1110.1,
-          "weight_pct": 1.12
+          "market_val": 1110.0,
+          "weight_pct": 1.11
         },
         "127040": {
           "ticker": "127040",
@@ -3571,10 +3571,10 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 110.338,
-          "last_price": 109.62,
+          "last_price": 110.01,
           "entry_date": "2026-11-26",
-          "market_val": 2192.4,
-          "weight_pct": 2.2
+          "market_val": 2200.2,
+          "weight_pct": 2.21
         },
         "113062": {
           "ticker": "113062",
@@ -3582,9 +3582,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 122.361,
-          "last_price": 121.76,
+          "last_price": 121.92,
           "entry_date": "2026-11-26",
-          "market_val": 1217.6,
+          "market_val": 1219.2,
           "weight_pct": 1.22
         },
         "113631": {
@@ -3593,9 +3593,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 119.591,
-          "last_price": 118.73,
+          "last_price": 118.99,
           "entry_date": "2026-11-26",
-          "market_val": 1187.3,
+          "market_val": 1189.9,
           "weight_pct": 1.19
         },
         "118034": {
@@ -3604,9 +3604,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 104.664,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 2092.2,
+          "market_val": 2094.6,
           "weight_pct": 2.1
         },
         "110095": {
@@ -3615,10 +3615,10 @@
           "rating": "AA-",
           "qty": 20,
           "avg_cost": 99.299,
-          "last_price": 97.69,
+          "last_price": 97.88,
           "entry_date": "2026-11-26",
-          "market_val": 1953.8,
-          "weight_pct": 1.96
+          "market_val": 1957.6,
+          "weight_pct": 1.97
         },
         "127056": {
           "ticker": "127056",
@@ -3626,9 +3626,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 110.604,
-          "last_price": 109.52,
+          "last_price": 109.78,
           "entry_date": "2026-11-26",
-          "market_val": 2190.4,
+          "market_val": 2195.6,
           "weight_pct": 2.2
         },
         "127110": {
@@ -3637,9 +3637,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 130.06,
-          "last_price": 129.05,
+          "last_price": 129.02,
           "entry_date": "2026-11-26",
-          "market_val": 1290.5,
+          "market_val": 1290.2,
           "weight_pct": 1.3
         },
         "113058": {
@@ -3648,9 +3648,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 113.807,
-          "last_price": 112.59,
+          "last_price": 112.8,
           "entry_date": "2026-11-26",
-          "market_val": 1125.9,
+          "market_val": 1128.0,
           "weight_pct": 1.13
         },
         "113043": {
@@ -3670,9 +3670,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 120.526,
-          "last_price": 118.04,
+          "last_price": 118.33,
           "entry_date": "2026-11-26",
-          "market_val": 1180.4,
+          "market_val": 1183.3,
           "weight_pct": 1.19
         },
         "113681": {
@@ -3681,9 +3681,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 127.577,
-          "last_price": 126.51,
+          "last_price": 126.5,
           "entry_date": "2026-11-26",
-          "market_val": 1265.1,
+          "market_val": 1265.0,
           "weight_pct": 1.27
         },
         "113691": {
@@ -3692,9 +3692,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 114.857,
-          "last_price": 113.76,
+          "last_price": 113.97,
           "entry_date": "2026-11-26",
-          "market_val": 1137.6,
+          "market_val": 1139.7,
           "weight_pct": 1.14
         },
         "127050": {
@@ -3703,10 +3703,10 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 116.558,
-          "last_price": 116.64,
+          "last_price": 117.07,
           "entry_date": "2026-11-26",
-          "market_val": 1166.4,
-          "weight_pct": 1.17
+          "market_val": 1170.7,
+          "weight_pct": 1.18
         },
         "123150": {
           "ticker": "123150",
@@ -3714,10 +3714,10 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 124.862,
-          "last_price": 123.02,
+          "last_price": 123.0,
           "entry_date": "2026-11-26",
-          "market_val": 1230.2,
-          "weight_pct": 1.24
+          "market_val": 1230.0,
+          "weight_pct": 1.23
         },
         "113054": {
           "ticker": "113054",
@@ -3725,9 +3725,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 114.648,
-          "last_price": 114.36,
+          "last_price": 114.59,
           "entry_date": "2026-11-26",
-          "market_val": 1143.6,
+          "market_val": 1145.9,
           "weight_pct": 1.15
         },
         "127031": {
@@ -3736,9 +3736,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 112.357,
-          "last_price": 111.69,
+          "last_price": 111.67,
           "entry_date": "2026-11-26",
-          "market_val": 1116.9,
+          "market_val": 1116.7,
           "weight_pct": 1.12
         },
         "113051": {
@@ -3747,9 +3747,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 110.305,
-          "last_price": 109.91,
+          "last_price": 109.93,
           "entry_date": "2026-11-26",
-          "market_val": 2198.2,
+          "market_val": 2198.6,
           "weight_pct": 2.21
         },
         "123091": {
@@ -3758,10 +3758,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 111.092,
-          "last_price": 110.74,
+          "last_price": 110.75,
           "entry_date": "2026-11-26",
-          "market_val": 2214.8,
-          "weight_pct": 2.23
+          "market_val": 2215.0,
+          "weight_pct": 2.22
         },
         "127084": {
           "ticker": "127084",
@@ -3769,9 +3769,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 129.134,
-          "last_price": 127.68,
+          "last_price": 127.95,
           "entry_date": "2026-11-26",
-          "market_val": 1276.8,
+          "market_val": 1279.5,
           "weight_pct": 1.28
         },
         "110099": {
@@ -3780,10 +3780,10 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 138.59,
-          "last_price": 137.8,
+          "last_price": 137.89,
           "entry_date": "2026-11-26",
-          "market_val": 1378.0,
-          "weight_pct": 1.39
+          "market_val": 1378.9,
+          "weight_pct": 1.38
         },
         "127034": {
           "ticker": "127034",
@@ -3791,9 +3791,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 112.752,
-          "last_price": 111.56,
+          "last_price": 111.82,
           "entry_date": "2026-11-26",
-          "market_val": 1115.6,
+          "market_val": 1118.2,
           "weight_pct": 1.12
         },
         "113659": {
@@ -3802,9 +3802,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 123.061,
-          "last_price": 123.22,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 1232.2,
+          "market_val": 1236.0,
           "weight_pct": 1.24
         },
         "110098": {
@@ -3813,9 +3813,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 125.562,
-          "last_price": 125.31,
+          "last_price": 125.44,
           "entry_date": "2026-11-26",
-          "market_val": 1253.1,
+          "market_val": 1254.4,
           "weight_pct": 1.26
         },
         "111017": {
@@ -3824,9 +3824,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 116.058,
-          "last_price": 115.1,
+          "last_price": 115.36,
           "entry_date": "2026-11-26",
-          "market_val": 1151.0,
+          "market_val": 1153.6,
           "weight_pct": 1.16
         },
         "127089": {
@@ -3835,9 +3835,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 92.796,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 1815.4,
+          "market_val": 1821.2,
           "weight_pct": 1.83
         },
         "110084": {
@@ -3846,9 +3846,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 113.556,
-          "last_price": 112.33,
+          "last_price": 112.49,
           "entry_date": "2026-11-26",
-          "market_val": 1123.3,
+          "market_val": 1124.9,
           "weight_pct": 1.13
         },
         "113066": {
@@ -3857,9 +3857,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 123.742,
-          "last_price": 123.21,
+          "last_price": 123.63,
           "entry_date": "2026-11-26",
-          "market_val": 1232.1,
+          "market_val": 1236.3,
           "weight_pct": 1.24
         },
         "110097": {
@@ -3868,10 +3868,10 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 134.331,
-          "last_price": 133.7,
+          "last_price": 134.05,
           "entry_date": "2026-11-26",
-          "market_val": 1337.0,
-          "weight_pct": 1.34
+          "market_val": 1340.5,
+          "weight_pct": 1.35
         },
         "127046": {
           "ticker": "127046",
@@ -3879,9 +3879,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 112.256,
-          "last_price": 110.75,
+          "last_price": 111.04,
           "entry_date": "2026-11-26",
-          "market_val": 1107.5,
+          "market_val": 1110.4,
           "weight_pct": 1.11
         },
         "123149": {
@@ -3890,9 +3890,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 114.457,
-          "last_price": 113.52,
+          "last_price": 113.91,
           "entry_date": "2026-11-26",
-          "market_val": 1135.2,
+          "market_val": 1139.1,
           "weight_pct": 1.14
         },
         "113643": {
@@ -3901,10 +3901,10 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 145.527,
-          "last_price": 144.6,
+          "last_price": 146.56,
           "entry_date": "2026-11-26",
-          "market_val": 1446.0,
-          "weight_pct": 1.45
+          "market_val": 1465.6,
+          "weight_pct": 1.47
         },
         "113070": {
           "ticker": "113070",
@@ -3912,9 +3912,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 118.059,
-          "last_price": 117.22,
+          "last_price": 117.31,
           "entry_date": "2026-11-26",
-          "market_val": 1172.2,
+          "market_val": 1173.1,
           "weight_pct": 1.18
         },
         "113067": {
@@ -3923,10 +3923,10 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 117.158,
-          "last_price": 116.82,
+          "last_price": 117.08,
           "entry_date": "2026-11-26",
-          "market_val": 1168.2,
-          "weight_pct": 1.17
+          "market_val": 1170.8,
+          "weight_pct": 1.18
         },
         "127049": {
           "ticker": "127049",
@@ -3934,9 +3934,9 @@
           "rating": "AAA",
           "qty": 20,
           "avg_cost": 102.867,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 2035.0,
+          "market_val": 2038.0,
           "weight_pct": 2.05
         },
         "123104": {
@@ -3945,9 +3945,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 119.519,
-          "last_price": 118.75,
+          "last_price": 118.89,
           "entry_date": "2026-11-26",
-          "market_val": 1187.5,
+          "market_val": 1188.9,
           "weight_pct": 1.19
         },
         "123114": {
@@ -3956,9 +3956,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 116.928,
-          "last_price": 115.52,
+          "last_price": 115.57,
           "entry_date": "2026-11-26",
-          "market_val": 1155.2,
+          "market_val": 1155.7,
           "weight_pct": 1.16
         },
         "123247": {
@@ -3967,10 +3967,10 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 137.318,
-          "last_price": 135.57,
+          "last_price": 136.4,
           "entry_date": "2026-11-26",
-          "market_val": 1355.7,
-          "weight_pct": 1.36
+          "market_val": 1364.0,
+          "weight_pct": 1.37
         },
         "123109": {
           "ticker": "123109",
@@ -3978,9 +3978,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 116.528,
-          "last_price": 115.5,
+          "last_price": 115.99,
           "entry_date": "2026-11-26",
-          "market_val": 1155.0,
+          "market_val": 1159.9,
           "weight_pct": 1.16
         },
         "127082": {
@@ -3989,9 +3989,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 118.699,
-          "last_price": 117.16,
+          "last_price": 117.73,
           "entry_date": "2026-11-26",
-          "market_val": 1171.6,
+          "market_val": 1177.3,
           "weight_pct": 1.18
         }
       },
@@ -5183,7 +5183,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 0.0,
-      "total_nav": 99220.85,
+      "total_nav": 99522.45,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 99.99,
@@ -5198,9 +5198,9 @@
           "rating": "AA+",
           "qty": 4.8427,
           "avg_cost": 92.5,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 439.57,
+          "market_val": 440.98,
           "weight_pct": 0.44
         },
         "110095": {
@@ -5209,9 +5209,9 @@
           "rating": "AA-",
           "qty": 4.5248,
           "avg_cost": 99.0,
-          "last_price": 97.69,
+          "last_price": 97.88,
           "entry_date": "2026-11-26",
-          "market_val": 442.03,
+          "market_val": 442.89,
           "weight_pct": 0.45
         },
         "118031": {
@@ -5220,9 +5220,9 @@
           "rating": "AA",
           "qty": 4.5991,
           "avg_cost": 97.4,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 446.43,
+          "market_val": 447.03,
           "weight_pct": 0.45
         },
         "123264": {
@@ -5231,9 +5231,9 @@
           "rating": "AA-",
           "qty": 4.0539,
           "avg_cost": 110.5,
-          "last_price": 109.87,
+          "last_price": 109.77,
           "entry_date": "2026-11-26",
-          "market_val": 445.4,
+          "market_val": 445.0,
           "weight_pct": 0.45
         },
         "110100": {
@@ -5242,9 +5242,9 @@
           "rating": "AA",
           "qty": 3.9722,
           "avg_cost": 112.772,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 449.06,
+          "market_val": 449.69,
           "weight_pct": 0.45
         },
         "118066": {
@@ -5253,9 +5253,9 @@
           "rating": "AA-",
           "qty": 3.9294,
           "avg_cost": 114.0,
-          "last_price": 113.26,
+          "last_price": 113.52,
           "entry_date": "2026-11-26",
-          "market_val": 445.04,
+          "market_val": 446.07,
           "weight_pct": 0.45
         },
         "123216": {
@@ -5264,9 +5264,9 @@
           "rating": "AA-",
           "qty": 4.226,
           "avg_cost": 106.0,
-          "last_price": 104.99,
+          "last_price": 105.31,
           "entry_date": "2026-11-26",
-          "market_val": 443.69,
+          "market_val": 445.04,
           "weight_pct": 0.45
         },
         "118042": {
@@ -5275,9 +5275,9 @@
           "rating": "AA-",
           "qty": 3.9078,
           "avg_cost": 114.629,
-          "last_price": 114.01,
+          "last_price": 114.26,
           "entry_date": "2026-11-26",
-          "market_val": 445.53,
+          "market_val": 446.51,
           "weight_pct": 0.45
         },
         "123262": {
@@ -5286,9 +5286,9 @@
           "rating": "AA-",
           "qty": 3.8287,
           "avg_cost": 116.998,
-          "last_price": 115.96,
+          "last_price": 115.92,
           "entry_date": "2026-11-26",
-          "market_val": 443.98,
+          "market_val": 443.82,
           "weight_pct": 0.45
         },
         "110085": {
@@ -5297,9 +5297,9 @@
           "rating": "AAA",
           "qty": 4.5321,
           "avg_cost": 98.84,
-          "last_price": 97.71,
+          "last_price": 97.84,
           "entry_date": "2026-11-26",
-          "market_val": 442.83,
+          "market_val": 443.42,
           "weight_pct": 0.45
         },
         "127103": {
@@ -5308,9 +5308,9 @@
           "rating": "AA",
           "qty": 4.1366,
           "avg_cost": 108.29,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 444.48,
+          "market_val": 445.39,
           "weight_pct": 0.45
         },
         "113700": {
@@ -5319,9 +5319,9 @@
           "rating": "AA",
           "qty": 3.9711,
           "avg_cost": 112.804,
-          "last_price": 111.89,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 444.33,
+          "market_val": 445.16,
           "weight_pct": 0.45
         },
         "113679": {
@@ -5330,9 +5330,9 @@
           "rating": "AA-",
           "qty": 3.8683,
           "avg_cost": 115.802,
-          "last_price": 114.98,
+          "last_price": 115.39,
           "entry_date": "2026-11-26",
-          "market_val": 444.78,
+          "market_val": 446.36,
           "weight_pct": 0.45
         },
         "113648": {
@@ -5341,9 +5341,9 @@
           "rating": "AA-",
           "qty": 4.3031,
           "avg_cost": 104.1,
-          "last_price": 103.36,
+          "last_price": 103.49,
           "entry_date": "2026-11-26",
-          "market_val": 444.77,
+          "market_val": 445.33,
           "weight_pct": 0.45
         },
         "118065": {
@@ -5352,9 +5352,9 @@
           "rating": "AA+",
           "qty": 3.7082,
           "avg_cost": 120.8,
-          "last_price": 120.75,
+          "last_price": 120.94,
           "entry_date": "2026-11-26",
-          "market_val": 447.77,
+          "market_val": 448.47,
           "weight_pct": 0.45
         },
         "118068": {
@@ -5363,9 +5363,9 @@
           "rating": "AA-",
           "qty": 3.996,
           "avg_cost": 112.1,
-          "last_price": 111.81,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 446.79,
+          "market_val": 447.95,
           "weight_pct": 0.45
         },
         "123193": {
@@ -5374,10 +5374,10 @@
           "rating": "AA-",
           "qty": 3.8286,
           "avg_cost": 117.0,
-          "last_price": 115.83,
+          "last_price": 115.44,
           "entry_date": "2026-11-26",
-          "market_val": 443.47,
-          "weight_pct": 0.45
+          "market_val": 441.97,
+          "weight_pct": 0.44
         },
         "118034": {
           "ticker": "118034",
@@ -5385,9 +5385,9 @@
           "rating": "AA+",
           "qty": 4.2923,
           "avg_cost": 104.362,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 449.02,
+          "market_val": 449.53,
           "weight_pct": 0.45
         },
         "118060": {
@@ -5396,9 +5396,9 @@
           "rating": "AA-",
           "qty": 3.6852,
           "avg_cost": 121.555,
-          "last_price": 121.53,
+          "last_price": 121.77,
           "entry_date": "2026-11-26",
-          "market_val": 447.86,
+          "market_val": 448.75,
           "weight_pct": 0.45
         },
         "123172": {
@@ -5407,9 +5407,9 @@
           "rating": "AA-",
           "qty": 3.8952,
           "avg_cost": 115.0,
-          "last_price": 113.89,
+          "last_price": 113.98,
           "entry_date": "2026-11-26",
-          "market_val": 443.62,
+          "market_val": 443.97,
           "weight_pct": 0.45
         },
         "123288": {
@@ -5418,9 +5418,9 @@
           "rating": "AA",
           "qty": 3.7935,
           "avg_cost": 118.083,
-          "last_price": 117.54,
+          "last_price": 117.48,
           "entry_date": "2026-11-26",
-          "market_val": 445.89,
+          "market_val": 445.66,
           "weight_pct": 0.45
         },
         "113692": {
@@ -5429,9 +5429,9 @@
           "rating": "AA",
           "qty": 3.8059,
           "avg_cost": 117.7,
-          "last_price": 116.98,
+          "last_price": 117.14,
           "entry_date": "2026-11-26",
-          "market_val": 445.21,
+          "market_val": 445.82,
           "weight_pct": 0.45
         },
         "118024": {
@@ -5440,9 +5440,9 @@
           "rating": "AA",
           "qty": 3.9322,
           "avg_cost": 113.92,
-          "last_price": 113.59,
+          "last_price": 113.58,
           "entry_date": "2026-11-26",
-          "market_val": 446.66,
+          "market_val": 446.62,
           "weight_pct": 0.45
         },
         "127112": {
@@ -5451,10 +5451,10 @@
           "rating": "AA+",
           "qty": 3.7273,
           "avg_cost": 120.18,
-          "last_price": 118.65,
+          "last_price": 118.81,
           "entry_date": "2026-11-26",
-          "market_val": 442.24,
-          "weight_pct": 0.45
+          "market_val": 442.84,
+          "weight_pct": 0.44
         },
         "118073": {
           "ticker": "118073",
@@ -5462,9 +5462,9 @@
           "rating": "AA",
           "qty": 3.7376,
           "avg_cost": 119.85,
-          "last_price": 119.04,
+          "last_price": 119.5,
           "entry_date": "2026-11-26",
-          "market_val": 444.92,
+          "market_val": 446.64,
           "weight_pct": 0.45
         },
         "110093": {
@@ -5473,9 +5473,9 @@
           "rating": "AAA",
           "qty": 4.2088,
           "avg_cost": 106.433,
-          "last_price": 106.02,
+          "last_price": 106.06,
           "entry_date": "2026-11-26",
-          "market_val": 446.22,
+          "market_val": 446.39,
           "weight_pct": 0.45
         },
         "113693": {
@@ -5484,9 +5484,9 @@
           "rating": "AA",
           "qty": 4.087,
           "avg_cost": 109.604,
-          "last_price": 109.05,
+          "last_price": 108.94,
           "entry_date": "2026-11-26",
-          "market_val": 445.69,
+          "market_val": 445.24,
           "weight_pct": 0.45
         },
         "127049": {
@@ -5495,9 +5495,9 @@
           "rating": "AAA",
           "qty": 4.3674,
           "avg_cost": 102.566,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 444.38,
+          "market_val": 445.04,
           "weight_pct": 0.45
         },
         "123271": {
@@ -5506,9 +5506,9 @@
           "rating": "AA",
           "qty": 3.598,
           "avg_cost": 124.499,
-          "last_price": 125.02,
+          "last_price": 124.79,
           "entry_date": "2026-11-26",
-          "market_val": 449.82,
+          "market_val": 448.99,
           "weight_pct": 0.45
         },
         "111018": {
@@ -5517,9 +5517,9 @@
           "rating": "AA-",
           "qty": 3.8617,
           "avg_cost": 116.0,
-          "last_price": 115.13,
+          "last_price": 115.42,
           "entry_date": "2026-11-26",
-          "market_val": 444.6,
+          "market_val": 445.72,
           "weight_pct": 0.45
         },
         "123252": {
@@ -5528,9 +5528,9 @@
           "rating": "AA-",
           "qty": 3.8837,
           "avg_cost": 115.342,
-          "last_price": 114.03,
+          "last_price": 114.25,
           "entry_date": "2026-11-26",
-          "market_val": 442.86,
+          "market_val": 443.71,
           "weight_pct": 0.45
         },
         "111025": {
@@ -5539,9 +5539,9 @@
           "rating": "AA+",
           "qty": 3.6271,
           "avg_cost": 123.5,
-          "last_price": 122.97,
+          "last_price": 123.15,
           "entry_date": "2026-11-26",
-          "market_val": 446.02,
+          "market_val": 446.68,
           "weight_pct": 0.45
         },
         "127068": {
@@ -5550,9 +5550,9 @@
           "rating": "AA-",
           "qty": 4.3495,
           "avg_cost": 102.99,
-          "last_price": 102.02,
+          "last_price": 102.18,
           "entry_date": "2026-11-26",
-          "market_val": 443.74,
+          "market_val": 444.43,
           "weight_pct": 0.45
         },
         "110087": {
@@ -5561,9 +5561,9 @@
           "rating": "AA+",
           "qty": 4.1599,
           "avg_cost": 107.682,
-          "last_price": 107.27,
+          "last_price": 107.5,
           "entry_date": "2026-11-26",
-          "market_val": 446.23,
+          "market_val": 447.19,
           "weight_pct": 0.45
         },
         "111009": {
@@ -5572,9 +5572,9 @@
           "rating": "AA",
           "qty": 4.1481,
           "avg_cost": 107.989,
-          "last_price": 107.55,
+          "last_price": 107.81,
           "entry_date": "2026-11-26",
-          "market_val": 446.13,
+          "market_val": 447.21,
           "weight_pct": 0.45
         },
         "118022": {
@@ -5583,9 +5583,9 @@
           "rating": "AA",
           "qty": 4.117,
           "avg_cost": 108.805,
-          "last_price": 108.52,
+          "last_price": 108.56,
           "entry_date": "2026-11-26",
-          "market_val": 446.78,
+          "market_val": 446.94,
           "weight_pct": 0.45
         },
         "113703": {
@@ -5594,9 +5594,9 @@
           "rating": "AA-",
           "qty": 3.5922,
           "avg_cost": 124.7,
-          "last_price": 124.8,
+          "last_price": 125.19,
           "entry_date": "2026-11-26",
-          "market_val": 448.31,
+          "market_val": 449.71,
           "weight_pct": 0.45
         },
         "118063": {
@@ -5605,9 +5605,9 @@
           "rating": "AA+",
           "qty": 3.5552,
           "avg_cost": 126.0,
-          "last_price": 123.32,
+          "last_price": 123.93,
           "entry_date": "2026-11-26",
-          "market_val": 438.43,
+          "market_val": 440.6,
           "weight_pct": 0.44
         },
         "127044": {
@@ -5616,9 +5616,9 @@
           "rating": "AA-",
           "qty": 4.0664,
           "avg_cost": 110.158,
-          "last_price": 109.96,
+          "last_price": 110.0,
           "entry_date": "2026-11-26",
-          "market_val": 447.14,
+          "market_val": 447.3,
           "weight_pct": 0.45
         },
         "127114": {
@@ -5627,9 +5627,9 @@
           "rating": "AA+",
           "qty": 3.8484,
           "avg_cost": 116.4,
-          "last_price": 115.47,
+          "last_price": 115.57,
           "entry_date": "2026-11-26",
-          "market_val": 444.37,
+          "market_val": 444.76,
           "weight_pct": 0.45
         },
         "113666": {
@@ -5638,9 +5638,9 @@
           "rating": "AA",
           "qty": 3.9436,
           "avg_cost": 113.59,
-          "last_price": 113.59,
+          "last_price": 113.54,
           "entry_date": "2026-11-26",
-          "market_val": 447.95,
+          "market_val": 447.76,
           "weight_pct": 0.45
         },
         "123194": {
@@ -5649,9 +5649,9 @@
           "rating": "AA-",
           "qty": 3.6192,
           "avg_cost": 123.772,
-          "last_price": 123.02,
+          "last_price": 122.97,
           "entry_date": "2026-11-26",
-          "market_val": 445.23,
+          "market_val": 445.05,
           "weight_pct": 0.45
         },
         "113709": {
@@ -5660,10 +5660,10 @@
           "rating": "AA",
           "qty": 3.4779,
           "avg_cost": 128.8,
-          "last_price": 127.2,
+          "last_price": 127.22,
           "entry_date": "2026-11-26",
-          "market_val": 442.39,
-          "weight_pct": 0.45
+          "market_val": 442.46,
+          "weight_pct": 0.44
         },
         "127105": {
           "ticker": "127105",
@@ -5671,9 +5671,9 @@
           "rating": "AA-",
           "qty": 3.8465,
           "avg_cost": 116.456,
-          "last_price": 115.41,
+          "last_price": 115.58,
           "entry_date": "2026-11-26",
-          "market_val": 443.92,
+          "market_val": 444.58,
           "weight_pct": 0.45
         },
         "118070": {
@@ -5682,9 +5682,9 @@
           "rating": "AA+",
           "qty": 3.5836,
           "avg_cost": 125.0,
-          "last_price": 125.44,
+          "last_price": 124.9,
           "entry_date": "2026-11-26",
-          "market_val": 449.53,
+          "market_val": 447.59,
           "weight_pct": 0.45
         },
         "110102": {
@@ -5693,9 +5693,9 @@
           "rating": "AA+",
           "qty": 3.7174,
           "avg_cost": 120.5,
-          "last_price": 119.3,
+          "last_price": 119.7,
           "entry_date": "2026-11-26",
-          "market_val": 443.49,
+          "market_val": 444.97,
           "weight_pct": 0.45
         },
         "113633": {
@@ -5704,9 +5704,9 @@
           "rating": "AA",
           "qty": 4.0356,
           "avg_cost": 111.0,
-          "last_price": 111.33,
+          "last_price": 111.4,
           "entry_date": "2026-11-26",
-          "market_val": 449.28,
+          "market_val": 449.57,
           "weight_pct": 0.45
         },
         "113059": {
@@ -5715,9 +5715,9 @@
           "rating": "AA",
           "qty": 4.1593,
           "avg_cost": 107.7,
-          "last_price": 107.0,
+          "last_price": 106.98,
           "entry_date": "2026-11-26",
-          "market_val": 445.05,
+          "market_val": 444.96,
           "weight_pct": 0.45
         },
         "123281": {
@@ -5726,9 +5726,9 @@
           "rating": "AA-",
           "qty": 3.5272,
           "avg_cost": 127.0,
-          "last_price": 124.5,
+          "last_price": 125.02,
           "entry_date": "2026-11-26",
-          "market_val": 439.14,
+          "market_val": 440.97,
           "weight_pct": 0.44
         },
         "110084": {
@@ -5737,9 +5737,9 @@
           "rating": "AA",
           "qty": 3.9642,
           "avg_cost": 113.0,
-          "last_price": 112.33,
+          "last_price": 112.49,
           "entry_date": "2026-11-26",
-          "market_val": 445.3,
+          "market_val": 445.93,
           "weight_pct": 0.45
         },
         "113711": {
@@ -5748,9 +5748,9 @@
           "rating": "AA-",
           "qty": 3.5608,
           "avg_cost": 125.8,
-          "last_price": 123.86,
+          "last_price": 124.18,
           "entry_date": "2026-11-26",
-          "market_val": 441.04,
+          "market_val": 442.18,
           "weight_pct": 0.44
         },
         "123267": {
@@ -5759,9 +5759,9 @@
           "rating": "AA",
           "qty": 3.3977,
           "avg_cost": 131.838,
-          "last_price": 127.72,
+          "last_price": 128.24,
           "entry_date": "2026-11-26",
-          "market_val": 433.95,
+          "market_val": 435.72,
           "weight_pct": 0.44
         },
         "113708": {
@@ -5770,9 +5770,9 @@
           "rating": "AAA",
           "qty": 3.6567,
           "avg_cost": 122.5,
-          "last_price": 121.56,
+          "last_price": 121.78,
           "entry_date": "2026-11-26",
-          "market_val": 444.51,
+          "market_val": 445.31,
           "weight_pct": 0.45
         },
         "113691": {
@@ -5781,9 +5781,9 @@
           "rating": "AA",
           "qty": 3.9191,
           "avg_cost": 114.3,
-          "last_price": 113.76,
+          "last_price": 113.97,
           "entry_date": "2026-11-26",
-          "market_val": 445.84,
+          "market_val": 446.66,
           "weight_pct": 0.45
         },
         "111004": {
@@ -5792,9 +5792,9 @@
           "rating": "AA-",
           "qty": 3.7267,
           "avg_cost": 120.202,
-          "last_price": 119.05,
+          "last_price": 119.45,
           "entry_date": "2026-11-26",
-          "market_val": 443.66,
+          "market_val": 445.15,
           "weight_pct": 0.45
         },
         "127083": {
@@ -5803,9 +5803,9 @@
           "rating": "AAA",
           "qty": 3.9418,
           "avg_cost": 113.642,
-          "last_price": 113.58,
+          "last_price": 113.9,
           "entry_date": "2026-11-26",
-          "market_val": 447.71,
+          "market_val": 448.97,
           "weight_pct": 0.45
         },
         "111020": {
@@ -5814,9 +5814,9 @@
           "rating": "AA-",
           "qty": 3.8161,
           "avg_cost": 117.384,
-          "last_price": 117.3,
+          "last_price": 117.48,
           "entry_date": "2026-11-26",
-          "market_val": 447.63,
+          "market_val": 448.32,
           "weight_pct": 0.45
         },
         "123269": {
@@ -5825,10 +5825,10 @@
           "rating": "AA-",
           "qty": 3.52,
           "avg_cost": 127.26,
-          "last_price": 129.61,
+          "last_price": 133.51,
           "entry_date": "2026-11-26",
-          "market_val": 456.23,
-          "weight_pct": 0.46
+          "market_val": 469.96,
+          "weight_pct": 0.47
         },
         "113710": {
           "ticker": "113710",
@@ -5836,9 +5836,9 @@
           "rating": "AA",
           "qty": 3.6096,
           "avg_cost": 124.1,
-          "last_price": 123.15,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 444.52,
+          "market_val": 446.15,
           "weight_pct": 0.45
         },
         "113702": {
@@ -5847,9 +5847,9 @@
           "rating": "AA+",
           "qty": 3.558,
           "avg_cost": 125.9,
-          "last_price": 124.5,
+          "last_price": 124.69,
           "entry_date": "2026-11-26",
-          "market_val": 442.97,
+          "market_val": 443.65,
           "weight_pct": 0.45
         },
         "113671": {
@@ -5858,9 +5858,9 @@
           "rating": "AA",
           "qty": 4.0085,
           "avg_cost": 111.751,
-          "last_price": 111.33,
+          "last_price": 111.53,
           "entry_date": "2026-11-26",
-          "market_val": 446.27,
+          "market_val": 447.07,
           "weight_pct": 0.45
         },
         "113705": {
@@ -5869,9 +5869,9 @@
           "rating": "AA-",
           "qty": 3.6348,
           "avg_cost": 123.238,
-          "last_price": 121.48,
+          "last_price": 121.93,
           "entry_date": "2026-11-26",
-          "market_val": 441.56,
+          "market_val": 443.19,
           "weight_pct": 0.45
         },
         "123253": {
@@ -5880,10 +5880,10 @@
           "rating": "AA-",
           "qty": 3.7548,
           "avg_cost": 119.3,
-          "last_price": 117.8,
+          "last_price": 117.93,
           "entry_date": "2026-11-26",
-          "market_val": 442.32,
-          "weight_pct": 0.45
+          "market_val": 442.8,
+          "weight_pct": 0.44
         },
         "113698": {
           "ticker": "113698",
@@ -5891,9 +5891,9 @@
           "rating": "AA-",
           "qty": 3.4484,
           "avg_cost": 129.9,
-          "last_price": 127.82,
+          "last_price": 127.69,
           "entry_date": "2026-11-26",
-          "market_val": 440.77,
+          "market_val": 440.33,
           "weight_pct": 0.44
         },
         "113048": {
@@ -5902,9 +5902,9 @@
           "rating": "AA",
           "qty": 4.0887,
           "avg_cost": 109.558,
-          "last_price": 109.37,
+          "last_price": 109.46,
           "entry_date": "2026-11-26",
-          "market_val": 447.18,
+          "market_val": 447.55,
           "weight_pct": 0.45
         },
         "113655": {
@@ -5913,9 +5913,9 @@
           "rating": "AA",
           "qty": 4.005,
           "avg_cost": 111.848,
-          "last_price": 111.04,
+          "last_price": 111.32,
           "entry_date": "2026-11-26",
-          "market_val": 444.72,
+          "market_val": 445.84,
           "weight_pct": 0.45
         },
         "110090": {
@@ -5924,9 +5924,9 @@
           "rating": "AA",
           "qty": 3.8309,
           "avg_cost": 116.93,
-          "last_price": 116.31,
+          "last_price": 116.7,
           "entry_date": "2026-11-26",
-          "market_val": 445.57,
+          "market_val": 447.07,
           "weight_pct": 0.45
         },
         "123179": {
@@ -5935,9 +5935,9 @@
           "rating": "AA-",
           "qty": 3.8952,
           "avg_cost": 115.0,
-          "last_price": 114.49,
+          "last_price": 114.62,
           "entry_date": "2026-11-26",
-          "market_val": 445.96,
+          "market_val": 446.47,
           "weight_pct": 0.45
         },
         "127038": {
@@ -5946,9 +5946,9 @@
           "rating": "AA+",
           "qty": 4.104,
           "avg_cost": 109.15,
-          "last_price": 109.13,
+          "last_price": 109.17,
           "entry_date": "2026-11-26",
-          "market_val": 447.87,
+          "market_val": 448.03,
           "weight_pct": 0.45
         },
         "123168": {
@@ -5957,9 +5957,9 @@
           "rating": "AA-",
           "qty": 3.9054,
           "avg_cost": 114.7,
-          "last_price": 114.4,
+          "last_price": 114.66,
           "entry_date": "2026-11-26",
-          "market_val": 446.78,
+          "market_val": 447.79,
           "weight_pct": 0.45
         },
         "113649": {
@@ -5968,9 +5968,9 @@
           "rating": "AA-",
           "qty": 3.7805,
           "avg_cost": 118.491,
-          "last_price": 118.04,
+          "last_price": 118.38,
           "entry_date": "2026-11-26",
-          "market_val": 446.25,
+          "market_val": 447.54,
           "weight_pct": 0.45
         },
         "127069": {
@@ -5979,9 +5979,9 @@
           "rating": "AA-",
           "qty": 3.6838,
           "avg_cost": 121.6,
-          "last_price": 121.85,
+          "last_price": 122.03,
           "entry_date": "2026-11-26",
-          "market_val": 448.87,
+          "market_val": 449.53,
           "weight_pct": 0.45
         },
         "111014": {
@@ -5990,9 +5990,9 @@
           "rating": "AA",
           "qty": 3.9585,
           "avg_cost": 113.161,
-          "last_price": 112.61,
+          "last_price": 112.78,
           "entry_date": "2026-11-26",
-          "market_val": 445.77,
+          "market_val": 446.44,
           "weight_pct": 0.45
         },
         "123117": {
@@ -6001,9 +6001,9 @@
           "rating": "AA",
           "qty": 4.1021,
           "avg_cost": 109.2,
-          "last_price": 108.92,
+          "last_price": 109.0,
           "entry_date": "2026-11-26",
-          "market_val": 446.8,
+          "market_val": 447.13,
           "weight_pct": 0.45
         },
         "127030": {
@@ -6012,9 +6012,9 @@
           "rating": "AA+",
           "qty": 4.1439,
           "avg_cost": 108.1,
-          "last_price": 107.4,
+          "last_price": 107.56,
           "entry_date": "2026-11-26",
-          "market_val": 445.05,
+          "market_val": 445.72,
           "weight_pct": 0.45
         },
         "123119": {
@@ -6023,9 +6023,9 @@
           "rating": "AA",
           "qty": 4.0484,
           "avg_cost": 110.649,
-          "last_price": 110.47,
+          "last_price": 110.51,
           "entry_date": "2026-11-26",
-          "market_val": 447.23,
+          "market_val": 447.39,
           "weight_pct": 0.45
         },
         "118032": {
@@ -6034,9 +6034,9 @@
           "rating": "AA-",
           "qty": 3.8744,
           "avg_cost": 115.618,
-          "last_price": 115.24,
+          "last_price": 115.45,
           "entry_date": "2026-11-26",
-          "market_val": 446.49,
+          "market_val": 447.3,
           "weight_pct": 0.45
         },
         "113670": {
@@ -6045,9 +6045,9 @@
           "rating": "AA",
           "qty": 3.9449,
           "avg_cost": 113.553,
-          "last_price": 112.42,
+          "last_price": 112.5,
           "entry_date": "2026-11-26",
-          "market_val": 443.49,
+          "market_val": 443.8,
           "weight_pct": 0.45
         },
         "123178": {
@@ -6056,9 +6056,9 @@
           "rating": "AA-",
           "qty": 3.702,
           "avg_cost": 121.004,
-          "last_price": 120.27,
+          "last_price": 120.81,
           "entry_date": "2026-11-26",
-          "market_val": 445.24,
+          "market_val": 447.24,
           "weight_pct": 0.45
         },
         "123180": {
@@ -6067,9 +6067,9 @@
           "rating": "AA-",
           "qty": 3.819,
           "avg_cost": 117.297,
-          "last_price": 116.52,
+          "last_price": 116.98,
           "entry_date": "2026-11-26",
-          "market_val": 444.99,
+          "market_val": 446.75,
           "weight_pct": 0.45
         },
         "113647": {
@@ -6078,9 +6078,9 @@
           "rating": "AA",
           "qty": 4.08,
           "avg_cost": 109.793,
-          "last_price": 108.72,
+          "last_price": 108.82,
           "entry_date": "2026-11-26",
-          "market_val": 443.58,
+          "market_val": 443.99,
           "weight_pct": 0.45
         },
         "113699": {
@@ -6089,9 +6089,9 @@
           "rating": "AA",
           "qty": 3.5168,
           "avg_cost": 127.375,
-          "last_price": 128.0,
+          "last_price": 128.2,
           "entry_date": "2026-11-26",
-          "market_val": 450.15,
+          "market_val": 450.85,
           "weight_pct": 0.45
         },
         "127085": {
@@ -6100,9 +6100,9 @@
           "rating": "AA+",
           "qty": 4.0357,
           "avg_cost": 110.998,
-          "last_price": 110.38,
+          "last_price": 110.62,
           "entry_date": "2026-11-26",
-          "market_val": 445.46,
+          "market_val": 446.43,
           "weight_pct": 0.45
         },
         "127102": {
@@ -6111,9 +6111,9 @@
           "rating": "AA+",
           "qty": 3.9757,
           "avg_cost": 112.671,
-          "last_price": 112.37,
+          "last_price": 112.52,
           "entry_date": "2026-11-26",
-          "market_val": 446.75,
+          "market_val": 447.35,
           "weight_pct": 0.45
         },
         "113659": {
@@ -6122,9 +6122,9 @@
           "rating": "AA",
           "qty": 3.6567,
           "avg_cost": 122.5,
-          "last_price": 123.22,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 450.58,
+          "market_val": 451.97,
           "weight_pct": 0.45
         },
         "123133": {
@@ -6133,9 +6133,9 @@
           "rating": "AA-",
           "qty": 3.8952,
           "avg_cost": 115.0,
-          "last_price": 115.18,
+          "last_price": 115.28,
           "entry_date": "2026-11-26",
-          "market_val": 448.65,
+          "market_val": 449.04,
           "weight_pct": 0.45
         },
         "113627": {
@@ -6144,9 +6144,9 @@
           "rating": "AA",
           "qty": 4.1247,
           "avg_cost": 108.602,
-          "last_price": 108.44,
+          "last_price": 108.48,
           "entry_date": "2026-11-26",
-          "market_val": 447.28,
+          "market_val": 447.45,
           "weight_pct": 0.45
         },
         "123183": {
@@ -6155,9 +6155,9 @@
           "rating": "AA-",
           "qty": 3.6,
           "avg_cost": 124.43,
-          "last_price": 122.53,
+          "last_price": 122.95,
           "entry_date": "2026-11-26",
-          "market_val": 441.11,
+          "market_val": 442.62,
           "weight_pct": 0.44
         },
         "113053": {
@@ -6166,9 +6166,9 @@
           "rating": "AAA",
           "qty": 4.0502,
           "avg_cost": 110.6,
-          "last_price": 110.18,
+          "last_price": 110.19,
           "entry_date": "2026-11-26",
-          "market_val": 446.25,
+          "market_val": 446.29,
           "weight_pct": 0.45
         },
         "118005": {
@@ -6177,10 +6177,10 @@
           "rating": "AA-",
           "qty": 3.8837,
           "avg_cost": 115.341,
-          "last_price": 113.84,
+          "last_price": 114.01,
           "entry_date": "2026-11-26",
-          "market_val": 442.12,
-          "weight_pct": 0.45
+          "market_val": 442.78,
+          "weight_pct": 0.44
         },
         "123225": {
           "ticker": "123225",
@@ -6188,9 +6188,9 @@
           "rating": "AA-",
           "qty": 3.7113,
           "avg_cost": 120.7,
-          "last_price": 120.4,
+          "last_price": 120.87,
           "entry_date": "2026-11-26",
-          "market_val": 446.84,
+          "market_val": 448.58,
           "weight_pct": 0.45
         },
         "113660": {
@@ -6199,9 +6199,9 @@
           "rating": "AA-",
           "qty": 4.004,
           "avg_cost": 111.876,
-          "last_price": 112.28,
+          "last_price": 112.49,
           "entry_date": "2026-11-26",
-          "market_val": 449.57,
+          "market_val": 450.41,
           "weight_pct": 0.45
         },
         "123247": {
@@ -6210,9 +6210,9 @@
           "rating": "AA",
           "qty": 3.2757,
           "avg_cost": 136.75,
-          "last_price": 135.57,
+          "last_price": 136.4,
           "entry_date": "2026-11-26",
-          "market_val": 444.09,
+          "market_val": 446.81,
           "weight_pct": 0.45
         },
         "127110": {
@@ -6221,9 +6221,9 @@
           "rating": "AAA",
           "qty": 3.4592,
           "avg_cost": 129.495,
-          "last_price": 129.05,
+          "last_price": 129.02,
           "entry_date": "2026-11-26",
-          "market_val": 446.41,
+          "market_val": 446.31,
           "weight_pct": 0.45
         },
         "113650": {
@@ -6232,9 +6232,9 @@
           "rating": "AA-",
           "qty": 3.9112,
           "avg_cost": 114.531,
-          "last_price": 114.5,
+          "last_price": 114.53,
           "entry_date": "2026-11-26",
-          "market_val": 447.83,
+          "market_val": 447.95,
           "weight_pct": 0.45
         },
         "113696": {
@@ -6243,9 +6243,9 @@
           "rating": "AA",
           "qty": 3.5951,
           "avg_cost": 124.6,
-          "last_price": 123.3,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 443.28,
+          "market_val": 444.35,
           "weight_pct": 0.45
         },
         "118074": {
@@ -6254,9 +6254,9 @@
           "rating": "AA+",
           "qty": 3.6417,
           "avg_cost": 123.007,
-          "last_price": 122.79,
+          "last_price": 123.48,
           "entry_date": "2026-11-26",
-          "market_val": 447.16,
+          "market_val": 449.68,
           "weight_pct": 0.45
         },
         "110086": {
@@ -6265,9 +6265,9 @@
           "rating": "AA",
           "qty": 4.0429,
           "avg_cost": 110.8,
-          "last_price": 110.22,
+          "last_price": 110.3,
           "entry_date": "2026-11-26",
-          "market_val": 445.61,
+          "market_val": 445.93,
           "weight_pct": 0.45
         },
         "113049": {
@@ -6287,9 +6287,9 @@
           "rating": "AA-",
           "qty": 3.8615,
           "avg_cost": 116.004,
-          "last_price": 115.94,
+          "last_price": 116.13,
           "entry_date": "2026-11-26",
-          "market_val": 447.7,
+          "market_val": 448.44,
           "weight_pct": 0.45
         },
         "127111": {
@@ -6298,9 +6298,9 @@
           "rating": "AA",
           "qty": 3.598,
           "avg_cost": 124.5,
-          "last_price": 122.69,
+          "last_price": 122.72,
           "entry_date": "2026-11-26",
-          "market_val": 441.44,
+          "market_val": 441.55,
           "weight_pct": 0.44
         },
         "113056": {
@@ -6309,9 +6309,9 @@
           "rating": "AAA",
           "qty": 3.7722,
           "avg_cost": 118.75,
-          "last_price": 118.22,
+          "last_price": 118.25,
           "entry_date": "2026-11-26",
-          "market_val": 445.95,
+          "market_val": 446.06,
           "weight_pct": 0.45
         },
         "127108": {
@@ -6320,9 +6320,9 @@
           "rating": "AA+",
           "qty": 3.8123,
           "avg_cost": 117.501,
-          "last_price": 116.49,
+          "last_price": 116.68,
           "entry_date": "2026-11-26",
-          "market_val": 444.09,
+          "market_val": 444.82,
           "weight_pct": 0.45
         },
         "113686": {
@@ -6331,10 +6331,10 @@
           "rating": "AA-",
           "qty": 3.3429,
           "avg_cost": 134.0,
-          "last_price": 132.22,
+          "last_price": 132.28,
           "entry_date": "2026-11-26",
-          "market_val": 442.0,
-          "weight_pct": 0.45
+          "market_val": 442.2,
+          "weight_pct": 0.44
         },
         "113638": {
           "ticker": "113638",
@@ -6342,9 +6342,9 @@
           "rating": "AA",
           "qty": 3.9406,
           "avg_cost": 113.675,
-          "last_price": 113.39,
+          "last_price": 113.42,
           "entry_date": "2026-11-26",
-          "market_val": 446.82,
+          "market_val": 446.94,
           "weight_pct": 0.45
         },
         "113661": {
@@ -6353,10 +6353,10 @@
           "rating": "AA",
           "qty": 3.7962,
           "avg_cost": 118.001,
-          "last_price": 119.0,
+          "last_price": 118.63,
           "entry_date": "2026-11-26",
-          "market_val": 451.75,
-          "weight_pct": 0.46
+          "market_val": 450.34,
+          "weight_pct": 0.45
         },
         "128142": {
           "ticker": "128142",
@@ -6364,9 +6364,9 @@
           "rating": "AA",
           "qty": 4.0715,
           "avg_cost": 110.02,
-          "last_price": 109.92,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 447.54,
+          "market_val": 447.5,
           "weight_pct": 0.45
         },
         "127062": {
@@ -6375,9 +6375,9 @@
           "rating": "AA-",
           "qty": 3.8952,
           "avg_cost": 115.0,
-          "last_price": 114.34,
+          "last_price": 114.4,
           "entry_date": "2026-11-26",
-          "market_val": 445.38,
+          "market_val": 445.61,
           "weight_pct": 0.45
         },
         "123107": {
@@ -6386,9 +6386,9 @@
           "rating": "AAA",
           "qty": 4.0723,
           "avg_cost": 110.0,
-          "last_price": 109.42,
+          "last_price": 109.48,
           "entry_date": "2026-11-26",
-          "market_val": 445.59,
+          "market_val": 445.84,
           "weight_pct": 0.45
         },
         "127116": {
@@ -6397,9 +6397,9 @@
           "rating": "AA",
           "qty": 3.5637,
           "avg_cost": 125.7,
-          "last_price": 123.0,
+          "last_price": 123.49,
           "entry_date": "2026-11-26",
-          "market_val": 438.34,
+          "market_val": 440.08,
           "weight_pct": 0.44
         },
         "113688": {
@@ -6408,9 +6408,9 @@
           "rating": "AA+",
           "qty": 3.8221,
           "avg_cost": 117.2,
-          "last_price": 116.91,
+          "last_price": 117.02,
           "entry_date": "2026-11-26",
-          "market_val": 446.84,
+          "market_val": 447.26,
           "weight_pct": 0.45
         },
         "127056": {
@@ -6419,9 +6419,9 @@
           "rating": "AAA",
           "qty": 4.0612,
           "avg_cost": 110.299,
-          "last_price": 109.52,
+          "last_price": 109.78,
           "entry_date": "2026-11-26",
-          "market_val": 444.78,
+          "market_val": 445.84,
           "weight_pct": 0.45
         },
         "127045": {
@@ -6430,9 +6430,9 @@
           "rating": "AAA",
           "qty": 4.0397,
           "avg_cost": 110.888,
-          "last_price": 109.47,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 442.23,
+          "market_val": 444.0,
           "weight_pct": 0.45
         },
         "127054": {
@@ -6441,9 +6441,9 @@
           "rating": "AA",
           "qty": 3.972,
           "avg_cost": 112.777,
-          "last_price": 111.95,
+          "last_price": 112.36,
           "entry_date": "2026-11-26",
-          "market_val": 444.67,
+          "market_val": 446.29,
           "weight_pct": 0.45
         },
         "111022": {
@@ -6452,9 +6452,9 @@
           "rating": "AA-",
           "qty": 3.5316,
           "avg_cost": 126.842,
-          "last_price": 125.69,
+          "last_price": 126.1,
           "entry_date": "2026-11-26",
-          "market_val": 443.89,
+          "market_val": 445.33,
           "weight_pct": 0.45
         },
         "123286": {
@@ -6463,10 +6463,10 @@
           "rating": "AA-",
           "qty": 3.3429,
           "avg_cost": 134.0,
-          "last_price": 131.72,
+          "last_price": 132.69,
           "entry_date": "2026-11-26",
-          "market_val": 440.33,
-          "weight_pct": 0.44
+          "market_val": 443.57,
+          "weight_pct": 0.45
         },
         "123277": {
           "ticker": "123277",
@@ -6474,9 +6474,9 @@
           "rating": "AA",
           "qty": 3.4552,
           "avg_cost": 129.645,
-          "last_price": 128.08,
+          "last_price": 128.51,
           "entry_date": "2026-11-26",
-          "market_val": 442.54,
+          "market_val": 444.03,
           "weight_pct": 0.45
         },
         "123109": {
@@ -6485,9 +6485,9 @@
           "rating": "AA-",
           "qty": 3.8627,
           "avg_cost": 115.97,
-          "last_price": 115.5,
+          "last_price": 115.99,
           "entry_date": "2026-11-26",
-          "market_val": 446.14,
+          "market_val": 448.03,
           "weight_pct": 0.45
         },
         "118013": {
@@ -6496,9 +6496,9 @@
           "rating": "AA",
           "qty": 3.5274,
           "avg_cost": 126.991,
-          "last_price": 125.08,
+          "last_price": 125.2,
           "entry_date": "2026-11-26",
-          "market_val": 441.21,
+          "market_val": 441.63,
           "weight_pct": 0.44
         },
         "127046": {
@@ -6507,9 +6507,9 @@
           "rating": "AA",
           "qty": 4.0103,
           "avg_cost": 111.7,
-          "last_price": 110.75,
+          "last_price": 111.04,
           "entry_date": "2026-11-26",
-          "market_val": 444.14,
+          "market_val": 445.3,
           "weight_pct": 0.45
         },
         "123266": {
@@ -6518,9 +6518,9 @@
           "rating": "AA",
           "qty": 3.4725,
           "avg_cost": 129.0,
-          "last_price": 128.09,
+          "last_price": 128.62,
           "entry_date": "2026-11-26",
-          "market_val": 444.79,
+          "market_val": 446.63,
           "weight_pct": 0.45
         },
         "113706": {
@@ -6529,10 +6529,10 @@
           "rating": "AA",
           "qty": 3.3379,
           "avg_cost": 134.2,
-          "last_price": 135.16,
+          "last_price": 143.97,
           "entry_date": "2026-11-26",
-          "market_val": 451.15,
-          "weight_pct": 0.45
+          "market_val": 480.56,
+          "weight_pct": 0.48
         },
         "127059": {
           "ticker": "127059",
@@ -6540,9 +6540,9 @@
           "rating": "AA-",
           "qty": 3.9126,
           "avg_cost": 114.49,
-          "last_price": 114.29,
+          "last_price": 114.6,
           "entry_date": "2026-11-26",
-          "market_val": 447.17,
+          "market_val": 448.38,
           "weight_pct": 0.45
         },
         "123257": {
@@ -6551,9 +6551,9 @@
           "rating": "AA+",
           "qty": 3.3322,
           "avg_cost": 134.43,
-          "last_price": 134.84,
+          "last_price": 135.33,
           "entry_date": "2026-11-26",
-          "market_val": 449.31,
+          "market_val": 450.95,
           "weight_pct": 0.45
         },
         "111000": {
@@ -6562,9 +6562,9 @@
           "rating": "AA-",
           "qty": 3.734,
           "avg_cost": 119.966,
-          "last_price": 118.04,
+          "last_price": 118.33,
           "entry_date": "2026-11-26",
-          "market_val": 440.76,
+          "market_val": 441.84,
           "weight_pct": 0.44
         },
         "123165": {
@@ -6573,9 +6573,9 @@
           "rating": "AA-",
           "qty": 3.8098,
           "avg_cost": 117.58,
-          "last_price": 118.32,
+          "last_price": 118.63,
           "entry_date": "2026-11-26",
-          "market_val": 450.78,
+          "market_val": 451.96,
           "weight_pct": 0.45
         },
         "113062": {
@@ -6584,9 +6584,9 @@
           "rating": "AAA",
           "qty": 3.6778,
           "avg_cost": 121.8,
-          "last_price": 121.76,
+          "last_price": 121.92,
           "entry_date": "2026-11-26",
-          "market_val": 447.81,
+          "market_val": 448.4,
           "weight_pct": 0.45
         },
         "113616": {
@@ -6595,9 +6595,9 @@
           "rating": "AA+",
           "qty": 4.0807,
           "avg_cost": 109.773,
-          "last_price": 109.75,
+          "last_price": 109.74,
           "entry_date": "2026-11-26",
-          "market_val": 447.86,
+          "market_val": 447.82,
           "weight_pct": 0.45
         },
         "123263": {
@@ -6606,9 +6606,9 @@
           "rating": "AA",
           "qty": 3.2938,
           "avg_cost": 136.0,
-          "last_price": 132.0,
+          "last_price": 132.05,
           "entry_date": "2026-11-26",
-          "market_val": 434.78,
+          "market_val": 434.95,
           "weight_pct": 0.44
         },
         "113640": {
@@ -6617,9 +6617,9 @@
           "rating": "AA-",
           "qty": 3.8935,
           "avg_cost": 115.05,
-          "last_price": 113.7,
+          "last_price": 113.86,
           "entry_date": "2026-11-26",
-          "market_val": 442.69,
+          "market_val": 443.31,
           "weight_pct": 0.45
         },
         "123192": {
@@ -6628,9 +6628,9 @@
           "rating": "AA-",
           "qty": 3.8352,
           "avg_cost": 116.8,
-          "last_price": 115.8,
+          "last_price": 116.07,
           "entry_date": "2026-11-26",
-          "market_val": 444.12,
+          "market_val": 445.15,
           "weight_pct": 0.45
         },
         "127072": {
@@ -6639,9 +6639,9 @@
           "rating": "AA",
           "qty": 3.7706,
           "avg_cost": 118.8,
-          "last_price": 117.45,
+          "last_price": 117.92,
           "entry_date": "2026-11-26",
-          "market_val": 442.86,
+          "market_val": 444.63,
           "weight_pct": 0.45
         },
         "123091": {
@@ -6650,9 +6650,9 @@
           "rating": "AA",
           "qty": 4.0434,
           "avg_cost": 110.787,
-          "last_price": 110.74,
+          "last_price": 110.75,
           "entry_date": "2026-11-26",
-          "market_val": 447.77,
+          "market_val": 447.81,
           "weight_pct": 0.45
         },
         "113043": {
@@ -6672,10 +6672,10 @@
           "rating": "AA-",
           "qty": 3.393,
           "avg_cost": 132.022,
-          "last_price": 129.86,
+          "last_price": 130.95,
           "entry_date": "2026-11-26",
-          "market_val": 440.61,
-          "weight_pct": 0.44
+          "market_val": 444.31,
+          "weight_pct": 0.45
         },
         "111021": {
           "ticker": "111021",
@@ -6683,9 +6683,9 @@
           "rating": "AA-",
           "qty": 3.7174,
           "avg_cost": 120.5,
-          "last_price": 119.64,
+          "last_price": 119.6,
           "entry_date": "2026-11-26",
-          "market_val": 444.75,
+          "market_val": 444.6,
           "weight_pct": 0.45
         },
         "113054": {
@@ -6694,9 +6694,9 @@
           "rating": "AA+",
           "qty": 3.9263,
           "avg_cost": 114.091,
-          "last_price": 114.36,
+          "last_price": 114.59,
           "entry_date": "2026-11-26",
-          "market_val": 449.01,
+          "market_val": 449.91,
           "weight_pct": 0.45
         },
         "113652": {
@@ -6705,9 +6705,9 @@
           "rating": "AA",
           "qty": 3.855,
           "avg_cost": 116.2,
-          "last_price": 116.1,
+          "last_price": 116.32,
           "entry_date": "2026-11-26",
-          "market_val": 447.57,
+          "market_val": 448.41,
           "weight_pct": 0.45
         },
         "113634": {
@@ -6716,9 +6716,9 @@
           "rating": "AA",
           "qty": 3.8451,
           "avg_cost": 116.5,
-          "last_price": 116.69,
+          "last_price": 116.74,
           "entry_date": "2026-11-26",
-          "market_val": 448.68,
+          "market_val": 448.88,
           "weight_pct": 0.45
         },
         "123090": {
@@ -6727,9 +6727,9 @@
           "rating": "AA",
           "qty": 4.0089,
           "avg_cost": 111.74,
-          "last_price": 111.7,
+          "last_price": 111.72,
           "entry_date": "2026-11-26",
-          "market_val": 447.79,
+          "market_val": 447.87,
           "weight_pct": 0.45
         },
         "118071": {
@@ -6738,9 +6738,9 @@
           "rating": "AA",
           "qty": 3.1219,
           "avg_cost": 143.486,
-          "last_price": 140.45,
+          "last_price": 140.61,
           "entry_date": "2026-11-26",
-          "market_val": 438.47,
+          "market_val": 438.97,
           "weight_pct": 0.44
         },
         "118036": {
@@ -6749,9 +6749,9 @@
           "rating": "AA-",
           "qty": 3.5859,
           "avg_cost": 124.921,
-          "last_price": 124.16,
+          "last_price": 124.36,
           "entry_date": "2026-11-26",
-          "market_val": 445.23,
+          "market_val": 445.94,
           "weight_pct": 0.45
         },
         "123113": {
@@ -6760,9 +6760,9 @@
           "rating": "AA-",
           "qty": 4.015,
           "avg_cost": 111.569,
-          "last_price": 111.41,
+          "last_price": 111.44,
           "entry_date": "2026-11-26",
-          "market_val": 447.31,
+          "market_val": 447.43,
           "weight_pct": 0.45
         },
         "127064": {
@@ -6771,9 +6771,9 @@
           "rating": "AA+",
           "qty": 3.5552,
           "avg_cost": 125.998,
-          "last_price": 126.0,
+          "last_price": 126.02,
           "entry_date": "2026-11-26",
-          "market_val": 447.96,
+          "market_val": 448.03,
           "weight_pct": 0.45
         },
         "111002": {
@@ -6782,9 +6782,9 @@
           "rating": "AA",
           "qty": 3.8727,
           "avg_cost": 115.669,
-          "last_price": 115.81,
+          "last_price": 116.14,
           "entry_date": "2026-11-26",
-          "market_val": 448.5,
+          "market_val": 449.78,
           "weight_pct": 0.45
         },
         "113615": {
@@ -6793,10 +6793,10 @@
           "rating": "AA",
           "qty": 1.0979,
           "avg_cost": 408.0,
-          "last_price": 410.88,
+          "last_price": 412.83,
           "entry_date": "2026-11-26",
-          "market_val": 451.11,
-          "weight_pct": 0.45
+          "market_val": 453.25,
+          "weight_pct": 0.46
         },
         "118076": {
           "ticker": "118076",
@@ -6804,9 +6804,9 @@
           "rating": "AA",
           "qty": 3.1622,
           "avg_cost": 141.66,
-          "last_price": 139.99,
+          "last_price": 140.19,
           "entry_date": "2026-11-26",
-          "market_val": 442.68,
+          "market_val": 443.31,
           "weight_pct": 0.45
         },
         "123259": {
@@ -6815,10 +6815,10 @@
           "rating": "AA",
           "qty": 3.4201,
           "avg_cost": 130.978,
-          "last_price": 128.67,
+          "last_price": 129.55,
           "entry_date": "2026-11-26",
-          "market_val": 440.06,
-          "weight_pct": 0.44
+          "market_val": 443.07,
+          "weight_pct": 0.45
         },
         "113052": {
           "ticker": "113052",
@@ -6826,9 +6826,9 @@
           "rating": "AAA",
           "qty": 4.0302,
           "avg_cost": 111.15,
-          "last_price": 111.01,
+          "last_price": 111.0,
           "entry_date": "2026-11-26",
-          "market_val": 447.39,
+          "market_val": 447.35,
           "weight_pct": 0.45
         },
         "113042": {
@@ -6837,9 +6837,9 @@
           "rating": "AAA",
           "qty": 3.98,
           "avg_cost": 112.55,
-          "last_price": 112.58,
+          "last_price": 112.57,
           "entry_date": "2026-11-26",
-          "market_val": 448.07,
+          "market_val": 448.03,
           "weight_pct": 0.45
         },
         "127040": {
@@ -6848,9 +6848,9 @@
           "rating": "AA+",
           "qty": 4.0711,
           "avg_cost": 110.033,
-          "last_price": 109.62,
+          "last_price": 110.01,
           "entry_date": "2026-11-26",
-          "market_val": 446.27,
+          "market_val": 447.86,
           "weight_pct": 0.45
         },
         "113674": {
@@ -6859,9 +6859,9 @@
           "rating": "AA",
           "qty": 3.8918,
           "avg_cost": 115.1,
-          "last_price": 115.46,
+          "last_price": 115.69,
           "entry_date": "2026-11-26",
-          "market_val": 449.35,
+          "market_val": 450.24,
           "weight_pct": 0.45
         },
         "110097": {
@@ -6870,9 +6870,9 @@
           "rating": "AA",
           "qty": 3.3488,
           "avg_cost": 133.764,
-          "last_price": 133.7,
+          "last_price": 134.05,
           "entry_date": "2026-11-26",
-          "market_val": 447.73,
+          "market_val": 448.91,
           "weight_pct": 0.45
         },
         "118062": {
@@ -6881,9 +6881,9 @@
           "rating": "AA-",
           "qty": 3.1227,
           "avg_cost": 143.452,
-          "last_price": 140.76,
+          "last_price": 141.21,
           "entry_date": "2026-11-26",
-          "market_val": 439.55,
+          "market_val": 440.96,
           "weight_pct": 0.44
         },
         "123279": {
@@ -6892,10 +6892,10 @@
           "rating": "AA",
           "qty": 3.1216,
           "avg_cost": 143.499,
-          "last_price": 144.44,
+          "last_price": 145.82,
           "entry_date": "2026-11-26",
-          "market_val": 450.88,
-          "weight_pct": 0.45
+          "market_val": 455.19,
+          "weight_pct": 0.46
         },
         "127088": {
           "ticker": "127088",
@@ -6903,9 +6903,9 @@
           "rating": "AA-",
           "qty": 3.5693,
           "avg_cost": 125.5,
-          "last_price": 125.38,
+          "last_price": 125.73,
           "entry_date": "2026-11-26",
-          "market_val": 447.52,
+          "market_val": 448.77,
           "weight_pct": 0.45
         },
         "113643": {
@@ -6914,10 +6914,10 @@
           "rating": "AA-",
           "qty": 3.0903,
           "avg_cost": 144.955,
-          "last_price": 144.6,
+          "last_price": 146.56,
           "entry_date": "2026-11-26",
-          "market_val": 446.86,
-          "weight_pct": 0.45
+          "market_val": 452.91,
+          "weight_pct": 0.46
         },
         "127027": {
           "ticker": "127027",
@@ -6936,9 +6936,9 @@
           "rating": "AA+",
           "qty": 3.7633,
           "avg_cost": 119.031,
-          "last_price": 118.73,
+          "last_price": 118.99,
           "entry_date": "2026-11-26",
-          "market_val": 446.82,
+          "market_val": 447.8,
           "weight_pct": 0.45
         },
         "127099": {
@@ -6947,9 +6947,9 @@
           "rating": "AA-",
           "qty": 3.8287,
           "avg_cost": 116.999,
-          "last_price": 117.73,
+          "last_price": 117.83,
           "entry_date": "2026-11-26",
-          "market_val": 450.75,
+          "market_val": 451.14,
           "weight_pct": 0.45
         },
         "110101": {
@@ -6958,9 +6958,9 @@
           "rating": "AAA",
           "qty": 3.474,
           "avg_cost": 128.944,
-          "last_price": 125.06,
+          "last_price": 125.5,
           "entry_date": "2026-11-26",
-          "market_val": 434.46,
+          "market_val": 435.99,
           "weight_pct": 0.44
         },
         "113682": {
@@ -6969,9 +6969,9 @@
           "rating": "AA",
           "qty": 3.7082,
           "avg_cost": 120.8,
-          "last_price": 119.69,
+          "last_price": 119.94,
           "entry_date": "2026-11-26",
-          "market_val": 443.83,
+          "market_val": 444.76,
           "weight_pct": 0.45
         },
         "123149": {
@@ -6980,9 +6980,9 @@
           "rating": "AA",
           "qty": 3.9329,
           "avg_cost": 113.9,
-          "last_price": 113.52,
+          "last_price": 113.91,
           "entry_date": "2026-11-26",
-          "market_val": 446.46,
+          "market_val": 448.0,
           "weight_pct": 0.45
         },
         "127034": {
@@ -6991,9 +6991,9 @@
           "rating": "AA-",
           "qty": 3.9926,
           "avg_cost": 112.196,
-          "last_price": 111.56,
+          "last_price": 111.82,
           "entry_date": "2026-11-26",
-          "market_val": 445.41,
+          "market_val": 446.45,
           "weight_pct": 0.45
         },
         "127084": {
@@ -7002,9 +7002,9 @@
           "rating": "AAA",
           "qty": 3.4841,
           "avg_cost": 128.57,
-          "last_price": 127.68,
+          "last_price": 127.95,
           "entry_date": "2026-11-26",
-          "market_val": 444.85,
+          "market_val": 445.79,
           "weight_pct": 0.45
         },
         "127050": {
@@ -7013,9 +7013,9 @@
           "rating": "AA",
           "qty": 3.8617,
           "avg_cost": 116.0,
-          "last_price": 116.64,
+          "last_price": 117.07,
           "entry_date": "2026-11-26",
-          "market_val": 450.43,
+          "market_val": 452.09,
           "weight_pct": 0.45
         },
         "127113": {
@@ -7024,9 +7024,9 @@
           "rating": "AA-",
           "qty": 3.2951,
           "avg_cost": 135.946,
-          "last_price": 135.35,
+          "last_price": 136.27,
           "entry_date": "2026-11-26",
-          "market_val": 445.99,
+          "market_val": 449.02,
           "weight_pct": 0.45
         },
         "111026": {
@@ -7035,9 +7035,9 @@
           "rating": "AA",
           "qty": 3.1604,
           "avg_cost": 141.74,
-          "last_price": 136.74,
+          "last_price": 137.33,
           "entry_date": "2026-11-26",
-          "market_val": 432.15,
+          "market_val": 434.02,
           "weight_pct": 0.44
         },
         "127031": {
@@ -7046,9 +7046,9 @@
           "rating": "AA",
           "qty": 4.0067,
           "avg_cost": 111.801,
-          "last_price": 111.69,
+          "last_price": 111.67,
           "entry_date": "2026-11-26",
-          "market_val": 447.51,
+          "market_val": 447.43,
           "weight_pct": 0.45
         },
         "113051": {
@@ -7057,9 +7057,9 @@
           "rating": "AAA",
           "qty": 4.0723,
           "avg_cost": 110.0,
-          "last_price": 109.91,
+          "last_price": 109.93,
           "entry_date": "2026-11-26",
-          "market_val": 447.59,
+          "market_val": 447.67,
           "weight_pct": 0.45
         },
         "110099": {
@@ -7068,9 +7068,9 @@
           "rating": "AA+",
           "qty": 3.2455,
           "avg_cost": 138.021,
-          "last_price": 137.8,
+          "last_price": 137.89,
           "entry_date": "2026-11-26",
-          "market_val": 447.23,
+          "market_val": 447.52,
           "weight_pct": 0.45
         },
         "111003": {
@@ -7079,9 +7079,9 @@
           "rating": "AA-",
           "qty": 3.6419,
           "avg_cost": 123.0,
-          "last_price": 121.96,
+          "last_price": 122.22,
           "entry_date": "2026-11-26",
-          "market_val": 444.17,
+          "market_val": 445.11,
           "weight_pct": 0.45
         },
         "123150": {
@@ -7090,9 +7090,9 @@
           "rating": "AA-",
           "qty": 3.6038,
           "avg_cost": 124.3,
-          "last_price": 123.02,
+          "last_price": 123.0,
           "entry_date": "2026-11-26",
-          "market_val": 443.34,
+          "market_val": 443.27,
           "weight_pct": 0.45
         },
         "118059": {
@@ -7101,9 +7101,9 @@
           "rating": "AA+",
           "qty": 3.0724,
           "avg_cost": 145.799,
-          "last_price": 141.27,
+          "last_price": 142.31,
           "entry_date": "2026-11-26",
-          "market_val": 434.04,
+          "market_val": 437.23,
           "weight_pct": 0.44
         },
         "123114": {
@@ -7112,9 +7112,9 @@
           "rating": "AA-",
           "qty": 3.8494,
           "avg_cost": 116.37,
-          "last_price": 115.52,
+          "last_price": 115.57,
           "entry_date": "2026-11-26",
-          "market_val": 444.68,
+          "market_val": 444.88,
           "weight_pct": 0.45
         },
         "127082": {
@@ -7123,9 +7123,9 @@
           "rating": "AA",
           "qty": 3.7917,
           "avg_cost": 118.14,
-          "last_price": 117.16,
+          "last_price": 117.73,
           "entry_date": "2026-11-26",
-          "market_val": 444.24,
+          "market_val": 446.4,
           "weight_pct": 0.45
         },
         "123282": {
@@ -7134,9 +7134,9 @@
           "rating": "AA-",
           "qty": 2.9644,
           "avg_cost": 151.11,
-          "last_price": 145.88,
+          "last_price": 147.4,
           "entry_date": "2026-11-26",
-          "market_val": 432.45,
+          "market_val": 436.95,
           "weight_pct": 0.44
         },
         "127095": {
@@ -7145,9 +7145,9 @@
           "rating": "AA-",
           "qty": 3.6605,
           "avg_cost": 122.375,
-          "last_price": 121.37,
+          "last_price": 121.88,
           "entry_date": "2026-11-26",
-          "market_val": 444.27,
+          "market_val": 446.14,
           "weight_pct": 0.45
         },
         "113058": {
@@ -7156,9 +7156,9 @@
           "rating": "AA",
           "qty": 3.9554,
           "avg_cost": 113.25,
-          "last_price": 112.59,
+          "last_price": 112.8,
           "entry_date": "2026-11-26",
-          "market_val": 445.34,
+          "market_val": 446.17,
           "weight_pct": 0.45
         },
         "113067": {
@@ -7167,9 +7167,9 @@
           "rating": "AAA",
           "qty": 3.8418,
           "avg_cost": 116.6,
-          "last_price": 116.82,
+          "last_price": 117.08,
           "entry_date": "2026-11-26",
-          "market_val": 448.8,
+          "market_val": 449.8,
           "weight_pct": 0.45
         },
         "113066": {
@@ -7178,9 +7178,9 @@
           "rating": "AAA",
           "qty": 3.6366,
           "avg_cost": 123.18,
-          "last_price": 123.21,
+          "last_price": 123.63,
           "entry_date": "2026-11-26",
-          "market_val": 448.07,
+          "market_val": 449.59,
           "weight_pct": 0.45
         },
         "113707": {
@@ -7189,9 +7189,9 @@
           "rating": "AA+",
           "qty": 3.2484,
           "avg_cost": 137.9,
-          "last_price": 135.11,
+          "last_price": 136.1,
           "entry_date": "2026-11-26",
-          "market_val": 438.89,
+          "market_val": 442.11,
           "weight_pct": 0.44
         },
         "111017": {
@@ -7200,9 +7200,9 @@
           "rating": "AA",
           "qty": 3.8784,
           "avg_cost": 115.5,
-          "last_price": 115.1,
+          "last_price": 115.36,
           "entry_date": "2026-11-26",
-          "market_val": 446.4,
+          "market_val": 447.41,
           "weight_pct": 0.45
         },
         "118077": {
@@ -7211,10 +7211,10 @@
           "rating": "AA",
           "qty": 2.9974,
           "avg_cost": 149.447,
-          "last_price": 150.94,
+          "last_price": 151.0,
           "entry_date": "2026-11-26",
-          "market_val": 452.43,
-          "weight_pct": 0.46
+          "market_val": 452.61,
+          "weight_pct": 0.45
         },
         "123272": {
           "ticker": "123272",
@@ -7222,9 +7222,9 @@
           "rating": "AA+",
           "qty": 3.5272,
           "avg_cost": 126.998,
-          "last_price": 127.0,
+          "last_price": 128.04,
           "entry_date": "2026-11-26",
-          "market_val": 447.95,
+          "market_val": 451.62,
           "weight_pct": 0.45
         },
         "113681": {
@@ -7233,9 +7233,9 @@
           "rating": "AA-",
           "qty": 3.5268,
           "avg_cost": 127.013,
-          "last_price": 126.51,
+          "last_price": 126.5,
           "entry_date": "2026-11-26",
-          "market_val": 446.18,
+          "market_val": 446.14,
           "weight_pct": 0.45
         },
         "123268": {
@@ -7244,9 +7244,9 @@
           "rating": "AA-",
           "qty": 2.9278,
           "avg_cost": 153.0,
-          "last_price": 149.5,
+          "last_price": 150.21,
           "entry_date": "2026-11-26",
-          "market_val": 437.71,
+          "market_val": 439.78,
           "weight_pct": 0.44
         },
         "110098": {
@@ -7255,9 +7255,9 @@
           "rating": "AA+",
           "qty": 3.5836,
           "avg_cost": 125.0,
-          "last_price": 125.31,
+          "last_price": 125.44,
           "entry_date": "2026-11-26",
-          "market_val": 449.06,
+          "market_val": 449.53,
           "weight_pct": 0.45
         },
         "123284": {
@@ -7266,10 +7266,10 @@
           "rating": "AA-",
           "qty": 3.0024,
           "avg_cost": 149.2,
-          "last_price": 149.52,
+          "last_price": 150.86,
           "entry_date": "2026-11-26",
-          "market_val": 448.92,
-          "weight_pct": 0.45
+          "market_val": 452.94,
+          "weight_pct": 0.46
         },
         "113704": {
           "ticker": "113704",
@@ -7277,9 +7277,9 @@
           "rating": "AA+",
           "qty": 2.9605,
           "avg_cost": 151.31,
-          "last_price": 150.62,
+          "last_price": 151.18,
           "entry_date": "2026-11-26",
-          "market_val": 445.91,
+          "market_val": 447.57,
           "weight_pct": 0.45
         },
         "118056": {
@@ -7288,10 +7288,10 @@
           "rating": "AA-",
           "qty": 2.7823,
           "avg_cost": 161.0,
-          "last_price": 158.61,
+          "last_price": 159.7,
           "entry_date": "2026-11-26",
-          "market_val": 441.3,
-          "weight_pct": 0.44
+          "market_val": 444.33,
+          "weight_pct": 0.45
         },
         "123104": {
           "ticker": "123104",
@@ -7299,9 +7299,9 @@
           "rating": "AA",
           "qty": 3.7656,
           "avg_cost": 118.96,
-          "last_price": 118.75,
+          "last_price": 118.89,
           "entry_date": "2026-11-26",
-          "market_val": 447.17,
+          "market_val": 447.69,
           "weight_pct": 0.45
         },
         "123211": {
@@ -7310,9 +7310,9 @@
           "rating": "AA-",
           "qty": 3.1151,
           "avg_cost": 143.8,
-          "last_price": 139.6,
+          "last_price": 139.84,
           "entry_date": "2026-11-26",
-          "market_val": 434.87,
+          "market_val": 435.62,
           "weight_pct": 0.44
         },
         "127109": {
@@ -7321,9 +7321,9 @@
           "rating": "AA",
           "qty": 3.3231,
           "avg_cost": 134.8,
-          "last_price": 136.75,
+          "last_price": 137.38,
           "entry_date": "2026-11-26",
-          "market_val": 454.43,
+          "market_val": 456.53,
           "weight_pct": 0.46
         },
         "113673": {
@@ -7332,9 +7332,9 @@
           "rating": "AA",
           "qty": 2.8623,
           "avg_cost": 156.5,
-          "last_price": 148.81,
+          "last_price": 150.22,
           "entry_date": "2026-11-26",
-          "market_val": 425.94,
+          "market_val": 429.97,
           "weight_pct": 0.43
         },
         "113677": {
@@ -7343,9 +7343,9 @@
           "rating": "AA-",
           "qty": 2.8441,
           "avg_cost": 157.5,
-          "last_price": 153.15,
+          "last_price": 153.98,
           "entry_date": "2026-11-26",
-          "market_val": 435.57,
+          "market_val": 437.93,
           "weight_pct": 0.44
         },
         "113070": {
@@ -7354,9 +7354,9 @@
           "rating": "AAA",
           "qty": 3.8124,
           "avg_cost": 117.5,
-          "last_price": 117.22,
+          "last_price": 117.31,
           "entry_date": "2026-11-26",
-          "market_val": 446.89,
+          "market_val": 447.23,
           "weight_pct": 0.45
         },
         "123287": {
@@ -7365,9 +7365,9 @@
           "rating": "AA-",
           "qty": 2.9275,
           "avg_cost": 153.016,
-          "last_price": 157.28,
+          "last_price": 158.0,
           "entry_date": "2026-11-26",
-          "market_val": 460.44,
+          "market_val": 462.55,
           "weight_pct": 0.46
         },
         "127055": {
@@ -7376,10 +7376,10 @@
           "rating": "AA-",
           "qty": 3.2088,
           "avg_cost": 139.599,
-          "last_price": 140.02,
+          "last_price": 141.32,
           "entry_date": "2026-11-26",
-          "market_val": 449.3,
-          "weight_pct": 0.45
+          "market_val": 453.47,
+          "weight_pct": 0.46
         },
         "113646": {
           "ticker": "113646",
@@ -7387,9 +7387,9 @@
           "rating": "AA-",
           "qty": 3.0979,
           "avg_cost": 144.6,
-          "last_price": 142.23,
+          "last_price": 142.82,
           "entry_date": "2026-11-26",
-          "market_val": 440.61,
+          "market_val": 442.44,
           "weight_pct": 0.44
         },
         "123158": {
@@ -7398,9 +7398,9 @@
           "rating": "AA",
           "qty": 2.9374,
           "avg_cost": 152.5,
-          "last_price": 146.97,
+          "last_price": 147.89,
           "entry_date": "2026-11-26",
-          "market_val": 431.71,
+          "market_val": 434.41,
           "weight_pct": 0.44
         },
         "123275": {
@@ -7409,10 +7409,10 @@
           "rating": "AA-",
           "qty": 2.7515,
           "avg_cost": 162.8,
-          "last_price": 160.41,
+          "last_price": 163.63,
           "entry_date": "2026-11-26",
-          "market_val": 441.37,
-          "weight_pct": 0.44
+          "market_val": 450.23,
+          "weight_pct": 0.45
         },
         "118030": {
           "ticker": "118030",
@@ -7420,9 +7420,9 @@
           "rating": "AA",
           "qty": 1.2375,
           "avg_cost": 361.993,
-          "last_price": 357.36,
+          "last_price": 360.7,
           "entry_date": "2026-11-26",
-          "market_val": 442.23,
+          "market_val": 446.37,
           "weight_pct": 0.45
         },
         "110103": {
@@ -7431,9 +7431,9 @@
           "rating": "AAA",
           "qty": 3.3256,
           "avg_cost": 134.7,
-          "last_price": 133.8,
+          "last_price": 134.2,
           "entry_date": "2026-11-26",
-          "market_val": 444.97,
+          "market_val": 446.3,
           "weight_pct": 0.45
         },
         "123280": {
@@ -7442,9 +7442,9 @@
           "rating": "AA-",
           "qty": 3.3257,
           "avg_cost": 134.694,
-          "last_price": 133.26,
+          "last_price": 133.33,
           "entry_date": "2026-11-26",
-          "market_val": 443.18,
+          "market_val": 443.42,
           "weight_pct": 0.45
         },
         "127092": {
@@ -7453,9 +7453,9 @@
           "rating": "AA-",
           "qty": 2.0454,
           "avg_cost": 219.0,
-          "last_price": 206.85,
+          "last_price": 208.14,
           "entry_date": "2026-11-26",
-          "market_val": 423.09,
+          "market_val": 425.73,
           "weight_pct": 0.43
         },
         "127037": {
@@ -7464,9 +7464,9 @@
           "rating": "AA",
           "qty": 1.6084,
           "avg_cost": 278.51,
-          "last_price": 273.32,
+          "last_price": 275.0,
           "entry_date": "2026-11-26",
-          "market_val": 439.61,
+          "market_val": 442.31,
           "weight_pct": 0.44
         },
         "127070": {
@@ -7475,9 +7475,9 @@
           "rating": "AA",
           "qty": 2.8272,
           "avg_cost": 158.444,
-          "last_price": 156.8,
+          "last_price": 157.62,
           "entry_date": "2026-11-26",
-          "market_val": 443.3,
+          "market_val": 445.62,
           "weight_pct": 0.45
         },
         "111024": {
@@ -7486,9 +7486,9 @@
           "rating": "AA-",
           "qty": 2.4478,
           "avg_cost": 183.0,
-          "last_price": 190.85,
+          "last_price": 192.65,
           "entry_date": "2026-11-26",
-          "market_val": 467.16,
+          "market_val": 471.57,
           "weight_pct": 0.47
         },
         "118051": {
@@ -7497,9 +7497,9 @@
           "rating": "AA-",
           "qty": 1.7362,
           "avg_cost": 258.0,
-          "last_price": 253.09,
+          "last_price": 252.45,
           "entry_date": "2026-11-26",
-          "market_val": 439.41,
+          "market_val": 438.3,
           "weight_pct": 0.44
         },
         "123213": {
@@ -7508,9 +7508,9 @@
           "rating": "AA-",
           "qty": 2.6547,
           "avg_cost": 168.74,
-          "last_price": 167.83,
+          "last_price": 167.95,
           "entry_date": "2026-11-26",
-          "market_val": 445.54,
+          "market_val": 445.86,
           "weight_pct": 0.45
         },
         "127053": {
@@ -7519,9 +7519,9 @@
           "rating": "AA-",
           "qty": 2.3827,
           "avg_cost": 188.0,
-          "last_price": 181.89,
+          "last_price": 183.15,
           "entry_date": "2026-11-26",
-          "market_val": 433.39,
+          "market_val": 436.39,
           "weight_pct": 0.44
         },
         "118075": {
@@ -7530,9 +7530,9 @@
           "rating": "AA",
           "qty": 2.5166,
           "avg_cost": 178.0,
-          "last_price": 171.9,
+          "last_price": 172.75,
           "entry_date": "2026-11-26",
-          "market_val": 432.6,
+          "market_val": 434.74,
           "weight_pct": 0.44
         },
         "127115": {
@@ -7541,9 +7541,9 @@
           "rating": "AA-",
           "qty": 2.791,
           "avg_cost": 160.5,
-          "last_price": 163.82,
+          "last_price": 162.25,
           "entry_date": "2026-11-26",
-          "market_val": 457.22,
+          "market_val": 452.84,
           "weight_pct": 0.46
         },
         "127117": {
@@ -7552,10 +7552,10 @@
           "rating": "AA",
           "qty": 2.4513,
           "avg_cost": 182.739,
-          "last_price": 183.0,
+          "last_price": 190.0,
           "entry_date": "2026-11-26",
-          "market_val": 448.59,
-          "weight_pct": 0.45
+          "market_val": 465.75,
+          "weight_pct": 0.47
         },
         "118064": {
           "ticker": "118064",
@@ -7563,9 +7563,9 @@
           "rating": "AA",
           "qty": 2.3331,
           "avg_cost": 192.0,
-          "last_price": 189.35,
+          "last_price": 190.52,
           "entry_date": "2026-11-26",
-          "market_val": 441.77,
+          "market_val": 444.5,
           "weight_pct": 0.45
         },
         "118069": {
@@ -7574,9 +7574,9 @@
           "rating": "AA-",
           "qty": 2.5893,
           "avg_cost": 173.0,
-          "last_price": 174.0,
+          "last_price": 173.04,
           "entry_date": "2026-11-26",
-          "market_val": 450.54,
+          "market_val": 448.05,
           "weight_pct": 0.45
         },
         "118050": {
@@ -7585,9 +7585,9 @@
           "rating": "AA-",
           "qty": 2.4846,
           "avg_cost": 180.29,
-          "last_price": 174.02,
+          "last_price": 175.38,
           "entry_date": "2026-11-26",
-          "market_val": 432.37,
+          "market_val": 435.75,
           "weight_pct": 0.44
         },
         "123241": {
@@ -7596,9 +7596,9 @@
           "rating": "AA-",
           "qty": 1.306,
           "avg_cost": 343.0,
-          "last_price": 330.85,
+          "last_price": 333.14,
           "entry_date": "2026-11-26",
-          "market_val": 432.09,
+          "market_val": 435.08,
           "weight_pct": 0.44
         },
         "123255": {
@@ -7607,9 +7607,9 @@
           "rating": "AA",
           "qty": 1.7706,
           "avg_cost": 253.0,
-          "last_price": 249.96,
+          "last_price": 251.24,
           "entry_date": "2026-11-26",
-          "market_val": 442.58,
+          "market_val": 444.85,
           "weight_pct": 0.45
         },
         "123176": {
@@ -7618,9 +7618,9 @@
           "rating": "AA-",
           "qty": 2.4345,
           "avg_cost": 184.0,
-          "last_price": 180.2,
+          "last_price": 181.53,
           "entry_date": "2026-11-26",
-          "market_val": 438.7,
+          "market_val": 441.93,
           "weight_pct": 0.44
         },
         "118058": {
@@ -7629,9 +7629,9 @@
           "rating": "AA",
           "qty": 2.2859,
           "avg_cost": 195.959,
-          "last_price": 191.51,
+          "last_price": 192.09,
           "entry_date": "2026-11-26",
-          "market_val": 437.77,
+          "market_val": 439.1,
           "weight_pct": 0.44
         },
         "123283": {
@@ -7640,9 +7640,9 @@
           "rating": "AA-",
           "qty": 2.2623,
           "avg_cost": 198.004,
-          "last_price": 207.39,
+          "last_price": 208.36,
           "entry_date": "2026-11-26",
-          "market_val": 469.18,
+          "market_val": 471.37,
           "weight_pct": 0.47
         }
       },
@@ -8163,7 +8163,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 11896.31,
-      "total_nav": 99427.81,
+      "total_nav": 99563.61,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 143.97,
@@ -8178,9 +8178,9 @@
           "rating": "AA+",
           "qty": 40,
           "avg_cost": 104.539,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 4184.4,
+          "market_val": 4189.2,
           "weight_pct": 4.21
         },
         "127089": {
@@ -8189,10 +8189,10 @@
           "rating": "AA+",
           "qty": 50,
           "avg_cost": 92.646,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 4538.5,
-          "weight_pct": 4.56
+          "market_val": 4553.0,
+          "weight_pct": 4.57
         },
         "113691": {
           "ticker": "113691",
@@ -8200,9 +8200,9 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 114.482,
-          "last_price": 113.76,
+          "last_price": 113.97,
           "entry_date": "2026-11-26",
-          "market_val": 4550.4,
+          "market_val": 4558.8,
           "weight_pct": 4.58
         },
         "127049": {
@@ -8211,9 +8211,9 @@
           "rating": "AAA",
           "qty": 50,
           "avg_cost": 102.717,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 5087.5,
+          "market_val": 5095.0,
           "weight_pct": 5.12
         },
         "127103": {
@@ -8222,9 +8222,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 108.511,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 3223.5,
+          "market_val": 3230.1,
           "weight_pct": 3.24
         },
         "110084": {
@@ -8233,9 +8233,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 113.223,
-          "last_price": 112.33,
+          "last_price": 112.49,
           "entry_date": "2026-11-26",
-          "market_val": 3369.9,
+          "market_val": 3374.7,
           "weight_pct": 3.39
         },
         "118031": {
@@ -8244,9 +8244,9 @@
           "rating": "AA",
           "qty": 40,
           "avg_cost": 97.574,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 3882.8,
+          "market_val": 3888.0,
           "weight_pct": 3.91
         },
         "110100": {
@@ -8255,9 +8255,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 113.078,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 2261.0,
+          "market_val": 2264.2,
           "weight_pct": 2.27
         },
         "113056": {
@@ -8266,10 +8266,10 @@
           "rating": "AAA",
           "qty": 50,
           "avg_cost": 118.909,
-          "last_price": 118.22,
+          "last_price": 118.25,
           "entry_date": "2026-11-26",
-          "market_val": 5911.0,
-          "weight_pct": 5.95
+          "market_val": 5912.5,
+          "weight_pct": 5.94
         },
         "127110": {
           "ticker": "127110",
@@ -8277,10 +8277,10 @@
           "rating": "AAA",
           "qty": 40,
           "avg_cost": 129.685,
-          "last_price": 129.05,
+          "last_price": 129.02,
           "entry_date": "2026-11-26",
-          "market_val": 5162.0,
-          "weight_pct": 5.19
+          "market_val": 5160.8,
+          "weight_pct": 5.18
         },
         "128142": {
           "ticker": "128142",
@@ -8288,10 +8288,10 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 110.242,
-          "last_price": 109.92,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 3297.6,
-          "weight_pct": 3.32
+          "market_val": 3297.3,
+          "weight_pct": 3.31
         },
         "123107": {
           "ticker": "123107",
@@ -8299,9 +8299,9 @@
           "rating": "AAA",
           "qty": 60,
           "avg_cost": 110.138,
-          "last_price": 109.42,
+          "last_price": 109.48,
           "entry_date": "2026-11-26",
-          "market_val": 6565.2,
+          "market_val": 6568.8,
           "weight_pct": 6.6
         },
         "113659": {
@@ -8310,9 +8310,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 122.811,
-          "last_price": 123.22,
+          "last_price": 123.6,
           "entry_date": "2026-11-26",
-          "market_val": 2464.4,
+          "market_val": 2472.0,
           "weight_pct": 2.48
         },
         "127045": {
@@ -8321,10 +8321,10 @@
           "rating": "AAA",
           "qty": 50,
           "avg_cost": 111.043,
-          "last_price": 109.47,
+          "last_price": 109.91,
           "entry_date": "2026-11-26",
-          "market_val": 5473.5,
-          "weight_pct": 5.5
+          "market_val": 5495.5,
+          "weight_pct": 5.52
         },
         "110087": {
           "ticker": "110087",
@@ -8332,9 +8332,9 @@
           "rating": "AA+",
           "qty": 40,
           "avg_cost": 107.861,
-          "last_price": 107.27,
+          "last_price": 107.5,
           "entry_date": "2026-11-26",
-          "market_val": 4290.8,
+          "market_val": 4300.0,
           "weight_pct": 4.32
         },
         "127083": {
@@ -8343,9 +8343,9 @@
           "rating": "AAA",
           "qty": 30,
           "avg_cost": 113.865,
-          "last_price": 113.58,
+          "last_price": 113.9,
           "entry_date": "2026-11-26",
-          "market_val": 3407.4,
+          "market_val": 3417.0,
           "weight_pct": 3.43
         },
         "127056": {
@@ -8354,9 +8354,9 @@
           "rating": "AAA",
           "qty": 50,
           "avg_cost": 110.454,
-          "last_price": 109.52,
+          "last_price": 109.78,
           "entry_date": "2026-11-26",
-          "market_val": 5476.0,
+          "market_val": 5489.0,
           "weight_pct": 5.51
         },
         "127112": {
@@ -8365,9 +8365,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 120.49,
-          "last_price": 118.65,
+          "last_price": 118.81,
           "entry_date": "2026-11-26",
-          "market_val": 2373.0,
+          "market_val": 2376.2,
           "weight_pct": 2.39
         },
         "118024": {
@@ -8376,9 +8376,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 114.227,
-          "last_price": 113.59,
+          "last_price": 113.58,
           "entry_date": "2026-11-26",
-          "market_val": 2271.8,
+          "market_val": 2271.6,
           "weight_pct": 2.28
         },
         "113062": {
@@ -8387,9 +8387,9 @@
           "rating": "AAA",
           "qty": 80,
           "avg_cost": 121.923,
-          "last_price": 121.76,
+          "last_price": 121.92,
           "entry_date": "2026-11-26",
-          "market_val": 9740.8,
+          "market_val": 9753.6,
           "weight_pct": 9.8
         }
       },
@@ -9036,7 +9036,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 13408.71,
-      "total_nav": 99324.01,
+      "total_nav": 99424.31,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 178.21,
@@ -9051,9 +9051,9 @@
           "rating": "AA+",
           "qty": 40,
           "avg_cost": 92.671,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 3630.8,
+          "market_val": 3642.4,
           "weight_pct": 3.66
         },
         "118031": {
@@ -9062,9 +9062,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 97.615,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 2912.1,
+          "market_val": 2916.0,
           "weight_pct": 2.93
         },
         "110100": {
@@ -9073,10 +9073,10 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 112.995,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 3391.5,
-          "weight_pct": 3.41
+          "market_val": 3396.3,
+          "weight_pct": 3.42
         },
         "110085": {
           "ticker": "110085",
@@ -9084,9 +9084,9 @@
           "rating": "AAA",
           "qty": 30,
           "avg_cost": 99.056,
-          "last_price": 97.71,
+          "last_price": 97.84,
           "entry_date": "2026-11-26",
-          "market_val": 2931.3,
+          "market_val": 2935.2,
           "weight_pct": 2.95
         },
         "127103": {
@@ -9095,9 +9095,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 108.511,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 3223.5,
+          "market_val": 3230.1,
           "weight_pct": 3.25
         },
         "113700": {
@@ -9106,9 +9106,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 113.027,
-          "last_price": 111.89,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 3356.7,
+          "market_val": 3363.0,
           "weight_pct": 3.38
         },
         "118065": {
@@ -9117,9 +9117,9 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 121.027,
-          "last_price": 120.75,
+          "last_price": 120.94,
           "entry_date": "2026-11-26",
-          "market_val": 3622.5,
+          "market_val": 3628.2,
           "weight_pct": 3.65
         },
         "118034": {
@@ -9128,9 +9128,9 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 104.581,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 3138.3,
+          "market_val": 3141.9,
           "weight_pct": 3.16
         },
         "123288": {
@@ -9139,10 +9139,10 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 118.309,
-          "last_price": 117.54,
+          "last_price": 117.48,
           "entry_date": "2026-11-26",
-          "market_val": 3526.2,
-          "weight_pct": 3.55
+          "market_val": 3524.4,
+          "weight_pct": 3.54
         },
         "113692": {
           "ticker": "113692",
@@ -9150,9 +9150,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 117.926,
-          "last_price": 116.98,
+          "last_price": 117.14,
           "entry_date": "2026-11-26",
-          "market_val": 3509.4,
+          "market_val": 3514.2,
           "weight_pct": 3.53
         },
         "118024": {
@@ -9161,9 +9161,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 114.144,
-          "last_price": 113.59,
+          "last_price": 113.58,
           "entry_date": "2026-11-26",
-          "market_val": 3407.7,
+          "market_val": 3407.4,
           "weight_pct": 3.43
         },
         "127112": {
@@ -9172,9 +9172,9 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 120.407,
-          "last_price": 118.65,
+          "last_price": 118.81,
           "entry_date": "2026-11-26",
-          "market_val": 3559.5,
+          "market_val": 3564.3,
           "weight_pct": 3.58
         },
         "118073": {
@@ -9183,10 +9183,10 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 120.077,
-          "last_price": 119.04,
+          "last_price": 119.5,
           "entry_date": "2026-11-26",
-          "market_val": 3571.2,
-          "weight_pct": 3.6
+          "market_val": 3585.0,
+          "weight_pct": 3.61
         },
         "110093": {
           "ticker": "110093",
@@ -9194,9 +9194,9 @@
           "rating": "AAA",
           "qty": 30,
           "avg_cost": 106.653,
-          "last_price": 106.02,
+          "last_price": 106.06,
           "entry_date": "2026-11-26",
-          "market_val": 3180.6,
+          "market_val": 3181.8,
           "weight_pct": 3.2
         },
         "113693": {
@@ -9205,9 +9205,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 109.825,
-          "last_price": 109.05,
+          "last_price": 108.94,
           "entry_date": "2026-11-26",
-          "market_val": 3271.5,
+          "market_val": 3268.2,
           "weight_pct": 3.29
         },
         "127049": {
@@ -9216,9 +9216,9 @@
           "rating": "AAA",
           "qty": 30,
           "avg_cost": 102.784,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 3052.5,
+          "market_val": 3057.0,
           "weight_pct": 3.07
         },
         "123271": {
@@ -9227,10 +9227,10 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 124.811,
-          "last_price": 125.02,
+          "last_price": 124.79,
           "entry_date": "2026-11-26",
-          "market_val": 2500.4,
-          "weight_pct": 2.52
+          "market_val": 2495.8,
+          "weight_pct": 2.51
         },
         "111025": {
           "ticker": "111025",
@@ -9238,9 +9238,9 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 123.812,
-          "last_price": 122.97,
+          "last_price": 123.15,
           "entry_date": "2026-11-26",
-          "market_val": 2459.4,
+          "market_val": 2463.0,
           "weight_pct": 2.48
         },
         "110087": {
@@ -9249,9 +9249,9 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 107.903,
-          "last_price": 107.27,
+          "last_price": 107.5,
           "entry_date": "2026-11-26",
-          "market_val": 3218.1,
+          "market_val": 3225.0,
           "weight_pct": 3.24
         },
         "111009": {
@@ -9260,9 +9260,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 108.21,
-          "last_price": 107.55,
+          "last_price": 107.81,
           "entry_date": "2026-11-26",
-          "market_val": 3226.5,
+          "market_val": 3234.3,
           "weight_pct": 3.25
         },
         "118022": {
@@ -9271,9 +9271,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 109.026,
-          "last_price": 108.52,
+          "last_price": 108.56,
           "entry_date": "2026-11-26",
-          "market_val": 3255.6,
+          "market_val": 3256.8,
           "weight_pct": 3.28
         },
         "118063": {
@@ -9282,10 +9282,10 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 126.313,
-          "last_price": 123.32,
+          "last_price": 123.93,
           "entry_date": "2026-11-26",
-          "market_val": 2466.4,
-          "weight_pct": 2.48
+          "market_val": 2478.6,
+          "weight_pct": 2.49
         },
         "127114": {
           "ticker": "127114",
@@ -9293,9 +9293,9 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 116.625,
-          "last_price": 115.47,
+          "last_price": 115.57,
           "entry_date": "2026-11-26",
-          "market_val": 3464.1,
+          "market_val": 3467.1,
           "weight_pct": 3.49
         },
         "113666": {
@@ -9304,9 +9304,9 @@
           "rating": "AA",
           "qty": 30,
           "avg_cost": 113.813,
-          "last_price": 113.59,
+          "last_price": 113.54,
           "entry_date": "2026-11-26",
-          "market_val": 3407.7,
+          "market_val": 3406.2,
           "weight_pct": 3.43
         },
         "113709": {
@@ -9315,9 +9315,9 @@
           "rating": "AA",
           "qty": 20,
           "avg_cost": 129.114,
-          "last_price": 127.2,
+          "last_price": 127.22,
           "entry_date": "2026-11-26",
-          "market_val": 2544.0,
+          "market_val": 2544.4,
           "weight_pct": 2.56
         },
         "118070": {
@@ -9326,10 +9326,10 @@
           "rating": "AA+",
           "qty": 20,
           "avg_cost": 125.312,
-          "last_price": 125.44,
+          "last_price": 124.9,
           "entry_date": "2026-11-26",
-          "market_val": 2508.8,
-          "weight_pct": 2.53
+          "market_val": 2498.0,
+          "weight_pct": 2.51
         },
         "110102": {
           "ticker": "110102",
@@ -9337,10 +9337,10 @@
           "rating": "AA+",
           "qty": 30,
           "avg_cost": 120.727,
-          "last_price": 119.3,
+          "last_price": 119.7,
           "entry_date": "2026-11-26",
-          "market_val": 3579.0,
-          "weight_pct": 3.6
+          "market_val": 3591.0,
+          "weight_pct": 3.61
         }
       },
       "pending_signal": {
@@ -10171,7 +10171,7 @@
       "genesis_date": "2026-11-25",
       "initial_cash": 100000.0,
       "cash": 32522.41,
-      "total_nav": 99000.71,
+      "total_nav": 99121.61,
       "peak_nav": 100000.0,
       "max_dd_pct": 0.0,
       "total_fees": 333.55,
@@ -10186,10 +10186,10 @@
           "rating": "CC",
           "qty": 10,
           "avg_cost": 89.544,
-          "last_price": 71.27,
+          "last_price": 71.96,
           "entry_date": "2026-11-26",
-          "market_val": 712.7,
-          "weight_pct": 0.72
+          "market_val": 719.6,
+          "weight_pct": 0.73
         },
         "110092": {
           "ticker": "110092",
@@ -10197,9 +10197,9 @@
           "rating": "A-",
           "qty": 20,
           "avg_cost": 78.779,
-          "last_price": 76.09,
+          "last_price": 76.21,
           "entry_date": "2026-11-26",
-          "market_val": 1521.8,
+          "market_val": 1524.2,
           "weight_pct": 1.54
         },
         "110081": {
@@ -10208,9 +10208,9 @@
           "rating": "BBB-",
           "qty": 10,
           "avg_cost": 86.143,
-          "last_price": 84.42,
+          "last_price": 84.29,
           "entry_date": "2026-11-26",
-          "market_val": 844.2,
+          "market_val": 842.9,
           "weight_pct": 0.85
         },
         "118020": {
@@ -10219,9 +10219,9 @@
           "rating": "BBB",
           "qty": 10,
           "avg_cost": 90.745,
-          "last_price": 89.79,
+          "last_price": 90.04,
           "entry_date": "2026-11-26",
-          "market_val": 897.9,
+          "market_val": 900.4,
           "weight_pct": 0.91
         },
         "127061": {
@@ -10230,9 +10230,9 @@
           "rating": "A",
           "qty": 10,
           "avg_cost": 83.822,
-          "last_price": 83.26,
+          "last_price": 83.45,
           "entry_date": "2026-11-26",
-          "market_val": 832.6,
+          "market_val": 834.5,
           "weight_pct": 0.84
         },
         "123175": {
@@ -10241,10 +10241,10 @@
           "rating": "BBB+",
           "qty": 10,
           "avg_cost": 93.897,
-          "last_price": 92.5,
+          "last_price": 92.77,
           "entry_date": "2026-11-26",
-          "market_val": 925.0,
-          "weight_pct": 0.93
+          "market_val": 927.7,
+          "weight_pct": 0.94
         },
         "127089": {
           "ticker": "127089",
@@ -10252,9 +10252,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 93.046,
-          "last_price": 90.77,
+          "last_price": 91.06,
           "entry_date": "2026-11-26",
-          "market_val": 907.7,
+          "market_val": 910.6,
           "weight_pct": 0.92
         },
         "110095": {
@@ -10263,9 +10263,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 99.549,
-          "last_price": 97.69,
+          "last_price": 97.88,
           "entry_date": "2026-11-26",
-          "market_val": 976.9,
+          "market_val": 978.8,
           "weight_pct": 0.99
         },
         "118031": {
@@ -10274,9 +10274,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 97.949,
-          "last_price": 97.07,
+          "last_price": 97.2,
           "entry_date": "2026-11-26",
-          "market_val": 970.7,
+          "market_val": 972.0,
           "weight_pct": 0.98
         },
         "123264": {
@@ -10285,9 +10285,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 111.055,
-          "last_price": 109.87,
+          "last_price": 109.77,
           "entry_date": "2026-11-26",
-          "market_val": 1098.7,
+          "market_val": 1097.7,
           "weight_pct": 1.11
         },
         "110100": {
@@ -10296,9 +10296,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 113.328,
-          "last_price": 113.05,
+          "last_price": 113.21,
           "entry_date": "2026-11-26",
-          "market_val": 1130.5,
+          "market_val": 1132.1,
           "weight_pct": 1.14
         },
         "118066": {
@@ -10307,10 +10307,10 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 114.557,
-          "last_price": 113.26,
+          "last_price": 113.52,
           "entry_date": "2026-11-26",
-          "market_val": 1132.6,
-          "weight_pct": 1.14
+          "market_val": 1135.2,
+          "weight_pct": 1.15
         },
         "123142": {
           "ticker": "123142",
@@ -10318,9 +10318,9 @@
           "rating": "BBB+",
           "qty": 10,
           "avg_cost": 110.655,
-          "last_price": 108.81,
+          "last_price": 108.92,
           "entry_date": "2026-11-26",
-          "market_val": 1088.1,
+          "market_val": 1089.2,
           "weight_pct": 1.1
         },
         "123250": {
@@ -10329,9 +10329,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 114.708,
-          "last_price": 113.65,
+          "last_price": 113.71,
           "entry_date": "2026-11-26",
-          "market_val": 1136.5,
+          "market_val": 1137.1,
           "weight_pct": 1.15
         },
         "111015": {
@@ -10340,9 +10340,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 113.436,
-          "last_price": 113.05,
+          "last_price": 113.37,
           "entry_date": "2026-11-26",
-          "market_val": 1130.5,
+          "market_val": 1133.7,
           "weight_pct": 1.14
         },
         "123216": {
@@ -10351,9 +10351,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 106.553,
-          "last_price": 104.99,
+          "last_price": 105.31,
           "entry_date": "2026-11-26",
-          "market_val": 1049.9,
+          "market_val": 1053.1,
           "weight_pct": 1.06
         },
         "118042": {
@@ -10362,9 +10362,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 115.186,
-          "last_price": 114.01,
+          "last_price": 114.26,
           "entry_date": "2026-11-26",
-          "market_val": 1140.1,
+          "market_val": 1142.6,
           "weight_pct": 1.15
         },
         "123262": {
@@ -10373,9 +10373,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 117.556,
-          "last_price": 115.96,
+          "last_price": 115.92,
           "entry_date": "2026-11-26",
-          "market_val": 1159.6,
+          "market_val": 1159.2,
           "weight_pct": 1.17
         },
         "110085": {
@@ -10384,9 +10384,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 99.389,
-          "last_price": 97.71,
+          "last_price": 97.84,
           "entry_date": "2026-11-26",
-          "market_val": 977.1,
+          "market_val": 978.4,
           "weight_pct": 0.99
         },
         "127103": {
@@ -10395,9 +10395,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 108.844,
-          "last_price": 107.45,
+          "last_price": 107.67,
           "entry_date": "2026-11-26",
-          "market_val": 1074.5,
+          "market_val": 1076.7,
           "weight_pct": 1.09
         },
         "113700": {
@@ -10406,9 +10406,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 113.36,
-          "last_price": 111.89,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 1118.9,
+          "market_val": 1121.0,
           "weight_pct": 1.13
         },
         "113679": {
@@ -10417,9 +10417,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 116.36,
-          "last_price": 114.98,
+          "last_price": 115.39,
           "entry_date": "2026-11-26",
-          "market_val": 1149.8,
+          "market_val": 1153.9,
           "weight_pct": 1.16
         },
         "118010": {
@@ -10428,9 +10428,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 115.057,
-          "last_price": 113.84,
+          "last_price": 114.33,
           "entry_date": "2026-11-26",
-          "market_val": 1138.4,
+          "market_val": 1143.3,
           "weight_pct": 1.15
         },
         "113648": {
@@ -10439,9 +10439,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 104.652,
-          "last_price": 103.36,
+          "last_price": 103.49,
           "entry_date": "2026-11-26",
-          "market_val": 1033.6,
+          "market_val": 1034.9,
           "weight_pct": 1.04
         },
         "118065": {
@@ -10450,9 +10450,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 121.36,
-          "last_price": 120.75,
+          "last_price": 120.94,
           "entry_date": "2026-11-26",
-          "market_val": 1207.5,
+          "market_val": 1209.4,
           "weight_pct": 1.22
         },
         "118068": {
@@ -10461,9 +10461,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 112.656,
-          "last_price": 111.81,
+          "last_price": 112.1,
           "entry_date": "2026-11-26",
-          "market_val": 1118.1,
+          "market_val": 1121.0,
           "weight_pct": 1.13
         },
         "123193": {
@@ -10472,10 +10472,10 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 117.559,
-          "last_price": 115.83,
+          "last_price": 115.44,
           "entry_date": "2026-11-26",
-          "market_val": 1158.3,
-          "weight_pct": 1.17
+          "market_val": 1154.4,
+          "weight_pct": 1.16
         },
         "118034": {
           "ticker": "118034",
@@ -10483,9 +10483,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 104.914,
-          "last_price": 104.61,
+          "last_price": 104.73,
           "entry_date": "2026-11-26",
-          "market_val": 1046.1,
+          "market_val": 1047.3,
           "weight_pct": 1.06
         },
         "118060": {
@@ -10494,9 +10494,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 122.116,
-          "last_price": 121.53,
+          "last_price": 121.77,
           "entry_date": "2026-11-26",
-          "market_val": 1215.3,
+          "market_val": 1217.7,
           "weight_pct": 1.23
         },
         "118039": {
@@ -10505,9 +10505,9 @@
           "rating": "A",
           "qty": 10,
           "avg_cost": 114.197,
-          "last_price": 112.8,
+          "last_price": 113.15,
           "entry_date": "2026-11-26",
-          "market_val": 1128.0,
+          "market_val": 1131.5,
           "weight_pct": 1.14
         },
         "127098": {
@@ -10516,9 +10516,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 111.814,
-          "last_price": 110.1,
+          "last_price": 110.26,
           "entry_date": "2026-11-26",
-          "market_val": 1101.0,
+          "market_val": 1102.6,
           "weight_pct": 1.11
         },
         "123172": {
@@ -10527,9 +10527,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 115.558,
-          "last_price": 113.89,
+          "last_price": 113.98,
           "entry_date": "2026-11-26",
-          "market_val": 1138.9,
+          "market_val": 1139.8,
           "weight_pct": 1.15
         },
         "123288": {
@@ -10538,9 +10538,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 118.642,
-          "last_price": 117.54,
+          "last_price": 117.48,
           "entry_date": "2026-11-26",
-          "market_val": 1175.4,
+          "market_val": 1174.8,
           "weight_pct": 1.19
         },
         "123144": {
@@ -10549,10 +10549,10 @@
           "rating": "A",
           "qty": 10,
           "avg_cost": 108.638,
-          "last_price": 107.15,
+          "last_price": 107.65,
           "entry_date": "2026-11-26",
-          "market_val": 1071.5,
-          "weight_pct": 1.08
+          "market_val": 1076.5,
+          "weight_pct": 1.09
         },
         "113692": {
           "ticker": "113692",
@@ -10560,9 +10560,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 118.259,
-          "last_price": 116.98,
+          "last_price": 117.14,
           "entry_date": "2026-11-26",
-          "market_val": 1169.8,
+          "market_val": 1171.4,
           "weight_pct": 1.18
         },
         "118024": {
@@ -10571,9 +10571,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 114.477,
-          "last_price": 113.59,
+          "last_price": 113.58,
           "entry_date": "2026-11-26",
-          "market_val": 1135.9,
+          "market_val": 1135.8,
           "weight_pct": 1.15
         },
         "127112": {
@@ -10582,9 +10582,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 120.74,
-          "last_price": 118.65,
+          "last_price": 118.81,
           "entry_date": "2026-11-26",
-          "market_val": 1186.5,
+          "market_val": 1188.1,
           "weight_pct": 1.2
         },
         "118073": {
@@ -10593,10 +10593,10 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 120.41,
-          "last_price": 119.04,
+          "last_price": 119.5,
           "entry_date": "2026-11-26",
-          "market_val": 1190.4,
-          "weight_pct": 1.2
+          "market_val": 1195.0,
+          "weight_pct": 1.21
         },
         "110093": {
           "ticker": "110093",
@@ -10604,9 +10604,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 106.986,
-          "last_price": 106.02,
+          "last_price": 106.06,
           "entry_date": "2026-11-26",
-          "market_val": 1060.2,
+          "market_val": 1060.6,
           "weight_pct": 1.07
         },
         "113694": {
@@ -10615,9 +10615,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 117.849,
-          "last_price": 116.41,
+          "last_price": 116.69,
           "entry_date": "2026-11-26",
-          "market_val": 1164.1,
+          "market_val": 1166.9,
           "weight_pct": 1.18
         },
         "113693": {
@@ -10626,9 +10626,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 110.159,
-          "last_price": 109.05,
+          "last_price": 108.94,
           "entry_date": "2026-11-26",
-          "market_val": 1090.5,
+          "market_val": 1089.4,
           "weight_pct": 1.1
         },
         "127049": {
@@ -10637,9 +10637,9 @@
           "rating": "AAA",
           "qty": 10,
           "avg_cost": 103.117,
-          "last_price": 101.75,
+          "last_price": 101.9,
           "entry_date": "2026-11-26",
-          "market_val": 1017.5,
+          "market_val": 1019.0,
           "weight_pct": 1.03
         },
         "118072": {
@@ -10648,10 +10648,10 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 125.083,
-          "last_price": 123.22,
+          "last_price": 123.47,
           "entry_date": "2026-11-26",
-          "market_val": 1232.2,
-          "weight_pct": 1.24
+          "market_val": 1234.7,
+          "weight_pct": 1.25
         },
         "123271": {
           "ticker": "123271",
@@ -10659,9 +10659,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 125.061,
-          "last_price": 125.02,
+          "last_price": 124.79,
           "entry_date": "2026-11-26",
-          "market_val": 1250.2,
+          "market_val": 1247.9,
           "weight_pct": 1.26
         },
         "118015": {
@@ -10670,9 +10670,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 117.679,
-          "last_price": 116.87,
+          "last_price": 117.14,
           "entry_date": "2026-11-26",
-          "market_val": 1168.7,
+          "market_val": 1171.4,
           "weight_pct": 1.18
         },
         "111018": {
@@ -10681,9 +10681,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 116.558,
-          "last_price": 115.13,
+          "last_price": 115.42,
           "entry_date": "2026-11-26",
-          "market_val": 1151.3,
+          "market_val": 1154.2,
           "weight_pct": 1.16
         },
         "118052": {
@@ -10692,9 +10692,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 127.975,
-          "last_price": 123.51,
+          "last_price": 123.94,
           "entry_date": "2026-11-26",
-          "market_val": 1235.1,
+          "market_val": 1239.4,
           "weight_pct": 1.25
         },
         "123252": {
@@ -10703,9 +10703,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 115.9,
-          "last_price": 114.03,
+          "last_price": 114.25,
           "entry_date": "2026-11-26",
-          "market_val": 1140.3,
+          "market_val": 1142.5,
           "weight_pct": 1.15
         },
         "111025": {
@@ -10714,9 +10714,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 124.062,
-          "last_price": 122.97,
+          "last_price": 123.15,
           "entry_date": "2026-11-26",
-          "market_val": 1229.7,
+          "market_val": 1231.5,
           "weight_pct": 1.24
         },
         "127068": {
@@ -10725,9 +10725,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 103.541,
-          "last_price": 102.02,
+          "last_price": 102.18,
           "entry_date": "2026-11-26",
-          "market_val": 1020.2,
+          "market_val": 1021.8,
           "weight_pct": 1.03
         },
         "110087": {
@@ -10736,9 +10736,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 108.236,
-          "last_price": 107.27,
+          "last_price": 107.5,
           "entry_date": "2026-11-26",
-          "market_val": 1072.7,
+          "market_val": 1075.0,
           "weight_pct": 1.08
         },
         "111009": {
@@ -10747,9 +10747,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 108.543,
-          "last_price": 107.55,
+          "last_price": 107.81,
           "entry_date": "2026-11-26",
-          "market_val": 1075.5,
+          "market_val": 1078.1,
           "weight_pct": 1.09
         },
         "118022": {
@@ -10758,9 +10758,9 @@
           "rating": "AA",
           "qty": 10,
           "avg_cost": 109.359,
-          "last_price": 108.52,
+          "last_price": 108.56,
           "entry_date": "2026-11-26",
-          "market_val": 1085.2,
+          "market_val": 1085.6,
           "weight_pct": 1.1
         },
         "123155": {
@@ -10769,10 +10769,10 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 115.958,
-          "last_price": 114.32,
+          "last_price": 114.73,
           "entry_date": "2026-11-26",
-          "market_val": 1143.2,
-          "weight_pct": 1.15
+          "market_val": 1147.3,
+          "weight_pct": 1.16
         },
         "123274": {
           "ticker": "123274",
@@ -10780,10 +10780,10 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 123.12,
-          "last_price": 121.13,
+          "last_price": 121.52,
           "entry_date": "2026-11-26",
-          "market_val": 1211.3,
-          "weight_pct": 1.22
+          "market_val": 1215.2,
+          "weight_pct": 1.23
         },
         "113701": {
           "ticker": "113701",
@@ -10791,9 +10791,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 125.683,
-          "last_price": 124.94,
+          "last_price": 125.26,
           "entry_date": "2026-11-26",
-          "market_val": 1249.4,
+          "market_val": 1252.6,
           "weight_pct": 1.26
         },
         "113703": {
@@ -10802,9 +10802,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 125.262,
-          "last_price": 124.8,
+          "last_price": 125.19,
           "entry_date": "2026-11-26",
-          "market_val": 1248.0,
+          "market_val": 1251.9,
           "weight_pct": 1.26
         },
         "118063": {
@@ -10813,9 +10813,9 @@
           "rating": "AA+",
           "qty": 10,
           "avg_cost": 126.563,
-          "last_price": 123.32,
+          "last_price": 123.93,
           "entry_date": "2026-11-26",
-          "market_val": 1233.2,
+          "market_val": 1239.3,
           "weight_pct": 1.25
         },
         "113656": {
@@ -10824,9 +10824,9 @@
           "rating": "A+",
           "qty": 10,
           "avg_cost": 112.062,
-          "last_price": 110.92,
+          "last_price": 111.08,
           "entry_date": "2026-11-26",
-          "market_val": 1109.2,
+          "market_val": 1110.8,
           "weight_pct": 1.12
         },
         "127044": {
@@ -10835,9 +10835,9 @@
           "rating": "AA-",
           "qty": 10,
           "avg_cost": 110.713,
-          "last_price": 109.96,
+          "last_price": 110.0,
           "entry_date": "2026-11-26",
-          "market_val": 1099.6,
+          "market_val": 1100.0,
           "weight_pct": 1.11
         }
       },
