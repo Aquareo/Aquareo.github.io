@@ -700,13 +700,24 @@ def build_clean_html(data: dict) -> str:
     .tab-btn.active { color: var(--ink); font-weight: 600; border-bottom-color: #fd8c73; }
     .tab-num { font-size: 11px; color: var(--light); font-weight: 600; }
 
-    .global-filters { display: flex; align-items: center; gap: 10px; padding-bottom: 8px; flex-wrap: wrap; }
-    .seg { display: inline-flex; background: var(--subtle); border: 1px solid var(--border); border-radius: 6px; padding: 2px; flex-wrap: wrap; }
-    .seg-btn {
-      border: none; background: transparent; padding: 4px 10px; font-size: 12px; font-weight: 500;
-      color: var(--muted); border-radius: 4px; cursor: pointer; white-space: nowrap;
+    .global-filters { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; flex-wrap: wrap; }
+    .sel-hdr {
+      border: 1px solid var(--border); background: var(--subtle); border-radius: 6px;
+      padding: 5px 10px; font-size: 12px; font-weight: 600; color: var(--ink); cursor: pointer;
     }
-    .seg-btn.active { background: var(--surface); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(31,35,40,0.08); }
+    .sel-hdr:hover { border-color: var(--muted); background: var(--surface); }
+    .sub-tabs {
+      display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 12px; margin-bottom: 14px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    }
+    .sub-tab-btn {
+      appearance: none; border: 1px solid transparent; background: transparent; color: var(--muted);
+      padding: 5px 11px; border-radius: 5px; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap;
+    }
+    .sub-tab-btn:hover { color: var(--ink); background: var(--subtle); }
+    .sub-tab-btn.active { background: var(--blue-soft); border-color: #b6e3ff; color: var(--blue); font-weight: 600; }
+    .sub-pane { display: none; }
+    .sub-pane.active { display: block; }
 
     /* Shell */
     .shell { max-width: 1200px; margin: 0 auto; padding: 18px 22px 56px; }
@@ -845,6 +856,9 @@ def build_clean_html(data: dict) -> str:
       .kpi-grid { grid-template-columns: 1fr 1fr; }
       .grid-2, .grid-overview { grid-template-columns: 1fr; }
       .shell, .header-inner { padding-left: 12px; padding-right: 12px; }
+      .brand-sub { display: none; }
+      .temp-metrics { gap: 10px 14px; }
+      .global-filters { width: 100%; justify-content: flex-start; }
     }
   </style>
 </head>
@@ -874,17 +888,17 @@ def build_clean_html(data: dict) -> str:
         <button class="tab-btn" data-tab="research"><span class="tab-num mono">05</span>因子研究</button>
       </nav>
       <div class="global-filters">
-        <div class="seg" id="poolSeg" title="点时信用评级过滤（严格公告次日生效）">
-          <button class="seg-btn active" data-pool="all">全市场</button>
-          <button class="seg-btn" data-pool="aa_minus">AA-及以上</button>
-          <button class="seg-btn" data-pool="aa">AA及以上</button>
-          <button class="seg-btn" data-pool="aa_plus">AA+及以上</button>
-          <button class="seg-btn" data-pool="aaa">仅AAA</button>
-        </div>
-        <div class="seg" id="riskSeg" title="因果剔除：历史ST正股 + 违约预警/<=BBB+ + 20日中位成交<500万">
-          <button class="seg-btn active" data-risk="raw">不剔除</button>
-          <button class="seg-btn" data-risk="filtered">剔除 ST·违约·低流</button>
-        </div>
+        <select class="sel-hdr" id="poolSel" title="点时信用评级过滤（严格公告次日生效）">
+          <option value="all">评级池：全市场</option>
+          <option value="aa_minus" selected>评级池：AA-及以上</option>
+          <option value="aa">评级池：AA及以上</option>
+          <option value="aa_plus">评级池：AA+及以上</option>
+          <option value="aaa">评级池：仅AAA</option>
+        </select>
+        <select class="sel-hdr" id="riskSel" title="因果剔除：历史ST正股 + 违约预警/<=BBB+ + 20日中位成交<500万">
+          <option value="filtered" selected>风控：剔除 ST·违约·低流</option>
+          <option value="raw">风控：不剔除风险标的</option>
+        </select>
       </div>
     </div>
   </div>
@@ -938,14 +952,9 @@ def build_clean_html(data: dict) -> str:
         <div class="card-head">
           <div>
             <h2 class="card-title" id="ovChartTitle">核心策略净值对比（0.10% 单边成本）</h2>
-            <span class="card-sub">默认展示 2023 年至今（完整保留 2020–2026）；可点击图例隐藏/显示</span>
+            <span class="card-sub">默认展示 2023 年至今（完整保留 2020–2026）；点击下方策略行可切换上方 KPI</span>
           </div>
-          <div class="pills" id="ovPresetPills">
-            <button class="pill active" data-ovp="lsm">原始 LSM</button>
-            <button class="pill" data-ovp="balanced">Balanced(20只)</button>
-            <button class="pill" data-ovp="defensive">Defensive(AA)</button>
-            <button class="pill" data-ovp="dl">传统双低</button>
-          </div>
+          <button class="btn-link" data-jump="backtest">参数回测工作台 →</button>
         </div>
         <div class="time-bar">
           <div class="pills" data-tbar="ov">
@@ -993,17 +1002,17 @@ def build_clean_html(data: dict) -> str:
     </div>
 
     <div class="card">
-      <div class="card-head">
-        <h2 class="card-title">最终验证结论与候选策略定位（不以七年历史峰值挑选参数）</h2>
-        <button class="btn-link" data-jump="research">查看专业因子对照、择时与审计 →</button>
-      </div>
-      <div class="card-body">
-        <ul class="takeaway-list">
-          <li><strong>三套候选实测筛选结果：</strong><code>Enhanced Growth (N=20, AA-)</code> 年化 +12.61% / 回撤 -25.39% 未能超越同池原始 LSM（+14.71% / -22.16%），<strong>未通过验证已淘汰</strong>；<strong>Enhanced Balanced</strong>（AA- 剔除风险 · 50/50 · 10D · 20/30 缓冲 · 固定 20 只等权）与 <strong>Enhanced Defensive</strong>（AA 以上 50/50 · 10D · 20/30 · 20 只逆波）在 ¥10 万 10 张整手实盘分别录得 91.1%–91.7% 资金利用率与 +12.32% / +12.73% 年化（回撤 -18.47% / -15.05%），但二者近 1 年受双低风格拖累录得 -7.97% / -9.82%，均在 ¥10 万模拟账户长期前瞻验证。</li>
-          <li><strong>专业对照与因子来源：</strong>LSM 与传统双低截面相关性仅 <code>+0.12</code>，形成显著互补；但在同时控制 BS 偏离、30 步 CRR 二叉树与 YTM 的多元 Fama-MacBeth 回归中，LSM 独立斜率因定价共线性（vs 二叉树相关 +0.63）衰减至 t=+0.49，证明其优势在于单期排序 Sharpe（0.97 vs BS 0.90 / 二叉树 0.81）与更低换手，而非完全正交的新因子。</li>
-          <li><strong>估值择时与过拟合防线：</strong>滚动估值分位分档在全市场 LSM 上将回撤从 -21.05% 降至 -14.91%（Sharpe 1.01→1.05），但 450 组试验 CSCV 过拟合概率 <code>PBO=11.4%</code>、滚动 2 年短窗样本外夏普仅 <code>0.03</code>，需以实盘前瞻为准。</li>
-        </ul>
-      </div>
+      <details class="fold-card">
+        <summary>研究验证结论速览（Growth淘汰 · Balanced/Defensive在¥10万实盘运行 · 完整实证见「05 因子研究」）</summary>
+        <div class="card-body">
+          <ul class="takeaway-list">
+            <li><strong>三套候选实测筛选结果：</strong><code>Enhanced Growth (N=20, AA-)</code> 年化 +12.61% / 回撤 -25.39% 未能超越同池原始 LSM（+14.71% / -22.16%），<strong>未通过验证已淘汰</strong>；<strong>Enhanced Balanced</strong>（AA- 剔除风险 · 50/50 · 10D · 20/30 缓冲 · 固定 20 只等权）与 <strong>Enhanced Defensive</strong>（AA 以上 50/50 · 10D · 20/30 · 20 只逆波）在 ¥10 万 10 张整手实盘分别录得 91.1%–91.7% 资金利用率与 +12.32% / +12.73% 年化（回撤 -18.47% / -15.05%），但二者近 1 年受双低风格拖累录得 -7.97% / -9.82%，均在 ¥10 万模拟账户长期前瞻验证。</li>
+            <li><strong>专业对照与因子来源：</strong>LSM 与传统双低截面相关性仅 <code>+0.12</code>，形成显著互补；但在同时控制 BS 偏离、30 步 CRR 二叉树与 YTM 的多元 Fama-MacBeth 回归中，LSM 独立斜率因定价共线性（vs 二叉树相关 +0.63）衰减至 t=+0.49，证明其优势在于单期排序 Sharpe（0.97 vs BS 0.90 / 二叉树 0.81）与更低换手，而非完全正交的新因子。</li>
+            <li><strong>估值择时与过拟合防线：</strong>滚动估值分位分档在全市场 LSM 上将回撤从 -21.05% 降至 -14.91%（Sharpe 1.01→1.05），但 450 组试验 CSCV 过拟合概率 <code>PBO=11.4%</code>、滚动 2 年短窗样本外夏普仅 <code>0.03</code>，需以实盘前瞻为准。</li>
+          </ul>
+          <div style="margin-top:10px;"><button class="btn-link" data-jump="research">前往 05 因子研究查看全部检验、450组消融与代码审计 →</button></div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -1088,39 +1097,29 @@ def build_clean_html(data: dict) -> str:
         </select>
       </div>
       <div class="param-strip">
-        <div class="param-group">
-          <span class="param-lbl">LSM/双低</span>
-          <div class="pills" id="btWeightPills">
-            <button class="pill" data-w="100/0">100/0 纯LSM</button>
-            <button class="pill" data-w="75/25">75/25</button>
-            <button class="pill active" data-w="50/50">50/50 均衡</button>
-            <button class="pill" data-w="25/75">25/75</button>
-            <button class="pill" data-w="0/100">0/100 纯双低</button>
-          </div>
-        </div>
-        <div class="param-group">
-          <span class="param-lbl">调仓</span>
-          <div class="pills" id="btFreqPills">
-            <button class="pill active" data-f="5">5D</button>
-            <button class="pill" data-f="10">10D</button>
-            <button class="pill" data-f="20">20D</button>
-          </div>
-        </div>
-        <div class="param-group">
-          <span class="param-lbl">缓冲</span>
-          <div class="pills" id="btBufPills">
-            <button class="pill" data-b="none">无缓冲</button>
-            <button class="pill active" data-b="buf_20_30">20/30 缓冲</button>
-            <button class="pill" data-b="buf_20_40">20/40 缓冲</button>
-          </div>
-        </div>
-        <div class="param-group">
-          <span class="param-lbl">成本</span>
-          <div class="pills" id="btCostPills">
-            <button class="pill" data-c="0.05%">0.05%</button>
-            <button class="pill active" data-c="0.10%">0.10%</button>
-            <button class="pill" data-c="0.20%">0.20%</button>
-          </div>
+        <div class="filter-row">
+          <select class="sel" id="btWeightSel" title="LSM / 传统双低 因子权重">
+            <option value="100/0">因子：100/0 纯LSM</option>
+            <option value="75/25">因子：75/25 偏LSM</option>
+            <option value="50/50" selected>因子：50/50 均衡</option>
+            <option value="25/75">因子：25/75 偏双低</option>
+            <option value="0/100">因子：0/100 纯双低</option>
+          </select>
+          <select class="sel" id="btFreqSel" title="调仓周期">
+            <option value="5" selected>调仓：每 5 交易日</option>
+            <option value="10">调仓：每 10 交易日</option>
+            <option value="20">调仓：每 20 交易日</option>
+          </select>
+          <select class="sel" id="btBufSel" title="缓冲区机制">
+            <option value="none">缓冲：无缓冲 (Top20%)</option>
+            <option value="buf_20_30" selected>缓冲：20/30 缓出</option>
+            <option value="buf_20_40">缓冲：20/40 缓出</option>
+          </select>
+          <select class="sel" id="btCostSel" title="单边交易成本">
+            <option value="0.05%">成本：0.05% 单边</option>
+            <option value="0.10%" selected>成本：0.10% 单边</option>
+            <option value="0.20%">成本：0.20% 单边</option>
+          </select>
         </div>
       </div>
       <div class="card-body">
@@ -1135,18 +1134,23 @@ def build_clean_html(data: dict) -> str:
           <div id="btNavSvg"></div>
           <div class="chart-tip mono" id="btTip"></div>
         </div>
-        <div style="font-size:11px;color:var(--muted);margin-top:8px;" id="btScopeNote">口径说明：当前净值为 2020 年起连续运行账户在所选起止日截取并归一化（含既定持仓与缓冲延续状态），与从 t0 全现金新建仓存在微弱首日摩擦差异。</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;" id="btScopeNote">口径说明：当前净值为 2020 年起连续运行账户在所选起止日截取并归一化（含既定持仓与缓冲延续状态）。</div>
       </div>
     </div>
 
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2 class="card-title">分年度表现对照（全历史完整逐年记录）</h2>
-            <span class="card-sub">所选参数组合 vs 原始 LSM vs 纯双低（同池同成本口径）</span>
-          </div>
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2 class="card-title">回测分解对比（全历史口径）</h2>
+          <span class="card-sub">切换查看逐年收益、跨 5 档信用池对照或 12 个月滚动超额曲线</span>
         </div>
+        <div class="pills" id="btSubTabs">
+          <button class="pill active" data-bts="annual">分年度表现</button>
+          <button class="pill" data-bts="pools">跨评级池对照</button>
+          <button class="pill" data-bts="excess">滚动12月超额</button>
+        </div>
+      </div>
+      <div class="sub-pane active" id="btPaneAnnual">
         <div class="table-wrap">
           <table>
             <thead><tr><th>年份</th><th class="num">所选参数 (MDD)</th><th class="num">原始 LSM</th><th class="num">纯双低</th></tr></thead>
@@ -1154,24 +1158,19 @@ def build_clean_html(data: dict) -> str:
           </table>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2 class="card-title">滚动 12 个月超额收益走势 (vs 同池等权基准)</h2>
-            <span class="card-sub">检验 2020–2026 不同市场阶段 Alpha 稳定性</span>
-          </div>
+      <div class="sub-pane" id="btPanePools">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>当前参数跨评级池对照</th><th class="num">全期年化</th><th class="num">回撤</th><th class="num">Sharpe</th><th class="num">换手</th></tr>
+            </thead>
+            <tbody id="bt5PoolBody"></tbody>
+          </table>
         </div>
+      </div>
+      <div class="sub-pane" id="btPaneExcess">
         <div class="card-body">
           <div id="btRollExcessSvg"></div>
-          <div class="table-wrap" style="margin-top:8px;border-top:1px solid var(--border-soft);">
-            <table>
-              <thead>
-                <tr><th>当前参数跨评级池对照</th><th class="num">全期年化</th><th class="num">回撤</th><th class="num">Sharpe</th><th class="num">换手</th></tr>
-              </thead>
-              <tbody id="bt5PoolBody"></tbody>
-            </table>
-          </div>
         </div>
       </div>
     </div>
@@ -1194,16 +1193,8 @@ def build_clean_html(data: dict) -> str:
           <span class="badge b-warn" id="ppStatusBadge">前瞻运行中</span>
         </div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>虚拟账户 (初始 ¥100,000)</th><th>执行口径</th><th class="num">当前总资产</th><th class="num">累计盈亏</th><th class="num">可用现金 (仓位%)</th><th class="num">最大回撤</th><th class="num">累计费用</th><th>待执行信号状态</th></tr>
-          </thead>
-          <tbody id="ppCohortBody"></tbody>
-        </table>
-      </div>
       <div class="param-strip">
-        <span class="param-lbl">查看账户明细</span>
+        <span class="param-lbl">选择账户</span>
         <div class="pills" id="ppAccPills"></div>
       </div>
       <div class="card-body">
@@ -1217,14 +1208,21 @@ def build_clean_html(data: dict) -> str:
       </div>
     </div>
 
-    <div class="grid-2">
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2 class="card-title" id="ppHoldTitle">当前模拟持仓明细</h2>
-            <span class="card-sub">严格按 1 手 = 10 张整数成交；创设首日信号队列等待下一交易日开盘成交</span>
-          </div>
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2 class="card-title" id="ppHoldTitle">账户实盘明细</h2>
+          <span class="card-sub">严格按 1 手 = 10 张整数成交；切换标签查看持仓、待执行信号、成交、资金或组内各账户横向对比</span>
         </div>
+        <div class="pills" id="ppDetailTabs">
+          <button class="pill active" data-ppd="holdings">当前持仓</button>
+          <button class="pill" data-ppd="pending">待执行信号</button>
+          <button class="pill" data-ppd="trades">历史成交</button>
+          <button class="pill" data-ppd="cash">资金流水</button>
+          <button class="pill" data-ppd="compare">各账户对比</button>
+        </div>
+      </div>
+      <div class="sub-pane active" id="ppPaneHoldings">
         <div class="table-wrap">
           <table>
             <thead><tr><th>标的</th><th>评级</th><th class="num">数量(张)</th><th class="num">成本价</th><th class="num">现价</th><th class="num">占比</th><th class="num">浮盈</th></tr></thead>
@@ -1232,23 +1230,21 @@ def build_clean_html(data: dict) -> str:
           </table>
         </div>
       </div>
-
-      <div class="card">
-        <div class="card-head">
-          <div>
-            <h2 class="card-title">待执行信号队列 & 成交/资金流水</h2>
-            <span class="card-sub">区分信号日、成交日与账本现金变化</span>
-          </div>
-          <div class="pills" id="ppLogPills">
-            <button class="pill active" data-ppl="pending">待执行信号</button>
-            <button class="pill" data-ppl="trades">历史成交</button>
-            <button class="pill" data-ppl="cash">资金流水</button>
-          </div>
-        </div>
+      <div class="sub-pane" id="ppPaneLog">
         <div class="table-wrap">
           <table>
             <thead id="ppLogHead"></thead>
             <tbody id="ppLogBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="sub-pane" id="ppPaneCompare">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>虚拟账户 (点击行切换)</th><th>执行口径</th><th class="num">当前总资产</th><th class="num">累计盈亏</th><th class="num">可用现金 (仓位%)</th><th class="num">最大回撤</th><th class="num">累计费用</th><th>待执行信号状态</th></tr>
+            </thead>
+            <tbody id="ppCohortBody"></tbody>
           </table>
         </div>
       </div>
@@ -1271,6 +1267,14 @@ def build_clean_html(data: dict) -> str:
 
   <!-- 05 FACTOR RESEARCH -->
   <section class="view-pane" id="view-research">
+    <div class="sub-tabs" id="resSubTabs">
+      <button class="sub-tab-btn active" data-rs="factors">① 因子 IC·五分组·FMB</button>
+      <button class="sub-tab-btn" data-rs="peers">② 专业策略横向对照</button>
+      <button class="sub-tab-btn" data-rs="timing">③ 市场估值与动态仓位</button>
+      <button class="sub-tab-btn" data-rs="audit">④ 消融·样本外·450组·审计</button>
+    </div>
+
+    <div class="sub-pane" id="resPanePeers">
     <!-- 5A. Peer Benchmarks & Incremental Power -->
     <div class="card">
       <div class="card-head">
@@ -1317,6 +1321,9 @@ def build_clean_html(data: dict) -> str:
       </details>
     </div>
 
+    </div>
+
+    <div class="sub-pane" id="resPaneTiming">
     <!-- 5B. Market Valuation Regimes & Position Sizing -->
     <div class="card">
       <div class="card-head">
@@ -1350,6 +1357,9 @@ def build_clean_html(data: dict) -> str:
       </div>
     </div>
 
+    </div>
+
+    <div class="sub-pane active" id="resPaneFactors">
     <!-- 5C. Time-Synced Factor IC / Quintiles / FMB -->
     <div class="card">
       <div class="card-head">
@@ -1383,6 +1393,9 @@ def build_clean_html(data: dict) -> str:
       </div>
     </div>
 
+    </div>
+
+    <div class="sub-pane" id="resPaneAudit">
     <!-- 5D. Stepwise Attribution & Walk-Forward OOS -->
     <div class="card">
       <div class="card-head">
@@ -1488,6 +1501,7 @@ def build_clean_html(data: dict) -> str:
         </div>
       </details>
     </div>
+    </div>
   </section>
 
   <footer>
@@ -1522,12 +1536,12 @@ const POOLS = {
 };
 
 let curTab = "overview";
-let curPool = "all";
-let curRisk = "raw";
+let curPool = "aa_minus";
+let curRisk = "filtered";
 let curOvPreset = "lsm";
 let curTimeRange = "since2023";
 let customStart = "2023-01-01";
-let customEnd = DATA.date || "2026-11-25";
+let customEnd = DATA.date || "2026-11-26";
 let hiddenSeries = new Set();
 
 let btWeight = "50/50";
@@ -1535,11 +1549,13 @@ let btFreq = 5;
 let btBuf = "buf_20_30";
 let btCost = "0.10%";
 let btOverlay = "none";
+let btSubTab = "annual";
 
 let ppCohort = "aa_minus";
 let ppAccId = "aam_balanced_v1";
-let ppLogTab = "pending";
+let ppDetailTab = "holdings";
 
+let curResSub = "factors";
 let curPeerScope = "aa_minus_filtered";
 let curRegMode = "price_buckets";
 let curRegH = "60";
@@ -1917,14 +1933,16 @@ function renderOverview() {
   ], 540, 215, 84);
 
   document.getElementById("ovMiniBody").innerHTML = [
-    ["同池原始 LSM (100/0·5D)", sLsm],
-    ["Enhanced Balanced (AA-·20只)", sBal],
-    ["Enhanced Defensive (AA·20只逆波)", sDef],
-    ["同池传统双低 (0/100·5D)", sDl],
-    ["同池等权基准", sEq],
-  ].map(([nm, st]) => {
+    ["lsm", "同池原始 LSM (100/0·5D)", sLsm],
+    ["balanced", "Enhanced Balanced (AA-·20只)", sBal],
+    ["defensive", "Enhanced Defensive (AA·20只逆波)", sDef],
+    ["dl", "同池传统双低 (0/100·5D)", sDl],
+    ["eq", "同池等权基准", sEq],
+  ].map(([k, nm, st]) => {
     const ex = typeof st.ann_ret === "number" && typeof sEq.ann_ret === "number" ? st.ann_ret - sEq.ann_ret : null;
-    return `<tr><td><strong>${nm}</strong></td><td class="num mono ${cls(st.ann_ret)}">${signed(st.ann_ret)}</td><td class="num mono neg">${fmt(st.mdd)}%</td><td class="num mono">${fmt(st.sharpe, 2)}</td><td class="num mono">${fmt(st.calmar, 2)}</td><td class="num mono ${cls(ex)}">${nm.includes("基准") ? "—" : signed(ex)}</td></tr>`;
+    const active = k === curOvPreset;
+    const clickAttr = k !== "eq" ? `style="cursor:pointer;" onclick="curOvPreset='${k}';renderOverview();"` : "";
+    return `<tr class="${active ? "hl-row" : ""}" ${clickAttr}><td><strong>${nm}</strong></td><td class="num mono ${cls(st.ann_ret)}">${signed(st.ann_ret)}</td><td class="num mono neg">${fmt(st.mdd)}%</td><td class="num mono">${fmt(st.sharpe, 2)}</td><td class="num mono">${fmt(st.calmar, 2)}</td><td class="num mono ${cls(ex)}">${k==="eq" ? "—" : signed(ex)}</td></tr>`;
   }).join("");
 
   document.getElementById("ovTopTitle").textContent = `当前低估转债 Top 10（${POOLS[curPool].label}）`;
@@ -2098,7 +2116,7 @@ function renderPaper() {
     const pSig = a.pending_signal;
     const sigStr = pSig ? `${pSig.signal_date} (${pSig.status === "PENDING" ? "待下一交易日开盘" : "已于"+pSig.exec_date+"成交"})` : "无";
     const active = a.account_id === ppAccId;
-    return `<tr class="${active ? "hl-row" : ""}" style="cursor:pointer;" onclick="ppAccId='${a.account_id}';renderPaper();">
+    return `<tr class="${active ? "hl-row" : ""}" style="cursor:pointer;" onclick="ppAccId='${a.account_id}';ppDetailTab='holdings';renderPaper();">
       <td><strong>${a.name}</strong><span class="sub">${a.desc}</span></td>
       <td><span class="badge ${a.execution_mode==="theoretical_fractional"?"b-warn":"b-sig-y"}">${a.execution_mode==="theoretical_fractional"?"理论全池零整":"10张整数手"}</span></td>
       <td class="num mono"><strong>¥${a.total_nav.toLocaleString("zh-CN",{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></td>
@@ -2113,6 +2131,10 @@ function renderPaper() {
   document.getElementById("ppAccPills").innerHTML = cohortList.map(a =>
     `<button class="pill ${a.account_id===ppAccId?"active":""}" onclick="ppAccId='${a.account_id}';renderPaper();">${a.name}</button>`
   ).join("");
+  document.querySelectorAll("#ppDetailTabs .pill").forEach(b => b.classList.toggle("active", b.dataset.ppd === ppDetailTab));
+  document.getElementById("ppPaneHoldings").classList.toggle("active", ppDetailTab === "holdings");
+  document.getElementById("ppPaneLog").classList.toggle("active", ppDetailTab === "pending" || ppDetailTab === "trades" || ppDetailTab === "cash");
+  document.getElementById("ppPaneCompare").classList.toggle("active", ppDetailTab === "compare");
 
   const curA = accs[ppAccId];
   if (curA) {
@@ -2138,7 +2160,7 @@ function renderPaper() {
     }
 
     const hList = Object.values(curA.holdings || {}).sort((a, b) => (b.market_val || 0) - (a.market_val || 0));
-    document.getElementById("ppHoldTitle").textContent = `${curA.name} · 当前实盘模拟持仓`;
+    document.getElementById("ppHoldTitle").textContent = `${curA.name} · 模拟账本明细`;
     document.getElementById("ppHoldBody").innerHTML = hList.map(h => {
       const pnl = h.avg_cost > 0 ? ((h.last_price - h.avg_cost) / h.avg_cost) * 100 : 0;
       return `<tr><td><strong>${h.name}</strong><span class="sub mono">${h.ticker} (${h.entry_date})</span></td><td>${ratingBadge(h.rating)}</td><td class="num mono">${fmt(h.qty,0)}</td><td class="num mono">¥${fmt(h.avg_cost)}</td><td class="num mono">¥${fmt(h.last_price)}</td><td class="num mono">${fmt(h.weight_pct,1)}%</td><td class="num mono ${cls(pnl)}">${signed(pnl)}</td></tr>`;
@@ -2146,7 +2168,7 @@ function renderPaper() {
 
     const lHead = document.getElementById("ppLogHead");
     const lBody = document.getElementById("ppLogBody");
-    if (ppLogTab === "pending") {
+    if (ppDetailTab === "pending") {
       lHead.innerHTML = `<tr><th>拟买入目标券</th><th>评级</th><th class="num">信号收盘价</th><th class="num">目标仓位</th><th class="num">拟配(约张)</th></tr>`;
       const targets = (ps && ps.top_targets) || [];
       const expBudget = curA.total_nav * ((ps && ps.target_exposure) || 1.0);
@@ -2154,12 +2176,12 @@ function renderPaper() {
         const estLots = Math.floor((expBudget * (t.weight_pct / 100.0)) / Math.max(10.0, t.close * 10.0));
         return `<tr><td><strong>${t.name}</strong> <span class="sub mono">${t.ticker} · 信号 ${ps.signal_date} (${ps.status})</span></td><td>${ratingBadge(t.rating)}</td><td class="num mono">¥${fmt(t.close)}</td><td class="num mono">${fmt(t.weight_pct,2)}%</td><td class="num mono">${estLots * 10} 张</td></tr>`;
       }).join("") || `<tr><td colspan="5" style="text-align:center;color:var(--muted);">当前无待执行信号</td></tr>`;
-    } else if (ppLogTab === "trades") {
+    } else if (ppDetailTab === "trades") {
       lHead.innerHTML = `<tr><th>成交日 (信号日)</th><th>标的</th><th>方向</th><th class="num">数量</th><th class="num">开盘价</th><th class="num">手续费</th></tr>`;
       lBody.innerHTML = (curA.trades || []).slice(0, 60).map(t =>
         `<tr><td class="mono">${t.date} <span class="sub">sig:${t.signal_date}</span></td><td><strong>${t.name}</strong> <span class="sub mono">${t.ticker}</span></td><td><span class="badge ${t.side.includes("BUY")?"b-aaa":"b-warn"}">${t.side}</span></td><td class="num mono">${t.qty}张</td><td class="num mono">¥${fmt(t.price,3)}</td><td class="num mono">¥${fmt(t.fee)}</td></tr>`
       ).join("") || `<tr><td colspan="6" style="text-align:center;color:var(--muted);">待下一交易日开盘执行首次信号后生成真实成交流水</td></tr>`;
-    } else {
+    } else if (ppDetailTab === "cash") {
       lHead.innerHTML = `<tr><th>日期</th><th>类型</th><th class="num">现金变动</th><th class="num">账户现金余额</th><th>摘要</th></tr>`;
       lBody.innerHTML = (curA.cash_log || []).slice(0, 60).map(c =>
         `<tr><td class="mono">${c.date}</td><td class="mono">${c.type}</td><td class="num mono ${cls(c.delta)}">${signed(c.delta,2,"")}</td><td class="num mono">¥${fmt(c.cash_after)}</td><td style="font-size:12px;">${c.note}</td></tr>`
@@ -2392,21 +2414,35 @@ function switchTab(tab) {
 
 document.querySelectorAll("#mainTabs .tab-btn").forEach(b => b.addEventListener("click", () => switchTab(b.dataset.tab)));
 document.querySelectorAll("[data-jump]").forEach(b => b.addEventListener("click", () => { switchTab(b.dataset.jump); window.scrollTo({ top: 0, behavior: "smooth" }); }));
-document.querySelectorAll("#poolSeg .seg-btn").forEach(b => b.addEventListener("click", () => { curPool = b.dataset.pool; document.querySelectorAll("#poolSeg .seg-btn").forEach(x => x.classList.toggle("active", x === b)); renderAll(); }));
-document.querySelectorAll("#riskSeg .seg-btn").forEach(b => b.addEventListener("click", () => { curRisk = b.dataset.risk; document.querySelectorAll("#riskSeg .seg-btn").forEach(x => x.classList.toggle("active", x === b)); renderAll(); }));
-document.querySelectorAll("#ovPresetPills .pill").forEach(b => b.addEventListener("click", () => { curOvPreset = b.dataset.ovp; document.querySelectorAll("#ovPresetPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderOverview(); }));
+document.getElementById("poolSel").addEventListener("change", e => { curPool = e.target.value; renderAll(); });
+document.getElementById("riskSel").addEventListener("change", e => { curRisk = e.target.value; renderAll(); });
 document.querySelectorAll("[data-tbar] .pill").forEach(b => b.addEventListener("click", () => { curTimeRange = b.dataset.tr; renderAll(); }));
 [["trStartInp", "trEndInp"], ["btStartInp", "btEndInp"]].forEach(([sId, eId]) => {
   document.getElementById(sId).addEventListener("change", e => { customStart = e.target.value; curTimeRange = "custom"; renderAll(); });
   document.getElementById(eId).addEventListener("change", e => { customEnd = e.target.value; curTimeRange = "custom"; renderAll(); });
 });
 document.getElementById("btOverlaySel").addEventListener("change", e => { btOverlay = e.target.value; renderBacktest(); });
-document.querySelectorAll("#btWeightPills .pill").forEach(b => b.addEventListener("click", () => { btWeight = b.dataset.w; document.querySelectorAll("#btWeightPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
-document.querySelectorAll("#btFreqPills .pill").forEach(b => b.addEventListener("click", () => { btFreq = Number(b.dataset.f); document.querySelectorAll("#btFreqPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
-document.querySelectorAll("#btBufPills .pill").forEach(b => b.addEventListener("click", () => { btBuf = b.dataset.b; document.querySelectorAll("#btBufPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
-document.querySelectorAll("#btCostPills .pill").forEach(b => b.addEventListener("click", () => { btCost = b.dataset.c; document.querySelectorAll("#btCostPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderBacktest(); }));
+document.getElementById("btWeightSel").addEventListener("change", e => { btWeight = e.target.value; renderBacktest(); });
+document.getElementById("btFreqSel").addEventListener("change", e => { btFreq = Number(e.target.value); renderBacktest(); });
+document.getElementById("btBufSel").addEventListener("change", e => { btBuf = e.target.value; renderBacktest(); });
+document.getElementById("btCostSel").addEventListener("change", e => { btCost = e.target.value; renderBacktest(); });
+document.querySelectorAll("#btSubTabs .pill").forEach(b => b.addEventListener("click", () => {
+  btSubTab = b.dataset.bts;
+  document.querySelectorAll("#btSubTabs .pill").forEach(x => x.classList.toggle("active", x === b));
+  document.getElementById("btPaneAnnual").classList.toggle("active", btSubTab === "annual");
+  document.getElementById("btPanePools").classList.toggle("active", btSubTab === "pools");
+  document.getElementById("btPaneExcess").classList.toggle("active", btSubTab === "excess");
+}));
 document.getElementById("ppCohortSel").addEventListener("change", e => { ppCohort = e.target.value; renderPaper(); });
-document.querySelectorAll("#ppLogPills .pill").forEach(b => b.addEventListener("click", () => { ppLogTab = b.dataset.ppl; document.querySelectorAll("#ppLogPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderPaper(); }));
+document.querySelectorAll("#ppDetailTabs .pill").forEach(b => b.addEventListener("click", () => { ppDetailTab = b.dataset.ppd; renderPaper(); }));
+document.querySelectorAll("#resSubTabs .sub-tab-btn").forEach(b => b.addEventListener("click", () => {
+  curResSub = b.dataset.rs;
+  document.querySelectorAll("#resSubTabs .sub-tab-btn").forEach(x => x.classList.toggle("active", x === b));
+  document.getElementById("resPaneFactors").classList.toggle("active", curResSub === "factors");
+  document.getElementById("resPanePeers").classList.toggle("active", curResSub === "peers");
+  document.getElementById("resPaneTiming").classList.toggle("active", curResSub === "timing");
+  document.getElementById("resPaneAudit").classList.toggle("active", curResSub === "audit");
+}));
 document.querySelectorAll("#resPeerScopePills .pill").forEach(b => b.addEventListener("click", () => { curPeerScope = b.dataset.ps; document.querySelectorAll("#resPeerScopePills .pill").forEach(x => x.classList.toggle("active", x === b)); renderResearch(); }));
 document.querySelectorAll("#resRegModePills .pill").forEach(b => b.addEventListener("click", () => { curRegMode = b.dataset.rm; document.querySelectorAll("#resRegModePills .pill").forEach(x => x.classList.toggle("active", x === b)); renderResearch(); }));
 document.querySelectorAll("#resRegHPills .pill").forEach(b => b.addEventListener("click", () => { curRegH = b.dataset.rh; document.querySelectorAll("#resRegHPills .pill").forEach(x => x.classList.toggle("active", x === b)); renderResearch(); }));
