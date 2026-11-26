@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-11-26 12:06:52 CST",
+  "updated_at": "2026-11-26 12:19:35 CST",
   "date": "2026-11-26",
   "session": {
     "market_date": "2026-11-26",
     "today_cst": "2026-11-26",
-    "updated_at": "2026-11-26 12:06:52 CST",
+    "updated_at": "2026-11-26 12:19:35 CST",
     "phase": "INTRADAY",
     "trade_dates_tail": [
       "2026-11-20",
@@ -120953,7 +120953,7 @@
     "session": {
       "market_date": "2026-11-26",
       "today_cst": "2026-11-26",
-      "updated_at": "2026-11-26 12:06:52 CST",
+      "updated_at": "2026-11-26 12:19:35 CST",
       "phase": "INTRADAY",
       "trade_dates_tail": [
         "2026-11-20",
@@ -133273,7 +133273,7 @@
     "portfolio": {
       "rebalance_freq_days": 5,
       "one_way_cost": 0.001,
-      "nav_net": 0.9949,
+      "nav_net": 1.0,
       "last_rebal_date": "2026-11-25",
       "holdings": [
         {
@@ -133827,9 +133827,9 @@
         },
         {
           "date": "2026-11-26",
-          "nav_net": 0.9949,
+          "nav_net": 1.0,
           "holdings_count": 60,
-          "delisted_exits": 1,
+          "delisted_exits": 0,
           "rebalanced": 0
         }
       ],
@@ -133839,7 +133839,7 @@
       "all": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 0.9949,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-25",
         "holdings": [
           {
@@ -134393,9 +134393,9 @@
           },
           {
             "date": "2026-11-26",
-            "nav_net": 0.9949,
+            "nav_net": 1.0,
             "holdings_count": 60,
-            "delisted_exits": 1,
+            "delisted_exits": 0,
             "rebalanced": 0
           }
         ],
@@ -134404,7 +134404,7 @@
       "aa_minus": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 0.998,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -134823,7 +134823,7 @@
           },
           {
             "date": "2026-11-26",
-            "nav_net": 0.998,
+            "nav_net": 1.0,
             "holdings_count": 45,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -134834,7 +134834,7 @@
       "aa": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 0.9983,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135091,7 +135091,7 @@
           },
           {
             "date": "2026-11-26",
-            "nav_net": 0.9983,
+            "nav_net": 1.0,
             "holdings_count": 27,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -135102,7 +135102,7 @@
       "aa_plus": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 0.9959,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135215,7 +135215,7 @@
           },
           {
             "date": "2026-11-26",
-            "nav_net": 0.9959,
+            "nav_net": 1.0,
             "holdings_count": 11,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -135226,7 +135226,7 @@
       "aaa": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 0.9962,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135285,7 +135285,7 @@
           },
           {
             "date": "2026-11-26",
-            "nav_net": 0.9962,
+            "nav_net": 1.0,
             "holdings_count": 5,
             "delisted_exits": 0,
             "rebalanced": 0
