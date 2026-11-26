@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-11-27 02:26:22 CST",
+  "updated_at": "2026-11-27 03:48:25 CST",
   "date": "2026-11-26",
   "session": {
     "market_date": "2026-11-26",
     "today_cst": "2026-11-27",
-    "updated_at": "2026-11-27 02:26:22 CST",
+    "updated_at": "2026-11-27 03:48:25 CST",
     "phase": "EOD_CONFIRMED",
     "trade_dates_tail": [
       "2026-11-20",
@@ -120953,7 +120953,7 @@
     "session": {
       "market_date": "2026-11-26",
       "today_cst": "2026-11-27",
-      "updated_at": "2026-11-27 02:26:22 CST",
+      "updated_at": "2026-11-27 03:48:25 CST",
       "phase": "EOD_CONFIRMED",
       "trade_dates_tail": [
         "2026-11-20",
