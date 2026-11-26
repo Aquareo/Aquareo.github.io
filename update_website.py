@@ -684,9 +684,6 @@ def build_clean_html(data: dict) -> str:
     .brand-title { font-size: 18px; font-weight: 700; letter-spacing: -0.2px; color: var(--ink); }
     .brand-sub { font-size: 13px; color: var(--muted); }
     .status-chip { font-size: 11px; color: var(--muted); background: var(--subtle); border: 1px solid var(--border-soft); border-radius: 999px; padding: 2px 9px; }
-    .nav-ext { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; }
-    .nav-ext a { color: var(--muted); }
-    .nav-ext a:hover { color: var(--blue); }
 
     /* Tabs + Global Controls */
     .control-bar { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
@@ -871,13 +868,6 @@ def build_clean_html(data: dict) -> str:
         <span class="brand-sub">可转债量化研究 · Four-Region LSM</span>
         <span class="status-chip mono">参数已冻结 · arXiv:2409.06496v7</span>
       </div>
-      <nav class="nav-ext">
-        <a href="/">个人主页</a>
-        <a href="/trade/">A 股买卖看板</a>
-        <a href="/phd-tracker/">申请追踪</a>
-        <a href="https://github.com/Aquareo/Aquareo.github.io" target="_blank" rel="noopener">GitHub 源码 ↗</a>
-        <a href="https://arxiv.org/abs/2409.06496" target="_blank" rel="noopener">论文原文 ↗</a>
-      </nav>
     </div>
     <div class="control-bar">
       <nav class="tabs" id="mainTabs" role="tablist">
