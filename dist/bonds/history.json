@@ -5596,8 +5596,8 @@
           "name": "天23转债",
           "rating": "AA",
           "bond_price": 99.46,
-          "model_price": 124.48,
-          "undervaluation": 25.16,
+          "model_price": 124.49,
+          "undervaluation": 25.17,
           "double_low": 178.28,
           "region_code": "R4"
         },
@@ -5623,8 +5623,8 @@
           "name": "嘉益转债",
           "rating": "A+",
           "bond_price": 115.27,
-          "model_price": 138.95,
-          "undervaluation": 20.55,
+          "model_price": 138.94,
+          "undervaluation": 20.54,
           "double_low": 344.98,
           "region_code": "R4"
         },
@@ -5659,8 +5659,8 @@
           "name": "通22转债",
           "rating": "AAA",
           "bond_price": 99.36,
-          "model_price": 118.27,
-          "undervaluation": 19.03,
+          "model_price": 118.26,
+          "undervaluation": 19.02,
           "double_low": 299.64,
           "region_code": "R4"
         },
@@ -5677,8 +5677,8 @@
           "name": "迪威转债",
           "rating": "AA-",
           "bond_price": 113.2,
-          "model_price": 133.44,
-          "undervaluation": 17.88,
+          "model_price": 133.48,
+          "undervaluation": 17.91,
           "double_low": 313.24,
           "region_code": "R4"
         },
@@ -5826,15 +5826,6 @@
           "double_low": 216.03,
           "region_code": "R4"
         },
-        "118034": {
-          "name": "晶能转债",
-          "rating": "AA+",
-          "bond_price": 107.9,
-          "model_price": 121.77,
-          "undervaluation": 12.85,
-          "double_low": 131.13,
-          "region_code": "R3"
-        },
         "118024": {
           "name": "冠宇转债",
           "rating": "AA",
@@ -5843,6 +5834,15 @@
           "undervaluation": 12.85,
           "double_low": 198.32,
           "region_code": "R4"
+        },
+        "118034": {
+          "name": "晶能转债",
+          "rating": "AA+",
+          "bond_price": 107.9,
+          "model_price": 121.76,
+          "undervaluation": 12.84,
+          "double_low": 131.13,
+          "region_code": "R3"
         },
         "118015": {
           "name": "芯海转债",
@@ -5866,8 +5866,8 @@
           "name": "盛泰转债",
           "rating": "AA",
           "bond_price": 108.38,
-          "model_price": 121.78,
-          "undervaluation": 12.36,
+          "model_price": 121.8,
+          "undervaluation": 12.38,
           "double_low": 242.26,
           "region_code": "R4"
         },
@@ -5875,8 +5875,8 @@
           "name": "隆新转债",
           "rating": "AA",
           "bond_price": 121.98,
-          "model_price": 136.73,
-          "undervaluation": 12.09,
+          "model_price": 136.68,
+          "undervaluation": 12.05,
           "double_low": 210.22,
           "region_code": "R4"
         },
@@ -5884,8 +5884,8 @@
           "name": "清源转债",
           "rating": "A+",
           "bond_price": 120.33,
-          "model_price": 134.79,
-          "undervaluation": 12.02,
+          "model_price": 134.78,
+          "undervaluation": 12.01,
           "double_low": 193.86,
           "region_code": "R4"
         },
@@ -5911,8 +5911,8 @@
           "name": "嘉诚转债",
           "rating": "A+",
           "bond_price": 111.81,
-          "model_price": 124.99,
-          "undervaluation": 11.78,
+          "model_price": 124.96,
+          "undervaluation": 11.76,
           "double_low": 249.0,
           "region_code": "R4"
         },
@@ -6001,8 +6001,8 @@
           "name": "科沃转债",
           "rating": "AA",
           "bond_price": 111.16,
-          "model_price": 121.97,
-          "undervaluation": 9.72,
+          "model_price": 121.98,
+          "undervaluation": 9.73,
           "double_low": 399.43,
           "region_code": "R4"
         },
@@ -6145,8 +6145,8 @@
           "name": "宇邦转债",
           "rating": "A+",
           "bond_price": 123.5,
-          "model_price": 132.77,
-          "undervaluation": 7.51,
+          "model_price": 132.76,
+          "undervaluation": 7.5,
           "double_low": 212.65,
           "region_code": "R4"
         },
@@ -6154,8 +6154,8 @@
           "name": "晶科转债",
           "rating": "AA",
           "bond_price": 110.01,
-          "model_price": 117.91,
-          "undervaluation": 7.18,
+          "model_price": 117.93,
+          "undervaluation": 7.2,
           "double_low": 186.91,
           "region_code": "R4"
         },
@@ -6163,8 +6163,8 @@
           "name": "正元转02",
           "rating": "A+",
           "bond_price": 121.0,
-          "model_price": 129.51,
-          "undervaluation": 7.03,
+          "model_price": 129.5,
+          "undervaluation": 7.02,
           "double_low": 256.04,
           "region_code": "R4"
         },
@@ -6181,8 +6181,8 @@
           "name": "金05转债",
           "rating": "AA+",
           "bond_price": 129.43,
-          "model_price": 138.43,
-          "undervaluation": 6.95,
+          "model_price": 138.42,
+          "undervaluation": 6.94,
           "double_low": 259.33,
           "region_code": "R4"
         },
@@ -6244,8 +6244,8 @@
           "name": "建龙转债",
           "rating": "AA-",
           "bond_price": 117.0,
-          "model_price": 124.62,
-          "undervaluation": 6.52,
+          "model_price": 124.64,
+          "undervaluation": 6.53,
           "double_low": 354.94,
           "region_code": "R4"
         },
@@ -6325,8 +6325,8 @@
           "name": "铭利转债",
           "rating": "A+",
           "bond_price": 119.94,
-          "model_price": 126.95,
-          "undervaluation": 5.84,
+          "model_price": 126.92,
+          "undervaluation": 5.82,
           "double_low": 183.5,
           "region_code": "R3"
         },
@@ -6352,8 +6352,8 @@
           "name": "武进转债",
           "rating": "AA",
           "bond_price": 115.63,
-          "model_price": 122.27,
-          "undervaluation": 5.74,
+          "model_price": 122.24,
+          "undervaluation": 5.72,
           "double_low": 269.43,
           "region_code": "R4"
         },
@@ -6397,8 +6397,8 @@
           "name": "斯达转债",
           "rating": "AA+",
           "bond_price": 129.41,
-          "model_price": 136.18,
-          "undervaluation": 5.23,
+          "model_price": 136.19,
+          "undervaluation": 5.24,
           "double_low": 243.25,
           "region_code": "R4"
         },
@@ -6433,8 +6433,8 @@
           "name": "太平转债",
           "rating": "AA",
           "bond_price": 109.13,
-          "model_price": 114.54,
-          "undervaluation": 4.96,
+          "model_price": 114.52,
+          "undervaluation": 4.94,
           "double_low": 216.79,
           "region_code": "R4"
         },
@@ -6465,6 +6465,15 @@
           "double_low": 336.76,
           "region_code": "R4"
         },
+        "113701": {
+          "name": "祥和转债",
+          "rating": "A+",
+          "bond_price": 130.54,
+          "model_price": 136.35,
+          "undervaluation": 4.45,
+          "double_low": 213.67,
+          "region_code": "R3"
+        },
         "113056": {
           "name": "重银转债",
           "rating": "AAA",
@@ -6473,15 +6482,6 @@
           "undervaluation": 4.45,
           "double_low": 119.16,
           "region_code": "R2"
-        },
-        "113701": {
-          "name": "祥和转债",
-          "rating": "A+",
-          "bond_price": 130.54,
-          "model_price": 136.34,
-          "undervaluation": 4.44,
-          "double_low": 213.67,
-          "region_code": "R3"
         },
         "118070": {
           "name": "南芯转债",
@@ -6519,6 +6519,15 @@
           "double_low": 151.45,
           "region_code": "R3"
         },
+        "127102": {
+          "name": "浙建转债",
+          "rating": "AA+",
+          "bond_price": 114.61,
+          "model_price": 119.36,
+          "undervaluation": 4.15,
+          "double_low": 188.84,
+          "region_code": "R4"
+        },
         "118044": {
           "name": "赛特转债",
           "rating": "A+",
@@ -6528,21 +6537,12 @@
           "double_low": 190.77,
           "region_code": "R3"
         },
-        "127102": {
-          "name": "浙建转债",
-          "rating": "AA+",
-          "bond_price": 114.61,
-          "model_price": 119.34,
-          "undervaluation": 4.13,
-          "double_low": 188.84,
-          "region_code": "R4"
-        },
         "123220": {
           "name": "易瑞转债",
           "rating": "A+",
           "bond_price": 120.0,
-          "model_price": 124.9,
-          "undervaluation": 4.08,
+          "model_price": 124.88,
+          "undervaluation": 4.07,
           "double_low": 202.29,
           "region_code": "R4"
         },
@@ -6595,8 +6595,8 @@
           "name": "丰山转债",
           "rating": "AA-",
           "bond_price": 122.43,
-          "model_price": 126.88,
-          "undervaluation": 3.64,
+          "model_price": 126.89,
+          "undervaluation": 3.65,
           "double_low": 199.86,
           "region_code": "R4"
         },
@@ -6658,8 +6658,8 @@
           "name": "长海转债",
           "rating": "AA",
           "bond_price": 111.02,
-          "model_price": 114.73,
-          "undervaluation": 3.34,
+          "model_price": 114.74,
+          "undervaluation": 3.35,
           "double_low": 130.87,
           "region_code": "R3"
         },
@@ -6667,8 +6667,8 @@
           "name": "艾录转债",
           "rating": "A",
           "bond_price": 122.76,
-          "model_price": 126.79,
-          "undervaluation": 3.28,
+          "model_price": 126.81,
+          "undervaluation": 3.3,
           "double_low": 249.8,
           "region_code": "R4"
         },
@@ -6793,8 +6793,8 @@
           "name": "伯25转债",
           "rating": "AA",
           "bond_price": 128.61,
-          "model_price": 131.67,
-          "undervaluation": 2.38,
+          "model_price": 131.65,
+          "undervaluation": 2.36,
           "double_low": 199.73,
           "region_code": "R3"
         },
@@ -6838,8 +6838,8 @@
           "name": "财通转债",
           "rating": "AAA",
           "bond_price": 105.96,
-          "model_price": 108.03,
-          "undervaluation": 1.95,
+          "model_price": 108.04,
+          "undervaluation": 1.96,
           "double_low": 126.41,
           "region_code": "R3"
         },
@@ -6964,8 +6964,8 @@
           "name": "微芯转债",
           "rating": "A+",
           "bond_price": 123.58,
-          "model_price": 124.79,
-          "undervaluation": 0.98,
+          "model_price": 124.8,
+          "undervaluation": 0.99,
           "double_low": 204.81,
           "region_code": "R4"
         },
@@ -7072,8 +7072,8 @@
           "name": "玉禾转债",
           "rating": "AA",
           "bond_price": 137.27,
-          "model_price": 137.65,
-          "undervaluation": 0.28,
+          "model_price": 137.64,
+          "undervaluation": 0.27,
           "double_low": 174.28,
           "region_code": "R2"
         },
@@ -7189,8 +7189,8 @@
           "name": "华辰转债",
           "rating": "A+",
           "bond_price": 140.33,
-          "model_price": 138.94,
-          "undervaluation": -0.99,
+          "model_price": 138.92,
+          "undervaluation": -1.01,
           "double_low": 156.57,
           "region_code": "R2"
         },
@@ -7261,8 +7261,8 @@
           "name": "特纸转债",
           "rating": "AA",
           "bond_price": 119.03,
-          "model_price": 117.16,
-          "undervaluation": -1.57,
+          "model_price": 117.19,
+          "undervaluation": -1.54,
           "double_low": 160.97,
           "region_code": "R3"
         },
@@ -7428,15 +7428,6 @@
           "double_low": 171.66,
           "region_code": "R3"
         },
-        "113674": {
-          "name": "华设转债",
-          "rating": "AA",
-          "bond_price": 119.96,
-          "model_price": 116.32,
-          "undervaluation": -3.03,
-          "double_low": 197.46,
-          "region_code": "R4"
-        },
         "123160": {
           "name": "泰福转债",
           "rating": "A",
@@ -7454,6 +7445,15 @@
           "undervaluation": -3.05,
           "double_low": 166.6,
           "region_code": "R3"
+        },
+        "113674": {
+          "name": "华设转债",
+          "rating": "AA",
+          "bond_price": 119.96,
+          "model_price": 116.29,
+          "undervaluation": -3.06,
+          "double_low": 197.46,
+          "region_code": "R4"
         },
         "127104": {
           "name": "姚记转债",
@@ -7702,8 +7702,8 @@
           "name": "聚隆转债",
           "rating": "A+",
           "bond_price": 139.3,
-          "model_price": 129.87,
-          "undervaluation": -6.77,
+          "model_price": 129.86,
+          "undervaluation": -6.78,
           "double_low": 193.19,
           "region_code": "R3"
         },
@@ -7810,7 +7810,7 @@
           "name": "久吾转02",
           "rating": "A+",
           "bond_price": 143.52,
-          "model_price": 130.74,
+          "model_price": 130.75,
           "undervaluation": -8.9,
           "double_low": 230.32,
           "region_code": "R3"
@@ -7828,8 +7828,8 @@
           "name": "科博转债",
           "rating": "AA+",
           "bond_price": 144.41,
-          "model_price": 131.45,
-          "undervaluation": -8.98,
+          "model_price": 131.46,
+          "undervaluation": -8.97,
           "double_low": 232.45,
           "region_code": "R3"
         },
@@ -7990,8 +7990,8 @@
           "name": "宙邦转债",
           "rating": "AA",
           "bond_price": 167.0,
-          "model_price": 141.3,
-          "undervaluation": -15.39,
+          "model_price": 141.31,
+          "undervaluation": -15.38,
           "double_low": 203.36,
           "region_code": "R2"
         },
@@ -7999,8 +7999,8 @@
           "name": "三鑫转债",
           "rating": "AA-",
           "bond_price": 138.54,
-          "model_price": 117.09,
-          "undervaluation": -15.49,
+          "model_price": 117.1,
+          "undervaluation": -15.48,
           "double_low": 182.15,
           "region_code": "R3"
         },
