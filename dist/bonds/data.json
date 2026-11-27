@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-11-27 18:47:43 CST",
+  "updated_at": "2026-11-28 01:33:05 CST",
   "date": "2026-11-27",
   "session": {
     "market_date": "2026-11-27",
-    "today_cst": "2026-11-27",
-    "updated_at": "2026-11-27 18:47:43 CST",
+    "today_cst": "2026-11-28",
+    "updated_at": "2026-11-28 01:33:05 CST",
     "phase": "EOD_CONFIRMED",
     "trade_dates_tail": [
       "2026-11-23",
@@ -120952,8 +120952,8 @@
     "data_status": "OK",
     "session": {
       "market_date": "2026-11-27",
-      "today_cst": "2026-11-27",
-      "updated_at": "2026-11-27 18:47:43 CST",
+      "today_cst": "2026-11-28",
+      "updated_at": "2026-11-28 01:33:05 CST",
       "phase": "EOD_CONFIRMED",
       "trade_dates_tail": [
         "2026-11-23",
@@ -133465,7 +133465,7 @@
     "portfolio": {
       "rebalance_freq_days": 5,
       "one_way_cost": 0.001,
-      "nav_net": 1.0344,
+      "nav_net": 1.0,
       "last_rebal_date": "2026-11-25",
       "holdings": [
         {
@@ -134026,7 +134026,7 @@
         },
         {
           "date": "2026-11-27",
-          "nav_net": 1.0344,
+          "nav_net": 1.0,
           "holdings_count": 60,
           "delisted_exits": 0,
           "rebalanced": 0
@@ -134038,7 +134038,7 @@
       "all": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 1.0344,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-25",
         "holdings": [
           {
@@ -134599,7 +134599,7 @@
           },
           {
             "date": "2026-11-27",
-            "nav_net": 1.0344,
+            "nav_net": 1.0,
             "holdings_count": 60,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -134610,7 +134610,7 @@
       "aa_minus": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 1.0395,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135036,7 +135036,7 @@
           },
           {
             "date": "2026-11-27",
-            "nav_net": 1.0395,
+            "nav_net": 1.0,
             "holdings_count": 45,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -135047,7 +135047,7 @@
       "aa": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 1.0385,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135311,7 +135311,7 @@
           },
           {
             "date": "2026-11-27",
-            "nav_net": 1.0385,
+            "nav_net": 1.0,
             "holdings_count": 27,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -135322,7 +135322,7 @@
       "aa_plus": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 1.0383,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135442,7 +135442,7 @@
           },
           {
             "date": "2026-11-27",
-            "nav_net": 1.0383,
+            "nav_net": 1.0,
             "holdings_count": 11,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -135453,7 +135453,7 @@
       "aaa": {
         "rebalance_freq_days": 5,
         "one_way_cost": 0.001,
-        "nav_net": 1.0262,
+        "nav_net": 1.0,
         "last_rebal_date": "2026-11-26",
         "holdings": [
           {
@@ -135519,7 +135519,7 @@
           },
           {
             "date": "2026-11-27",
-            "nav_net": 1.0262,
+            "nav_net": 1.0,
             "holdings_count": 5,
             "delisted_exits": 0,
             "rebalanced": 0
@@ -136092,7 +136092,7 @@
       "bond_price": 118.53,
       "open_price": 117.999,
       "volume": 3266780.0,
-      "rem_scale": 113.46,
+      "rem_scale": 113.32,
       "model_price": 123.81,
       "undervaluation": 4.45,
       "pure_debt_val": 104.5,
@@ -136123,7 +136123,7 @@
       "bond_price": 112.67,
       "open_price": 112.498,
       "volume": 5893280.0,
-      "rem_scale": 107.27,
+      "rem_scale": 107.25,
       "model_price": 112.04,
       "undervaluation": -0.56,
       "pure_debt_val": 107.6,
@@ -136247,7 +136247,7 @@
       "bond_price": 122.46,
       "open_price": 121.78,
       "volume": 2064500.0,
-      "rem_scale": 58.0,
+      "rem_scale": 57.99,
       "model_price": 124.19,
       "undervaluation": 1.42,
       "pure_debt_val": 103.2,
@@ -139566,7 +139566,7 @@
       "bond_price": 118.53,
       "open_price": 117.999,
       "volume": 3266780.0,
-      "rem_scale": 113.46,
+      "rem_scale": 113.32,
       "model_price": 123.81,
       "undervaluation": 4.45,
       "pure_debt_val": 104.5,
@@ -139876,7 +139876,7 @@
       "bond_price": 129.38,
       "open_price": 129.266,
       "volume": 1422033.0,
-      "rem_scale": 30.53,
+      "rem_scale": 30.51,
       "model_price": 134.48,
       "undervaluation": 3.94,
       "pure_debt_val": 96.2,
@@ -140992,7 +140992,7 @@
       "bond_price": 122.46,
       "open_price": 121.78,
       "volume": 2064500.0,
-      "rem_scale": 58.0,
+      "rem_scale": 57.99,
       "model_price": 124.19,
       "undervaluation": 1.42,
       "pure_debt_val": 103.2,
@@ -141891,7 +141891,7 @@
       "bond_price": 112.67,
       "open_price": 112.498,
       "volume": 5893280.0,
-      "rem_scale": 107.27,
+      "rem_scale": 107.25,
       "model_price": 112.04,
       "undervaluation": -0.56,
       "pure_debt_val": 107.6,
@@ -141953,7 +141953,7 @@
       "bond_price": 133.61,
       "open_price": 132.0,
       "volume": 13402860.0,
-      "rem_scale": 5.48,
+      "rem_scale": 5.47,
       "model_price": 132.69,
       "undervaluation": -0.69,
       "pure_debt_val": 100.0,
